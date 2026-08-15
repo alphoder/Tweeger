@@ -22,3 +22,12 @@ uploads/
 
 # OS
 .DS_Store
+node_modules
+web/node_modules
+web/.next
+web/.open-next
+web/.env
+web/.env.local
+web/worker-configuration.d.ts
+web/tsconfig.tsbuildinfo
+web/public/uploads

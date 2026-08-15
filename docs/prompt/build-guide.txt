@@ -1,0 +1,1840 @@
+================================================================================
+AXON SOCIAL AI — FULLY AUTOMATED RESEARCH-FIRST AI AGENT SYSTEM
+================================================================================
+Version: 3.0 — Complete Rewrite
+Architecture: Autonomous Multi-Agent Research Team
+User Input: Product/Startup/Website URL → Everything Else Is Automated
+
+================================================================================
+THE ONE-LINE PITCH
+================================================================================
+
+Drop your website URL or describe your product. The AI research team takes
+over — it studies your brand, researches every platform's algorithm, generates
+platform-native content backed by real data, and sends you pixel-perfect post
+previews to swipe through on your phone. Swipe right to approve, left to
+reject, up to discuss changes with the AI. Once approved, posts schedule at
+optimal times, publish automatically, and the system learns from results to
+get smarter every single week. You review. It handles the rest.
+
+================================================================================
+HOW IT WORKS (USER EXPERIENCE)
+================================================================================
+
+STEP 1: User provides ONE of the following:
+  - A website URL (e.g., https://myrestaurant.com)
+  - A product/startup description (plain text)
+  - A social media profile link (existing presence)
+
+STEP 2: The Manager Bot takes over:
+  a) BRAND EXTRACTION PHASE (Automatic, ~60 seconds)
+     - If URL: Scrapes the website using web fetch
+       * Extracts: business name, industry, value proposition, services/products,
+         pricing, target audience, tone of voice, key claims, contact info,
+         existing social links, brand colors, logo, images
+       * Analyzes competitor positioning from the website copy
+       * Identifies the business's unique selling points
+     - If text description: AI parses and structures the same data
+     - If social profile: Fetches existing content, analyzes patterns,
+       extracts brand voice and positioning
+
+     Output: A complete Brand Profile stored in the database:
+     {
+       name, industry, subIndustry, description, valueProposition,
+       products: [{name, description, price, targetAudience}],
+       tone: {primary, secondary, avoidWords[], powerWords[]},
+       targetAudiences: [{persona, painPoints[], desires[], platforms[]}],
+       competitors: [{name, url, handle}],
+       brandKeywords: [], industryKeywords: [],
+       uniqueSellingPoints: [],
+       contentThemes: [],  // AI-identified themes the brand should own
+       languagePreference: "english" | "hinglish" | "hindi" | "regional",
+       location: {city, state, country},
+       festivals: [],  // auto-populated based on location + industry
+     }
+
+  b) PLATFORM RESEARCH PHASE (Automatic, ~2-5 minutes)
+     - Manager Bot dispatches research tasks to ALL 4 platform agents simultaneously
+     - Each agent researches:
+       * Current algorithm state for this specific industry
+       * Trending topics relevant to this brand
+       * Competitor content analysis on that platform
+       * Hashtag clusters with reach/competition data
+       * Best-performing content formats for this industry RIGHT NOW
+       * Optimal posting times based on the target audience's behavior
+       * Content gaps — what competitors aren't covering
+     - Manager Bot synthesizes cross-platform intelligence
+     - Generates a "Platform Strategy Brief" for each platform
+
+  c) CONTENT STRATEGY GENERATION (Automatic, ~2-3 minutes)
+     - Manager Bot creates a multi-platform content strategy:
+       * Content pillars (3-5 themes the brand will consistently cover)
+       * Content mix per platform (e.g., LinkedIn: 40% thought leadership,
+         30% case studies, 20% industry data, 10% behind-the-scenes)
+       * Posting frequency per platform (based on research data)
+       * Hashtag strategy per platform
+       * Visual style guide (what kinds of images to generate)
+       * CTA strategy (what actions to drive on each platform)
+       * Save-bait vs share-bait vs reply-bait content ratios
+
+  d) CONTENT GENERATION (Automatic, ~5-10 minutes for a full week)
+     - Manager Bot dispatches content generation to platform agents
+     - Each agent generates posts using:
+       * The brand profile as context
+       * Fresh platform research as intelligence
+       * Platform-specific algorithm optimization:
+         - LinkedIn: dwell-time optimized, 800-1000 chars, save-bait CTAs,
+           carousel documents when appropriate, easy-to-answer ending questions
+         - Twitter/X: reply-chain sparking hooks, no external links in body,
+           text-first format, 1-2 hashtags max, bookmark-bait for threads
+         - Instagram: DM-share optimized captions, 3-5 keyword-rich hashtags,
+           hook within 125 chars, save-bait carousels, Reel scripts with
+           1.7-second hooks
+         - Facebook: community discussion starters, NO external links,
+           Messenger-share optimized, group-style storytelling
+       * AI-generated images via Puter.js txt2img for each post
+       * AI scoring: predicted engagement score 0-100 with breakdown
+
+  e) SCHEDULING (Automatic)
+     - AI determines optimal posting times based on:
+       * Platform research agent's timing intelligence
+       * Historical performance data (after first week)
+       * Current trend velocity (if a trend is peaking, post NOW)
+       * Queue conflict avoidance (minimum 2-hour gap per platform)
+       * Day-of-week patterns from research data
+     - Posts are queued with exact timestamps
+
+  f) PUBLISHING (Automatic)
+     - Scheduler publishes posts at designated times
+     - Handles retries on failure (3 attempts with exponential backoff)
+     - Notifies admin via Telegram on success/failure
+     - Records post IDs for metrics tracking
+
+  g) PERFORMANCE TRACKING (Automatic, every 2 hours)
+     - Fetches engagement metrics for all published posts
+     - Calculates: engagement rate, save rate, share rate, reply depth,
+       impression velocity, reach decay curve
+     - Flags "best performing" posts automatically
+     - Identifies underperforming content with reasons
+
+  h) SELF-LEARNING LOOP (Automatic, daily at 2 AM)
+     - Analyzes all performance data from the past 30 days
+     - Generates insights:
+       * "Carousel posts about [topic] get 3.2x more saves on Instagram"
+       * "Posts at 10 AM on LinkedIn get 67% more engagement than 2 PM"
+       * "Questions ending tweets get 2.1x more replies"
+       * "Hinglish captions on Instagram outperform English by 45%"
+     - FEEDS INSIGHTS BACK INTO THE AGENTS' SYSTEM PROMPTS
+     - Next content generation cycle is informed by what actually worked
+     - Measures insight accuracy: did following this insight improve results?
+     - Confidence scoring: insights with proven impact get higher confidence
+
+  i) ALGORITHM CHANGE DETECTION (Automatic, continuous)
+     - Monitors engagement velocity shifts across all client accounts
+     - Detects when a format's performance deviates by >2 standard deviations
+       from the rolling 14-day mean
+     - Flags potential algorithm changes
+     - Auto-adjusts content strategy (e.g., if carousel reach drops on
+       LinkedIn, shift to polls or text posts)
+     - Alerts admin via Telegram: "Algorithm shift detected on Instagram.
+       Carousel reach dropped 34%. Shifting to Reels-first strategy."
+
+  j) WEEKLY REPORT (Automatic, every Monday 8 AM)
+     - AI-generated narrative report:
+       * Per-platform performance summary
+       * Best and worst performing content with reasons
+       * What the AI learned this week
+       * What the AI changed in the strategy
+       * Recommendations for next week
+       * Competitor movement (if any tracked)
+       * ROI dashboard: before vs after AI optimization
+
+STEP 3: USER REVIEWS VIA SWIPE REVIEW DECK (The Core Interaction):
+  The system NEVER auto-posts without user verification.
+  All generated content goes to the Review Deck — a mobile-first,
+  swipe-based interface where the user reviews every post before it
+  goes live.
+
+  THE REVIEW DECK (`/review`):
+
+  On MOBILE (primary experience):
+    - Full-screen card stack, one post per card
+    - Each card shows a PIXEL-PERFECT platform preview mock:
+      * Twitter: actual tweet card (avatar, name, handle, text, image, icons)
+      * LinkedIn: actual LinkedIn post (profile, headline, text, reactions bar)
+      * Instagram: actual Instagram post (profile header, image, caption, likes)
+      * Facebook: actual Facebook post (profile, text, image, reactions)
+    - Below the preview: AI reasoning panel (collapsible)
+      * "Why this works: [research-backed explanation]"
+      * AI Score: 87/100 with breakdown
+      * Target signal: "Optimized for saves" / "Optimized for replies"
+      * Scheduled time: "Tuesday 10:00 AM IST (optimal for LinkedIn)"
+    - SWIPE GESTURES:
+      * SWIPE RIGHT → Approve (green flash, card flies right, goes to scheduler)
+      * SWIPE LEFT  → Reject (red flash, card flies left, marked as rejected)
+      * SWIPE UP    → Edit/Discuss (card slides up, opens Manager Bot chat)
+    - Haptic feedback on each swipe (mobile vibration)
+    - Progress indicator: "3 of 7 posts reviewed"
+    - Batch action: "Approve All Remaining" button at bottom
+    - Undo: shake phone or tap "Undo" toast that appears for 3 seconds
+
+  On DESKTOP (button experience):
+    - Same card layout but arranged as a horizontal card carousel
+    - Each card shows the same pixel-perfect platform preview
+    - THREE BUTTONS below each card:
+      * ✓ APPROVE (green button, keyboard shortcut: →)
+      * ✗ REJECT (red button, keyboard shortcut: ←)
+      * ✎ EDIT/DISCUSS (blue button, keyboard shortcut: ↑)
+    - Keyboard navigation: arrow keys to approve/reject/edit,
+      spacebar to flip to next card
+    - Side panel shows the review queue with thumbnails
+
+  THE EDIT/DISCUSS FLOW (Manager Bot Conversation):
+    When user swipes up or clicks Edit, a chat interface opens
+    ON THE SAME CARD — the post preview stays visible at the top
+    and a conversation thread opens below it:
+
+    - The Manager Bot opens with context:
+      "This is a [platform] post targeting [industry] audience.
+       I optimized it for [signal]. What would you like to change?"
+
+    - User can type or voice-note their feedback:
+      * "Make the hook more punchy"
+      * "Add something about our new product launch"
+      * "Change the tone — this is too formal"
+      * "Can you make a version for Instagram too?"
+      * "I don't like the image, generate a different one"
+
+    - Manager Bot processes the feedback:
+      1. Understands the change request
+      2. Routes to the appropriate platform agent (or generates new image)
+      3. Shows the UPDATED post preview in real-time
+      4. Shows what changed: "Updated: Rewrote hook, shortened caption,
+         regenerated image with warmer tones"
+      5. Shows old version vs new version side-by-side (mobile: tap to toggle)
+
+    - User can continue the conversation:
+      * "Better, but change 'automation' to 'smart automation'"
+      * "Perfect, approve this one"
+
+    - When satisfied, user can:
+      * Tap "Approve This Version" → goes to scheduler
+      * Continue editing → another round
+      * "Reject" → discard entirely
+
+    - The Manager Bot remembers preferences from these conversations
+      and feeds them back into the brand profile's tone and style settings.
+      Example: if the user consistently says "too formal," the system
+      adjusts the tone for future generations.
+
+  REVIEW NOTIFICATIONS (via Telegram):
+    When new posts are ready for review, the system sends a Telegram message:
+    "📋 5 new posts ready for review across Twitter, LinkedIn, Instagram.
+     Tap to review: [link to /review]"
+
+    If posts haven't been reviewed within a configurable window (default: 4 hours):
+    "⏰ Reminder: 5 posts still pending review. Optimal posting times are
+     approaching. Tap to review: [link]"
+
+    Quick approve via Telegram (for users who can't open the site):
+    - Telegram shows a thumbnail preview of each post
+    - Inline buttons: ✅ Approve | ❌ Reject | ✏️ Edit
+    - Edit opens a Telegram conversation with the Manager Bot
+    - This is a FALLBACK, not the primary flow — the web Review Deck
+      is always the recommended experience
+
+  AFTER APPROVAL:
+    - Approved posts move to the scheduler queue
+    - Posts are scheduled at the AI-determined optimal time
+    - If the user edited and the scheduled time has passed,
+      the system finds the next optimal slot
+    - User gets a confirmation: "✅ Post approved. Scheduled for
+      Tuesday 10:00 AM IST on LinkedIn."
+
+  AFTER REJECTION:
+    - Rejected post is marked as rejected in the drafts table
+    - Manager Bot optionally generates a replacement (configurable)
+    - User can set: "When I reject, auto-generate a replacement"
+    - Replacement goes back to the Review Deck
+
+  REVIEW ANALYTICS (in Settings):
+    - Average review time per post
+    - Approval rate (what % of AI-generated posts get approved)
+    - Most common edit types (helps the AI learn)
+    - Time from generation to approval
+    - Posts approved via web vs Telegram
+
+================================================================================
+FULL AUTOMATION MODES
+================================================================================
+
+ALL MODES require user review before posting. The difference is
+how much the AI does before the review step.
+
+MODE 1: FULL AUTO-GENERATE (Default — recommended)
+  - AI runs complete pipeline: research → strategy → content → images
+  - All generated posts land in the Review Deck
+  - User swipes through and approves/rejects/edits
+  - Approved posts auto-schedule at optimal times and auto-publish
+  - User reviews once per day (morning batch, ~2-5 minutes)
+  - If user doesn't review within configurable window, Telegram reminder
+  - Self-learning runs automatically
+
+MODE 2: SEMI-AUTO (For users who want more control)
+  - AI runs research and strategy automatically
+  - User triggers content generation manually ("Generate this week's posts")
+  - Generated posts land in Review Deck
+  - Same swipe review flow
+  - Scheduling is manual (user picks times) or AI-suggested
+
+MODE 3: ON-DEMAND (For users who want full control)
+  - User creates posts manually in Content Studio
+  - AI provides research intelligence and suggestions as they write
+  - User can request AI improvements ("Improve this", "Score this")
+  - Posts still go through Review Deck before publishing
+  - No auto-generation, no auto-scheduling
+
+================================================================================
+MULTI-AGENT ARCHITECTURE (RESEARCH-FIRST)
+================================================================================
+
+5 AI Agents. The user NEVER interacts with platform agents directly.
+All communication goes through the Manager Bot.
+
+┌─────────────────────────────────────────────────────────┐
+│                         USER                            │
+│         Provides: Website URL / Product Info             │
+│         Receives: Content, Reports, Insights             │
+│         Interface: Web Dashboard / Telegram              │
+└───────────────────────┬─────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────┐
+│                   MANAGER BOT                           │
+│                                                         │
+│  THE AUTONOMOUS COORDINATOR                             │
+│                                                         │
+│  Responsibilities:                                      │
+│  1. Brand Extraction — Parse website/product info        │
+│  2. Task Distribution — Assign research + content tasks  │
+│  3. Cross-Platform Synthesis — Merge research findings   │
+│  4. Content Strategy — Build multi-platform plans        │
+│  5. Quality Control — Score, deduplicate, rank content   │
+│  6. Scheduling Intelligence — Optimal time assignment    │
+│  7. Report Generation — Weekly AI narrative reports      │
+│  8. Alert Handling — Trend alerts, algorithm changes     │
+│  9. Self-Learning — Feed performance data back to agents │
+│ 10. Usage Metering — Track posts/insights for billing    │
+│                                                         │
+│  Methods:                                               │
+│  - extractBrand(url | text | profile)                   │
+│  - conductResearch(platforms[], industry)                │
+│  - planContent(brandProfile, platforms[], days)          │
+│  - generateFullWeek(brandProfile, platforms[])           │
+│  - synthesizeCrossPlatform(researchResults[])            │
+│  - distributeContentTasks(tasks[])                       │
+│  - scoreAndRank(generatedContent[])                     │
+│  - scheduleOptimally(content[], platforms[])             │
+│  - generateReport(period, brandProfile)                  │
+│  - handleTrendAlert(platform, trend, brandProfile)       │
+│  - detectAlgorithmChange(metricsHistory)                │
+│  - runLearningCycle(performanceData, brandProfile)       │
+│  - adjustStrategy(insights[], currentStrategy)           │
+│  - meterUsage(clientId, action)                         │
+│  - autoFillWeek(brandProfile, platforms[])              │
+│  - sendToReviewDeck(drafts[]) — NEW                     │
+│  - handleEditRequest(draftId, userFeedback) — NEW       │
+│  - processApproval(draftId) — move to scheduler — NEW   │
+│  - processRejection(draftId, autoReplace?) — NEW        │
+│  - discussEdit(draftId, conversation[]) — NEW           │
+│  - learnFromEdits(brandId) — adjust tone/style — NEW    │
+│                                                         │
+└──┬──────────┬──────────┬──────────┬─────────────────────┘
+   │          │          │          │
+   ▼          ▼          ▼          ▼
+
+┌──────────────────────────────────────────────────────────┐
+│              PLATFORM RESEARCH AGENTS                    │
+├──────────┬──────────┬──────────┬─────────────────────────┤
+│ TWITTER  │ INSTAGRAM│ FACEBOOK │ LINKEDIN                │
+│ /X AGENT │ AGENT    │ AGENT    │ AGENT                   │
+├──────────┴──────────┴──────────┴─────────────────────────┤
+│                                                          │
+│  Each agent has TWO operational modes:                   │
+│                                                          │
+│  MODE A: RESEARCH (runs first, always)                   │
+│  - Trend analysis with velocity + peak prediction        │
+│  - Hashtag intelligence with clusters + competition      │
+│  - Format performance tracking (what the algorithm is    │
+│    currently boosting)                                   │
+│  - Competitor signal monitoring (gaps + opportunities)   │
+│  - Audience behavior patterns (when, what, how they      │
+│    engage)                                               │
+│  - Timing intelligence (hour × day-of-week × format)    │
+│  - Algorithm signal weights (which engagement metrics    │
+│    matter most right now)                                │
+│                                                          │
+│  MODE B: GENERATION (runs second, informed by research)  │
+│  - Content generation using brand profile + research     │
+│  - Platform-specific formatting and optimization         │
+│  - Image generation via Puter.js txt2img                │
+│  - Hashtag selection from research data                  │
+│  - CTA optimization based on desired engagement signal   │
+│  - AI scoring with engagement prediction                │
+│                                                          │
+│  CRITICAL: generatePost() REQUIRES ResearchResult as     │
+│  input. Content is NEVER generated without fresh         │
+│  research backing it.                                    │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+
+================================================================================
+PLATFORM AGENT SPECIFICATIONS
+================================================================================
+
+────────────────────────────────────────────────────────────
+TWITTER/X RESEARCH AGENT
+────────────────────────────────────────────────────────────
+
+ALGORITHM INTELLIGENCE (baked into every generation):
+  - Reply-to-reply weight: +75 (150x a like) — generate conversation-sparking content
+  - Bookmarks: 10x like weight — generate reference/save-worthy threads
+  - Text posts > Video for engagement rate — default to text-first
+  - External links: -30% to -90% reach penalty — NEVER include links in tweet body
+  - Premium subscribers: ~10x reach — recommend Premium to clients
+  - Hashtags: max 1-2 per tweet, >2 causes -17% engagement drop
+  - Optimal frequency: 3-5 tweets/day, steep drop after 7+
+  - Thread sweet spot: 3-5 tweets with visual breaks every 3-4
+
+RESEARCH METHODS:
+  - researchTrends(industry, brandProfile)
+    → Returns: scored trends with velocity, peak prediction, suggested angles
+    → Source: Twitter API getTrends() or AI prediction if free tier
+  - analyzeHashtags(topic, industry)
+    → Returns: hashtag clusters with volume, velocity, competition
+  - analyzeFormats(industry)
+    → Returns: current format performance ranking with algorithm boost signals
+  - monitorCompetitors(handles[])
+    → Returns: content gaps, engagement patterns, topic coverage
+  - analyzeAudience(brandProfile)
+    → Returns: active hours, engagement patterns (replies vs likes vs RTs)
+
+CONTENT GENERATION METHODS:
+  - generatePost(context, research, brandProfile)
+    → System prompt includes: brand context + all research data + algorithm weights
+    → Output JSON: {
+        tweet (max 260 chars),
+        hashtags (max 2),
+        imagePrompt (for Puter.js generation),
+        engagementPrediction (0-100),
+        primarySignalTarget ("replies" | "bookmarks" | "retweets"),
+        reasoning (why this content + format + timing),
+        suggestedReplyStrategy (how to engage when replies come in)
+      }
+  - generateThread(topic, research, brandProfile, tweetCount?)
+    → Multi-tweet thread with hook → value → CTA structure
+    → Each tweet designed to pull reader to next (slippery slope)
+    → Bookmark-bait formatting: lists, frameworks, reference material
+  - generateImage(postText, research, brandProfile)
+    → Twitter-optimized 1200x675 image via Puter.js txt2img
+  - generateReplyStrategy(tweetId, incomingReply)
+    → Suggests reply text to maximize reply-to-reply signal
+    → Priority: replies within first 30 minutes
+
+ENGAGEMENT COACHING (unique feature):
+  - When a tweet gets replies, the agent generates suggested responses
+  - Sends via Telegram: "Your tweet got 5 replies. Here are suggested
+    responses to maximize algorithmic reach (reply-to-reply = 75x weight):"
+  - Tracks which replied tweets got the most secondary engagement
+
+────────────────────────────────────────────────────────────
+INSTAGRAM RESEARCH AGENT
+────────────────────────────────────────────────────────────
+
+ALGORITHM INTELLIGENCE (baked into every generation):
+  - 4 separate algorithms: Feed, Stories, Reels, Explore — each ranked differently
+  - DM shares: 50% more weight than any other action — optimize for sendability
+  - Saves: 3-5x stronger than likes, 40-60% reach boost — save-bait everything
+  - Reels: 1.7-second hook or 50% drop off, 60%+ 3-second hold = 5-10x reach
+  - Hashtags: max 3-5 per post (limit dropped from 30), keyword captions > hashtags
+  - Caption truncation at 125 chars — hook MUST fit in 125 chars
+  - Carousels: 10% avg engagement vs 6% for Reels — highest format
+  - Collab posts: 2x+ impressions — suggest collabs when relevant
+  - Business accounts miss trending audio on Reels — flag this to users
+  - Posts with >2% save rate continue reaching new viewers for 30-60 days
+  - High-save content boosts NEXT post's initial reach by 15-25%
+
+RESEARCH METHODS:
+  - researchTrends(industry, brandProfile)
+    → Visual trends, Reel formats, aesthetic shifts, trending audio
+  - suggestHashtags(topic, count=5)
+    → Three-tier: 2 broad reach + 2 mid discovery + 1 niche conversion
+    → Banned/shadowbanned hashtag detection
+  - analyzeCarouselFormats(industry)
+    → Top-performing slide counts, CTA placement, save-bait techniques
+  - analyzeReelPatterns(industry)
+    → Hook styles, pacing, text overlay effectiveness, audio trends
+  - monitorCompetitors(handles[])
+    → Visual strategy, format mix, hashtag overlap, content gaps
+  - analyzeAudience(brandProfile)
+    → Save-to-like ratio, Explore discovery patterns, DM share triggers
+
+CONTENT GENERATION METHODS:
+  - generateCaption(context, research, brandProfile)
+    → Output JSON: {
+        caption (visual-first, line breaks, keyword-rich),
+        hashtags (3-5, from research),
+        imagePrompt (1080x1080 aesthetic),
+        engagementPrediction (0-100),
+        primarySignalTarget ("saves" | "shares" | "comments"),
+        saveHook (what makes this saveable),
+        shareHook (what makes someone DM this to a friend),
+        reasoning
+      }
+  - generateCarouselPlan(topic, research, brandProfile, slides?)
+    → Slide-by-slide: title, text (100-150 chars), image prompt per slide
+    → Hook slide → Value slides → CTA slide structure
+    → Optimized for swipe-through dwell time
+  - generateReelScript(topic, research, brandProfile)
+    → Hook (first 1.7 seconds), body, CTA
+    → Text overlay suggestions
+    → Audio recommendation (trending if Creator account)
+    → Optimal length recommendation (15s/30s/60s/90s)
+  - generateImage(caption, research, brandProfile)
+    → Instagram-aesthetic 1080x1080 via Puter.js txt2img
+    → Style informed by current visual trends from research
+
+INDIAN MARKET SPECIFICS:
+  - Optimal times for India: 8-10 PM IST (primary), 7-9 AM and 12-1:30 PM
+  - Metro cities: activity from 6:45 AM, evening to 10:30 PM
+  - Tier-2 cities: start 30-60 minutes later
+  - Hinglish captions for local businesses (Hindi hook + English value)
+  - Festival calendar integration (Diwali, Holi, Navratri, Eid, etc.)
+
+────────────────────────────────────────────────────────────
+FACEBOOK RESEARCH AGENT
+────────────────────────────────────────────────────────────
+
+ALGORITHM INTELLIGENCE (baked into every generation):
+  - 100+ prediction models, hundreds of thousands of signals per post
+  - 40%+ of News Feed is AI-recommended from non-followed accounts
+  - Groups: 30-60% organic reach vs Pages: 2-6% — prioritize group content
+  - Messenger/WhatsApp private shares = #1 signal for greater reach
+  - Link posts: 0.04% engagement, -70-80% reach — NEVER post external links
+  - Native video: 478% more shares than external video
+  - YouTube links are actively penalized
+  - Facebook Reels: 2-3x more organic reach than regular video, 135% > photos
+  - Original Reels: 3.2x more organic reach than repurposed content
+  - Music-backed Reels: 89% better performance
+  - 98% of US feed views come from posts WITHOUT links
+  - Algorithm predicts if shared content will generate further engagement
+
+RESEARCH METHODS:
+  - researchTrends(industry, brandProfile)
+    → Community topics, shareable patterns, group engagement trends, local trends
+  - analyzeGroupDynamics(industry)
+    → Top groups for industry, engagement patterns, posting format preferences
+  - analyzeSharePatterns(industry)
+    → What gets shared to Messenger, what triggers group shares
+  - monitorCompetitors(handles[])
+    → Group presence, page strategy, ad strategy, community building
+  - analyzeAudience(brandProfile)
+    → Share-to-group patterns, comment depth, meaningful interaction triggers
+
+CONTENT GENERATION METHODS:
+  - generatePost(context, research, brandProfile)
+    → Output JSON: {
+        text (storytelling, community-focused, 200-500 chars),
+        imagePrompt (relatable lifestyle/business),
+        engagementPrediction (0-100),
+        primarySignalTarget ("shares" | "comments" | "reactions"),
+        shareHook (what makes someone share to Messenger or groups),
+        discussionPrompt (what sparks a comment thread),
+        reasoning
+      }
+    → NEVER includes external links in the post body
+    → Optimized for "meaningful interactions" as Facebook defines them
+  - generateGroupPost(topic, research, brandProfile, groupContext?)
+    → Optimized for group culture: discussion starters, polls, asks
+  - generateReelScript(topic, research, brandProfile)
+    → Original content (not repurposed — 3.2x reach advantage)
+    → Music recommendation when possible (89% boost)
+  - generateImage(postText, research, brandProfile)
+    → Relatable, shareable imagery via Puter.js txt2img
+
+INDIAN MARKET SPECIFICS:
+  - 95%+ users access via mobile — all content mobile-first
+  - WhatsApp integration is the primary conversion mechanism
+  - Festival-aligned content gets algorithmic boost
+  - Regional language content boosted when matched with regional signals
+  - Click-to-WhatsApp is the dominant CTA for Indian SMBs
+
+────────────────────────────────────────────────────────────
+LINKEDIN RESEARCH AGENT
+────────────────────────────────────────────────────────────
+
+ALGORITHM INTELLIGENCE (baked into every generation):
+  - Three-stage pipeline: AI classification → 5-10% network test → extended distribution
+  - Dwell time: 3x weight of likes — write for reading, not scrolling
+  - Saves: 1 save = 5x reach of 1 like, 2x of 1 meaningful comment
+  - DM trigger: if someone messages you, 90% more likely to see your next post
+  - Expert comments: 5x more algorithmic weight than random connections
+  - Golden hour: first 60-90 minutes determine total reach
+  - Author reply within 30 min: +64% total comments, +2.3x views
+  - Content lifespan: 2-3 weeks for posts generating meaningful conversations
+  - Polls: 1.64x reach multiplier — best performing format
+  - Carousels: 1.45x multiplier, 24.42% avg engagement vs 6.67% text
+  - Optimal carousel: 8-10 slides, 1080x1080, 100-150 chars/slide
+  - Text-only: 0.88x multiplier — weakest standalone format
+  - Newsletters: bypass algorithm, 35-40% open rates, 4.48-5.76% engagement
+  - Hashtags: 3-5 at end of post, SEO keywords only (following removed)
+  - External links: -25-35% reach, mitigate by adding link after 1-2 hours
+  - Optimal post length: 800-1000 chars (1300-1600 for top performers)
+  - >2000 chars: -35% engagement drop
+  - Engagement pods: 97% detection accuracy, 60-90 day recovery penalty
+  - Posts ending with easy-to-answer question: +72% better performance
+
+RESEARCH METHODS:
+  - researchTrends(industry, brandProfile)
+    → Industry topics, thought leadership gaps, data points that resonate
+  - analyzeThoughtLeaders(industry)
+    → Key voices, underserved angles, content that drives professional discussion
+  - analyzeFormats(industry)
+    → Current format multipliers (polls, carousels, text, video, newsletters)
+  - monitorCompetitors(handles[])
+    → Thought leadership positioning, content frequency, engagement patterns
+  - analyzeAudience(brandProfile)
+    → Active hours, dwell time patterns, save/comment triggers
+
+CONTENT GENERATION METHODS:
+  - generatePost(context, research, brandProfile)
+    → Output JSON: {
+        text (800-1000 chars, aggressive line breaks, bold opening),
+        hashtags (3-5, SEO keywords),
+        imagePrompt (professional data-driven graphic) or carouselPlan,
+        engagementPrediction (0-100),
+        primarySignalTarget ("saves" | "dwellTime" | "comments"),
+        hookType ("personal_story" | "actionable_advice" | "statistic" | "question"),
+        closingQuestion (easy to answer, drives comments),
+        reasoning
+      }
+    → Hook must fit in 140 chars (mobile truncation)
+    → Slippery slope structure: each line pulls reader to next
+    → NEVER includes external links (add after 1-2 hours via scheduled edit)
+  - generateCarousel(topic, research, brandProfile, slides?)
+    → 8-10 slides, save-bait structure: hook → value → CTA
+    → Each slide: 100-150 chars, strong visual
+  - generateArticleOutline(topic, research, brandProfile)
+    → Long-form LinkedIn article structure with data points
+  - generateImage(postText, research, brandProfile)
+    → Professional 1200x627 via Puter.js txt2img
+
+GOLDEN HOUR MANAGEMENT (unique feature):
+  - Immediately after posting, the system enters "engagement mode"
+  - Monitors incoming comments via scheduled metric checks
+  - Generates suggested replies for the user (via Telegram)
+  - Reminds user to reply within 30 minutes for the 64% engagement boost
+  - Tracks engagement velocity against the 5-10% network test threshold
+
+================================================================================
+TECH STACK
+================================================================================
+
+| Layer              | Technology                                          |
+|--------------------|-----------------------------------------------------|
+| Framework          | Next.js 15 (App Router)                             |
+| Language           | TypeScript                                          |
+| Styling            | Tailwind CSS + shadcn/ui                            |
+| Database           | Neon (Serverless Postgres) + Drizzle ORM            |
+| Client-side AI     | Puter.js (500+ models, free, no API keys)           |
+| Server-side AI     | Google Gemini 2.5 Flash (@google/generative-ai)     |
+| Image Generation   | Puter.js txt2img (free, client-side)                |
+| Website Scraping   | Gemini with web fetch for brand extraction           |
+| Twitter/X API      | twitter-api-v2                                      |
+| Telegram           | grammy                                              |
+| Scheduling         | node-cron                                           |
+| Charts             | recharts                                            |
+| Drag-and-drop      | @dnd-kit/core + @dnd-kit/sortable                   |
+| Auth               | Cookie-based admin password                         |
+
+COST PER CLIENT:
+  - Gemini 2.5 Flash: ₹1-3 per generation (server-side only)
+  - Puter.js: FREE (client-side, runs in browser)
+  - Puter.js txt2img: FREE (client-side image generation)
+  - Neon Postgres free tier: 0.5GB (handles hundreds of clients)
+  - Twitter API free tier: 1,500 tweets/month
+  - TOTAL: ₹500-800/month per client at 100 posts + 200 research insights
+  - MARGIN: 92-95% at ₹15-25K/month managed service pricing
+
+================================================================================
+DATABASE SCHEMA (Neon Postgres + Drizzle ORM)
+================================================================================
+
+18 TABLES TOTAL. All queries via Drizzle ORM.
+
+ENUMS:
+  platformEnum:        "twitter" | "linkedin" | "instagram" | "facebook"
+  draftSourceEnum:     "manual" | "ai_generated" | "trend" | "event" | "campaign" |
+                       "ad_copy" | "manager_bot" | "auto_research"
+  draftStatusEnum:     "pending" | "approved" | "rejected" | "posted" | "archived"
+  queueStatusEnum:     "scheduled" | "posting" | "posted" | "failed" | "cancelled"
+  campaignStatusEnum:  "draft" | "active" | "completed" | "paused" | "cancelled"
+  eventCategoryEnum:   "industry" | "sale" | "product_launch" | "cultural" |
+                       "webinar" | "conference"
+  imageSourceEnum:     "ai_generated" | "uploaded" | "researched" | "stock"
+  insightTypeEnum:     "performance" | "timing" | "content" | "audience" |
+                       "trend" | "competitor" | "algorithm_change" | "format"
+  agentEnum:           "manager" | "twitter" | "instagram" | "facebook" | "linkedin"
+  automationModeEnum:  "full_auto_generate" | "semi_auto" | "on_demand"
+  reviewStatusEnum:    "pending_review" | "in_discussion" | "approved" |
+                       "rejected" | "replacement_pending"
+
+TABLE 1: brand_profiles (NEW — the core of automation)
+  - id: serial PK
+  - name: text NOT NULL
+  - website_url: text (nullable)
+  - industry: text NOT NULL
+  - sub_industry: text (nullable)
+  - description: text NOT NULL
+  - value_proposition: text NOT NULL
+  - products: jsonb default []
+    — [{name, description, price, targetAudience}]
+  - tone: jsonb NOT NULL
+    — {primary, secondary, avoidWords[], powerWords[]}
+  - target_audiences: jsonb default []
+    — [{persona, painPoints[], desires[], platforms[]}]
+  - competitors: jsonb default []
+    — [{name, url, handle, platform}]
+  - brand_keywords: jsonb default []
+  - industry_keywords: jsonb default []
+  - unique_selling_points: jsonb default []
+  - content_themes: jsonb default []
+    — AI-identified themes the brand should own
+  - content_pillars: jsonb default []
+    — [{pillar, percentage, platforms[]}]
+  - language_preference: text NOT NULL default "english"
+    — "english" | "hinglish" | "hindi" | "regional"
+  - location: jsonb (nullable) — {city, state, country}
+  - festivals: jsonb default []
+    — auto-populated based on location + industry
+  - social_links: jsonb default []
+    — [{platform, url, handle}]
+  - automation_mode: automationModeEnum NOT NULL default "full_autopilot"
+  - platforms_active: jsonb default ["twitter", "linkedin", "instagram", "facebook"]
+  - posts_per_day_per_platform: integer NOT NULL default 1
+  - created_at: timestamptz NOT NULL default now()
+  - updated_at: timestamptz NOT NULL default now()
+  - INDEX on industry
+
+TABLE 2: platform_strategies (NEW — per-platform strategy)
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - platform: platformEnum NOT NULL
+  - strategy: jsonb NOT NULL
+    — {
+        contentMix: [{type, percentage}],
+        postingFrequency: number,
+        hashtagStrategy: {count, placement, clusters[]},
+        visualStyle: {aesthetic, colorPalette, imageTypes[]},
+        ctaStrategy: {primary, secondary, ratio},
+        algorithmFocus: {primarySignal, secondarySignal, avoidSignals[]},
+        formatPriority: [{format, weight, reasoning}],
+        timingWindows: [{dayOfWeek, hours[], confidence}]
+      }
+  - active: boolean NOT NULL default true
+  - last_research_at: timestamptz (nullable)
+  - research_confidence: real NOT NULL default 0.5
+  - created_at: timestamptz NOT NULL default now()
+  - updated_at: timestamptz NOT NULL default now()
+  - UNIQUE on (brand_id, platform)
+
+TABLE 3: drafts
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - text: text NOT NULL
+  - image_path: text (nullable)
+  - image_prompt: text (nullable) — prompt used for AI image generation
+  - platform: platformEnum NOT NULL
+  - source: draftSourceEnum NOT NULL default "ai_generated"
+  - hashtags: jsonb default []
+  - status: draftStatusEnum NOT NULL default "pending"
+  - ai_analysis: text (nullable) — why this content works
+  - ai_score: real (nullable) — predicted engagement 0-100
+  - score_breakdown: jsonb (nullable)
+    — {hookStrength, ctaClarity, platformFit, hashtagStrategy, saveability,
+       shareability, replyPotential, dwellTimeEstimate}
+  - target_audience: text (nullable) — which persona this targets
+  - content_type: text (nullable)
+    — "post" | "thread" | "carousel" | "reel_script" | "story" | "article"
+  - content_pillar: text (nullable) — which brand pillar this supports
+  - research_backing: jsonb (nullable)
+    — summary of research that informed this generation
+  - generated_by: agentEnum NOT NULL default "manager"
+  - parent_draft_id: integer (nullable) — for A/B variants
+  - primary_signal_target: text (nullable)
+    — "saves" | "shares" | "replies" | "bookmarks" | "dwellTime" | "comments"
+  - created_at: timestamptz NOT NULL default now()
+  - reviewed_at: timestamptz (nullable)
+  - INDEX on (brand_id, status, platform)
+  - INDEX on created_at
+
+TABLE 4: queue
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - draft_id: integer REFERENCES drafts(id) ON DELETE SET NULL
+  - text: text NOT NULL
+  - image_path: text (nullable)
+  - platform: platformEnum NOT NULL
+  - scheduled_time: timestamptz NOT NULL
+  - status: queueStatusEnum NOT NULL default "scheduled"
+  - posted_at: timestamptz (nullable)
+  - post_id: text (nullable) — platform post ID
+  - post_url: text (nullable)
+  - error: text (nullable)
+  - retry_count: integer NOT NULL default 0
+  - max_retries: integer NOT NULL default 3
+  - scheduling_reasoning: text (nullable) — why this time was chosen
+  - created_at: timestamptz NOT NULL default now()
+  - INDEX on (status, scheduled_time)
+  - INDEX on (brand_id, platform)
+
+TABLE 5: posted
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - queue_id: integer REFERENCES queue(id) ON DELETE SET NULL
+  - draft_id: integer REFERENCES drafts(id) ON DELETE SET NULL
+  - post_id: text UNIQUE
+  - platform: platformEnum NOT NULL
+  - text: text NOT NULL
+  - image_path: text (nullable)
+  - posted_at: timestamptz NOT NULL default now()
+  - likes: integer NOT NULL default 0
+  - shares: integer NOT NULL default 0
+  - comments: integer NOT NULL default 0
+  - saves: integer NOT NULL default 0
+  - bookmarks: integer NOT NULL default 0
+  - impressions: integer NOT NULL default 0
+  - reach: integer NOT NULL default 0
+  - engagement_rate: real (nullable)
+  - save_rate: real (nullable) — saves/impressions
+  - share_rate: real (nullable) — shares/impressions
+  - reply_depth: integer NOT NULL default 0 — max depth of reply chains
+  - click_through_rate: real (nullable)
+  - content_type: text (nullable)
+  - content_pillar: text (nullable)
+  - primary_signal_target: text (nullable)
+  - signal_success: boolean (nullable) — did it achieve the target signal?
+  - best_performing: boolean NOT NULL default false
+  - last_metrics_update: timestamptz (nullable)
+  - INDEX on (brand_id, platform, posted_at)
+  - INDEX on post_id
+
+TABLE 6: events
+  - (same as original spec, add brand_id reference)
+
+TABLE 7: analytics
+  - (same as original spec, add brand_id reference)
+
+TABLE 8: campaigns
+  - (same as original spec, add brand_id reference)
+
+TABLE 9: ad_copies
+  - (same as original spec, add brand_id reference)
+
+TABLE 10: competitors
+  - (same as original spec, add brand_id reference)
+
+TABLE 11: content_calendars
+  - (same as original spec, add brand_id reference)
+
+TABLE 12: images
+  - (same as original spec, add brand_id reference)
+
+TABLE 13: ai_insights
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - type: insightTypeEnum NOT NULL
+  - platform: platformEnum (nullable) — null = cross-platform
+  - insight: text NOT NULL — human-readable insight
+  - data: jsonb NOT NULL — supporting data
+  - confidence: real NOT NULL default 0.5 — 0 to 1
+  - applied: boolean NOT NULL default false
+  - impact_score: real (nullable) — measured impact after applying
+  - auto_applied: boolean NOT NULL default false
+    — true if the system automatically acted on this insight
+  - strategy_change: text (nullable) — what the system changed as a result
+  - created_at: timestamptz NOT NULL default now()
+  - expires_at: timestamptz (nullable)
+  - INDEX on (brand_id, type, platform)
+
+TABLE 14: trend_cache
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE (nullable)
+  - platform: platformEnum NOT NULL
+  - trends: jsonb NOT NULL
+  - hashtags: jsonb NOT NULL default []
+  - viral_formats: jsonb (nullable)
+  - competitor_signals: jsonb (nullable)
+  - audience_patterns: jsonb (nullable)
+  - content_recommendations: jsonb (nullable)
+  - algorithm_signals: jsonb (nullable)
+    — {currentWeights: {saves, shares, replies, bookmarks, dwellTime},
+       formatBoosts: [{format, multiplier}],
+       detectedChanges: [{signal, oldWeight, newWeight, detectedAt}]}
+  - research_confidence: real NOT NULL default 0.5
+  - fetched_at: timestamptz NOT NULL default now()
+  - expires_at: timestamptz NOT NULL
+  - INDEX on (platform, brand_id, fetched_at)
+
+TABLE 15: agent_logs
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE (nullable)
+  - agent: agentEnum NOT NULL
+  - action: text NOT NULL
+  - input: jsonb (nullable)
+  - output: jsonb (nullable)
+  - tokens_used: integer (nullable)
+  - duration_ms: integer (nullable)
+  - success: boolean NOT NULL default true
+  - error: text (nullable)
+  - created_at: timestamptz NOT NULL default now()
+  - INDEX on (agent, created_at)
+  - INDEX on (brand_id, agent)
+
+TABLE 16: usage_meters
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - period_start: timestamptz NOT NULL
+  - period_end: timestamptz NOT NULL
+  - posts_used: integer NOT NULL default 0
+  - posts_limit: integer NOT NULL
+  - insights_used: integer NOT NULL default 0
+  - insights_limit: integer NOT NULL
+  - overage_posts: integer NOT NULL default 0
+  - overage_insights: integer NOT NULL default 0
+  - plan_tier: text NOT NULL — "starter" | "growth" | "scale" | "managed"
+  - created_at: timestamptz NOT NULL default now()
+  - UNIQUE on (brand_id, period_start)
+
+TABLE 17: review_queue (NEW — the heart of the Review Deck)
+  - id: serial PK
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - draft_id: integer REFERENCES drafts(id) ON DELETE CASCADE
+  - platform: platformEnum NOT NULL
+  - review_status: reviewStatusEnum NOT NULL default "pending_review"
+  - preview_data: jsonb NOT NULL
+    — Pre-rendered platform-specific preview data:
+    — Twitter: {avatar, name, handle, text, image, timestamp, replyCount, retweetCount, likeCount}
+    — LinkedIn: {avatar, name, headline, text, image, reactions, commentCount}
+    — Instagram: {avatar, handle, image, caption, likeCount, commentPreview}
+    — Facebook: {avatar, name, text, image, reactions, shareCount, commentCount}
+  - ai_reasoning: text NOT NULL — why this post was created
+  - ai_score: real NOT NULL default 0
+  - score_breakdown: jsonb (nullable)
+  - target_signal: text NOT NULL — "saves" | "replies" | "shares" | etc.
+  - suggested_time: timestamptz NOT NULL — AI-recommended posting time
+  - research_summary: text (nullable) — brief summary of research backing
+  - review_order: integer NOT NULL default 0 — position in the review deck
+  - reviewed_at: timestamptz (nullable)
+  - review_duration_ms: integer (nullable) — how long user spent on this card
+  - approved_version: integer NOT NULL default 1 — tracks edit iterations
+  - auto_replace_on_reject: boolean NOT NULL default false
+  - created_at: timestamptz NOT NULL default now()
+  - INDEX on (brand_id, review_status)
+  - INDEX on review_order
+
+TABLE 18: review_conversations (NEW — Manager Bot edit discussions)
+  - id: serial PK
+  - review_queue_id: integer REFERENCES review_queue(id) ON DELETE CASCADE
+  - draft_id: integer REFERENCES drafts(id) ON DELETE CASCADE
+  - brand_id: integer REFERENCES brand_profiles(id) ON DELETE CASCADE
+  - messages: jsonb NOT NULL default []
+    — [{
+        role: "user" | "manager_bot",
+        content: text,
+        timestamp: ISO string,
+        attachments: [{type: "image" | "preview", url}] (nullable)
+      }]
+  - edit_requests: jsonb default []
+    — [{
+        request: text (what user asked to change),
+        changes_made: text (what the bot changed),
+        old_version: text (previous post text),
+        new_version: text (updated post text),
+        old_image: text (nullable),
+        new_image: text (nullable),
+        timestamp: ISO string
+      }]
+  - total_edits: integer NOT NULL default 0
+  - user_preferences_learned: jsonb default []
+    — ["prefers casual tone", "doesn't like emojis", "always wants stats"]
+    — Fed back into brand_profiles.tone for future generations
+  - resolved: boolean NOT NULL default false
+  - resolved_action: text (nullable) — "approved" | "rejected"
+  - created_at: timestamptz NOT NULL default now()
+  - updated_at: timestamptz NOT NULL default now()
+  - INDEX on (brand_id, resolved)
+
+================================================================================
+ENV VARS (.env.local)
+================================================================================
+
+DATABASE_URL=postgresql://user:pass@ep-xxx.region.aws.neon.tech/neondb?sslmode=require
+ADMIN_PASSWORD=
+TWITTER_API_KEY=
+TWITTER_API_SECRET=
+TWITTER_ACCESS_TOKEN=
+TWITTER_ACCESS_SECRET=
+TWITTER_BEARER_TOKEN=
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_ADMIN_ID=
+TELEGRAM_WEBHOOK_URL=
+GEMINI_API_KEY=
+DEFAULT_AUTOMATION_MODE=full_autopilot
+DEFAULT_POSTS_PER_DAY=3
+RESEARCH_REFRESH_MINUTES=30
+LEARNING_CYCLE_HOUR_UTC=2
+REPORT_DAY=monday
+REPORT_HOUR_UTC=2
+
+================================================================================
+SIDEBAR NAVIGATION
+================================================================================
+
+  - "Axon" with Zap icon, "Social AI" subtitle
+  - Navigation:
+    * Command Center (LayoutDashboard) — /
+    * Review Deck (CheckSquare) — /review — PRIMARY: swipe review interface
+    * Brand Setup (Globe) — /brand — onboarding + brand profile
+    * Content Studio (PenTool) — /content
+    * Image Studio (Image) — /images
+    * Post Queue (Clock) — /queue
+    * Scheduling Calendar (CalendarRange) — /calendar
+    * Analytics (BarChart3) — /analytics
+    * AI Insights (Brain) — /insights
+    * Trend Research (TrendingUp) — /trends
+    * Events (CalendarDays) — /events
+    * Marketing Hub (Megaphone) — /marketing
+      ├── Campaigns (Target) — /marketing/campaigns
+      ├── Ad Copy (Copy) — /marketing/ad-copy
+      ├── Competitors (Users) — /marketing/competitors
+      └── Content Planner (CalendarClock) — /marketing/planner
+    * Agent Logs (Terminal) — /logs
+    * Settings (Settings) — /settings
+  - Review Deck badge: shows count of pending reviews (red dot with number)
+  - Automation mode indicator (green=auto-generate, yellow=semi, blue=on-demand)
+  - Platform status dots (green/gray)
+  - Usage meter: posts used / limit, insights used / limit
+
+================================================================================
+PART 1 OF 5 — FOUNDATION: PROJECT, DATABASE, AUTH, BRAND EXTRACTION, AGENTS
+================================================================================
+
+PROMPT:
+
+I am building "Axon Social AI" — a fully automated, research-first AI social
+media platform. The user provides their website URL or product description
+ONCE, and the system autonomously handles everything: brand extraction,
+platform research, content generation, scheduling, posting, performance
+tracking, and self-learning improvement.
+
+The system uses a multi-agent architecture: a Manager Bot coordinates 4
+Platform Research Agents (Twitter/X, Instagram, Facebook, LinkedIn). Each
+agent has two modes: RESEARCH (runs first, always) and GENERATION (runs
+second, informed by research). Content is NEVER generated without fresh
+research backing it.
+
+Build everything inside a `web/` subdirectory. Do NOT touch any existing
+files in the parent directory.
+
+---
+
+1. INITIALIZE THE PROJECT:
+   - Create a Next.js 15 project inside `web/` with App Router, TypeScript,
+     Tailwind CSS, `src/` directory DISABLED
+   - Install dependencies:
+     npm: @neondatabase/serverless drizzle-orm twitter-api-v2 grammy
+          node-cron recharts @google/generative-ai lucide-react date-fns
+          sonner @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities uuid
+     npm (dev): drizzle-kit @types/node-cron @types/uuid
+   - Set up shadcn/ui with "neutral" theme, CSS variables enabled
+   - Add shadcn components: button, card, input, textarea, badge, dialog,
+     dropdown-menu, tabs, table, toast, separator, avatar, select, label,
+     switch, calendar, popover, sheet, scroll-area, skeleton, tooltip,
+     progress, alert, command, context-menu, collapsible
+
+2. NEON DATABASE CONNECTION (`lib/db.ts`):
+   - @neondatabase/serverless with neon() HTTP driver
+   - drizzle(neon(DATABASE_URL))
+   - Export db instance
+
+3. DRIZZLE SCHEMA (`lib/schema.ts`):
+   Implement ALL 18 tables as specified in the DATABASE SCHEMA section above.
+   Include all enums, indexes, foreign keys, and default values exactly as
+   described. Pay special attention to:
+   - brand_profiles table (the core of automation)
+   - platform_strategies table (per-platform strategy)
+   - review_queue table (the heart of the Review Deck)
+   - review_conversations table (Manager Bot edit discussions)
+   - Enhanced drafts table with score_breakdown, research_backing,
+     primary_signal_target, content_pillar
+   - Enhanced posted table with saves, bookmarks, save_rate, share_rate,
+     reply_depth, signal_success
+   - Enhanced ai_insights with auto_applied, strategy_change
+   - Enhanced trend_cache with competitor_signals, audience_patterns,
+     content_recommendations, algorithm_signals
+   - usage_meters table
+   Export ALL tables, enums, and relations.
+
+4. DRIZZLE CONFIG + SCRIPTS (same as before)
+
+5. MULTI-AGENT CORE (`lib/agents/`):
+
+   a) `lib/agents/types.ts`:
+      Define all interfaces:
+      - BrandProfile (matching brand_profiles table)
+      - PlatformStrategy (matching platform_strategies table)
+      - ResearchTask, ResearchResult
+      - ContentGenerationTask (REQUIRES ResearchResult)
+      - AgentTask, AgentResult
+      - PlatformConfig (with research TTL, signal weights)
+      - ReviewCard (matching review_queue table — the swipe card data)
+      - ReviewConversation (matching review_conversations table)
+      - EditRequest (user feedback + Manager Bot response)
+      - EngagementCoachingSuggestion
+      - AlgorithmChangeAlert
+      - WeeklyReport
+
+   b) `lib/agents/platform-configs.ts`:
+      Export detailed configs for each platform including ALL algorithm
+      intelligence listed in the PLATFORM AGENT SPECIFICATIONS section.
+      Include:
+      - charLimit, hashtagLimit, emojiLimit
+      - bestPractices (platform-specific, informed by research data)
+      - contentStyles
+      - audienceType
+      - peakHours (IST)
+      - imageSpecs
+      - algorithmWeights: {
+          replies, bookmarks, saves, shares, dwellTime, likes
+        } (different per platform)
+      - signalHierarchy: ranked list of most valuable engagement signals
+      - formatMultipliers: {poll, carousel, text, video, image, reel, thread}
+      - researchTTL: minutes before research expires
+      - avoidPatterns: things the algorithm penalizes (external links, etc.)
+      - indianMarket: {
+          peakHours, languageStrategy, festivalCalendar, whatsappIntegration
+        }
+
+   c) `lib/agents/manager.ts` — The Autonomous Coordinator:
+      Class ManagerBot with ALL methods listed in the architecture section.
+      The key automation method:
+
+      `autoRunFullCycle(brandProfile)`:
+      1. Check if research is fresh (within TTL per platform)
+      2. If stale: dispatch parallel research to all active platform agents
+      3. Synthesize cross-platform findings
+      4. Update platform_strategies table with new strategy
+      5. Generate content for all platforms (POSTS_PER_DAY per platform)
+      6. Score and rank all generated content
+      7. Generate pixel-perfect platform preview for each post
+      8. Create review_queue entries with preview_data for each post
+      9. Send to Review Deck → notify user via Telegram with review link
+      10. Log everything to agent_logs
+      11. Meter usage in usage_meters
+      ** Posts NEVER go to scheduler until user approves in Review Deck **
+
+      `extractBrand(input: string)`:
+      1. If URL: fetch website content via Gemini with web context
+      2. Parse: name, industry, value proposition, products, tone, audiences,
+         keywords, USPs, social links, location
+      3. AI-identify: content themes, content pillars, language preference
+      4. Auto-populate: festival calendar based on location + industry
+      5. Create brand_profiles record
+      6. Create platform_strategies records for each active platform
+      7. Trigger first research cycle
+      8. Return complete brand profile
+
+   d) Platform bot files (twitter-bot.ts, instagram-bot.ts, facebook-bot.ts,
+      linkedin-bot.ts):
+      Each extends abstract PlatformBot class that enforces:
+      - researchTrends() must run before generatePost()
+      - generatePost() REQUIRES ResearchResult parameter
+      - All methods log to agent_logs
+      - All generation respects brand_profiles context
+      - All content optimizes for the platform's specific algorithm signals
+      Implement ALL research methods and generation methods as specified
+      in the PLATFORM AGENT SPECIFICATIONS section above.
+
+6. BRAND EXTRACTION ENGINE (`lib/brand-extraction.ts`):
+   - `extractFromURL(url)`: fetch website → parse with Gemini → return BrandProfile
+   - `extractFromText(description)`: parse text → return BrandProfile
+   - `extractFromSocial(profileUrl)`: fetch social profile → analyze → return BrandProfile
+   - Each method uses Gemini to intelligently extract structured data
+   - Auto-identifies industry, tone, target audiences, and content themes
+
+7. ADMIN AUTH (same as original spec):
+   Cookie-based, HTTP-only, middleware protection
+
+8. ROOT LAYOUT:
+   Dark theme (zinc-950), Puter.js script, sonner Toaster, Inter font
+
+9. SIDEBAR (`components/sidebar.tsx`):
+   As specified in SIDEBAR NAVIGATION section above.
+   Include automation mode indicator and usage meter.
+
+10. BRAND SETUP PAGE (`app/brand/page.tsx`):
+    This is the onboarding page. Three input methods:
+    a) URL Input: paste website URL → "Extract Brand" button
+       Shows loading animation while Manager Bot extracts brand info.
+       Displays extracted profile for review/edit.
+    b) Text Input: describe your product/startup in a textarea
+       "Build Profile" button → same extraction flow
+    c) Social Link: paste Twitter/LinkedIn/Instagram profile URL
+       "Analyze Profile" button → extracts from existing social presence
+
+    After extraction, shows:
+    - Brand Profile Card (name, industry, description, value prop)
+    - Products/Services list (editable)
+    - Target Audiences (editable personas)
+    - Detected Tone (with examples)
+    - Content Themes (AI-suggested)
+    - Content Pillars with percentage allocation
+    - Platform selection (which platforms to automate)
+    - Automation Mode selector (Full Auto-Generate / Semi-Auto / On-Demand)
+    - Posts per day per platform slider (1-5)
+    - Language preference selector
+    - "Start Automation" button → triggers first full cycle
+      (research → strategy → content → images → REVIEW DECK)
+      Posts appear in Review Deck, NOT auto-published.
+
+11. REVIEW DECK PAGE (`app/review/page.tsx`) — THE PRIMARY USER INTERFACE:
+    This is the most important page in the entire application.
+    Client component. Full-screen on mobile, card carousel on desktop.
+
+    a) REVIEW DECK API (`app/api/review/route.ts`):
+       - GET: fetch pending review items for brand, sorted by review_order
+       - PATCH: update review status (approve/reject), record review_duration_ms
+       - POST action=discuss: create/update review_conversation, send user
+         message to Manager Bot, get AI response, return updated conversation
+
+    b) REVIEW DECK API — Edit (`app/api/review/edit/route.ts`):
+       - POST: send edit request to Manager Bot
+         * Manager Bot parses user feedback
+         * Routes to appropriate platform agent for regeneration
+         * Generates new version of the post
+         * Updates draft, creates new preview_data
+         * Increments approved_version
+         * Returns updated review card with old vs new comparison
+
+    c) MOBILE LAYOUT (`components/review/review-deck-mobile.tsx`):
+       - Full-screen card stack using gesture detection (touch events)
+       - Swipe detection: track touchstart → touchmove → touchend
+         * Horizontal displacement > 100px + velocity > 0.3 = swipe
+         * Right swipe = approve (card animates right with green overlay)
+         * Left swipe = reject (card animates left with red overlay)
+         * Vertical displacement > 100px upward = edit/discuss
+       - Each card (`components/review/review-card.tsx`):
+         * Platform badge (top-left, colored: Twitter=sky, LinkedIn=indigo,
+           Instagram=pink, Facebook=blue)
+         * PIXEL-PERFECT PLATFORM PREVIEW MOCK:
+           Twitter mock: rounded card, avatar, display name, @handle,
+             tweet text, image (if any), timestamp, reply/RT/like/bookmark
+             icons with zero counts (preview)
+           LinkedIn mock: profile section (avatar, name, headline),
+             post text with line breaks, image, reaction bar, comment count
+           Instagram mock: profile header (avatar, handle, ···),
+             image (square, full-width), action bar (heart, comment, send,
+             bookmark icons), "Liked by..." text, caption with handle
+           Facebook mock: profile (avatar, name, timestamp, globe icon),
+             text, image, reaction bar, comment/share counts
+         * Below preview — collapsible AI Intelligence panel:
+           - "Why this post?" — research-backed reasoning (2-3 sentences)
+           - AI Score badge: 87/100
+           - Score breakdown: Hook 92 | CTA 78 | Platform Fit 95 | Save 85
+           - Target signal: "🎯 Optimized for saves (3x reach on Instagram)"
+           - Scheduled for: "Tuesday 10:00 AM IST"
+           - Research backing: "Based on trending topic [X] with 0.87 relevance"
+       - Swipe indicators: left edge = red glow, right edge = green glow
+         as card is dragged
+       - Progress: "3 of 7" with mini dots at top
+       - Bottom: "Approve All Remaining" button (with confirmation dialog)
+       - Haptic feedback: navigator.vibrate(50) on swipe complete
+       - Undo: toast with "Undo" button for 3 seconds after each action
+
+    d) DESKTOP LAYOUT (`components/review/review-deck-desktop.tsx`):
+       - Horizontal card carousel with navigation arrows
+       - One card visible at a time (centered, large)
+       - Same card content as mobile
+       - Three buttons below card:
+         * ✓ Approve (green, large) — keyboard: → or Enter
+         * ✗ Reject (red) — keyboard: ← or Backspace
+         * ✎ Edit & Discuss (blue) — keyboard: ↑ or E
+       - Keyboard shortcuts shown in subtle tooltip
+       - Side panel (right): review queue list with platform badges,
+         thumbnails, status indicators
+
+    e) EDIT/DISCUSS INTERFACE (`components/review/edit-discussion.tsx`):
+       When user swipes up (mobile) or clicks Edit (desktop):
+       - On mobile: card slides up to 40% of screen, chat opens below
+       - On desktop: card stays left, chat panel opens right (split view)
+       - Post preview remains VISIBLE at all times during discussion
+
+       Chat interface:
+       - Manager Bot opens: "This is a [platform] post targeting [audience].
+         I optimized it for [signal]. What would you like to change?"
+       - Text input at bottom + send button
+       - Voice input button (uses browser Speech-to-Text API for hands-free)
+       - Messages render as chat bubbles (user = right, bot = left)
+       - When bot regenerates content, it shows:
+         * "Updating post..." loading indicator
+         * New preview replaces old one (with subtle animation)
+         * "Changes made: [summary]" message
+         * "Old version" toggle to compare
+       - Action buttons after each bot response:
+         * "Approve This Version" (green) → approve + close
+         * "Keep Editing" → continue conversation
+         * "Show Me Something Completely Different" → full regeneration
+         * "Reject" → discard and close
+
+       Manager Bot capabilities in discussion:
+       - "Make it shorter" → regenerates within platform limits
+       - "More casual/professional/funny/data-driven" → adjusts tone
+       - "Add something about [topic]" → incorporates new context
+       - "Change the image" → regenerates image with new prompt
+       - "Make it a carousel instead" → converts to carousel format
+       - "Create versions for all platforms" → generates cross-platform
+       - "Schedule it for tomorrow morning instead" → adjusts timing
+       - "Why did you choose this approach?" → explains research reasoning
+
+       LEARNING FROM EDITS:
+       After every resolved conversation, the system:
+       1. Extracts user preferences from the conversation
+          (e.g., "prefers casual tone", "wants more data points",
+          "doesn't like emojis on LinkedIn")
+       2. Stores in review_conversations.user_preferences_learned
+       3. Aggregates across all conversations for this brand
+       4. Updates brand_profiles.tone with learned preferences
+       5. Future generations incorporate these preferences automatically
+       6. Over time, fewer edits needed = AI gets better at matching user taste
+
+    f) EMPTY STATE:
+       "No posts pending review. Your AI team is researching and generating
+        content. New posts will appear here when ready. 🧠"
+       - Shows when next batch is expected
+       - "Generate Now" button to trigger immediate cycle
+
+    g) REVIEW STATS (bottom of page, collapsible):
+       - Posts reviewed today: X
+       - Approval rate this week: 87%
+       - Average review time: 4.2 seconds per post
+       - Most common edit: "Tone adjustment" (helps AI learn)
+
+12. COMMAND CENTER (`app/page.tsx`):
+    Server component. Shows:
+    a) REVIEW DECK CTA (prominent): "5 posts ready for review" with link
+       This is the first thing the user sees — drives them to review
+    b) Automation Status: green "Auto-Generating" / yellow "Awaiting Reviews"
+    c) Brand Profile Summary Card
+    d) Platform cards with latest research freshness, scheduled posts, engagement
+    e) Usage Meter: visual progress bars for posts + insights used/limit
+    f) AI Insights Preview: top 3 latest insights
+    g) Trend Alerts: high-relevance trends with "Generate Content" button
+    h) Recent Activity Feed: last 10 agent actions
+    i) Quick Stats: posts today, avg engagement this week, insights generated
+    j) Next Scheduled Post: countdown timer
+    k) Weekly Report Preview: link to latest report
+
+13. PUTER.JS HOOK (`hooks/use-puter-ai.ts`):
+    Same as before but with added function:
+    - generateImage(prompt, platform) — platform determines dimensions
+    Models: Gemini Flash, GPT-4.1 Nano, Claude Sonnet, Llama Scout, DeepSeek, Grok
+
+14. Run db:push, verify login + brand setup + review deck + dashboard
+
+================================================================================
+PART 2 OF 5 — RESEARCH ENGINE, TREND INTELLIGENCE, IMAGE STUDIO, AGENT WIRING
+================================================================================
+
+PROMPT:
+
+Continue building Axon Social AI in `web/`. Part 1 is complete — we have
+project setup, 18 tables in Neon Postgres (including review_queue and
+review_conversations), multi-agent core with research-first architecture,
+brand extraction engine, brand setup page, Review Deck with swipe/button
+interface, and dashboard.
+
+The system NEVER auto-posts. All content goes through the Review Deck
+where users swipe to approve/reject/discuss with the Manager Bot.
+
+Now build the Research Engine, Trend Intelligence, Image Studio, and wire
+up all platform agents:
+
+1. GEMINI SERVER CLIENT (`lib/gemini.ts`):
+   - @google/generative-ai with gemini-2.5-flash
+   - Functions: generate(), generateWithVision(), generateJSON()
+   - All calls logged to agent_logs with brand_id, duration, tokens
+   - Used for: brand extraction, server-side research, content generation
+     when called from scheduler/Telegram
+
+2. BRAND EXTRACTION IMPLEMENTATION:
+   Actually wire up the brand extraction engine:
+   a) `extractFromURL(url)`:
+      - Use Gemini to fetch and analyze website content
+      - Structured extraction prompt that returns JSON matching BrandProfile
+      - Auto-detect industry from website copy
+      - Extract products/services with descriptions
+      - Identify tone from language patterns
+      - Extract key claims and statistics
+      - Find social media links
+      - Detect target audience from messaging
+   b) `extractFromText(description)`:
+      - Same structured extraction from plain text
+   c) `extractFromSocial(profileUrl)`:
+      - If Twitter handle: use Twitter API to fetch profile + recent tweets
+      - Analyze content patterns, engagement, topics, tone
+      - Build brand profile from social presence
+
+3. RESEARCH SYSTEM IMPLEMENTATION:
+   Wire up ALL research methods for all 4 platform agents.
+
+   Each platform agent's research cycle:
+   a) Check trend_cache for fresh data (within platform-specific TTL)
+   b) If fresh: return cached data with confidence decay
+   c) If stale: run full research using Gemini with platform-specific prompts
+
+   TWITTER RESEARCH PROMPT (example of depth required):
+   "You are an expert Twitter/X strategist with deep knowledge of the X
+   algorithm. The algorithm weighs reply-to-reply at +75 (150x likes),
+   bookmarks at 10x likes, and penalizes external links by 30-90%.
+
+   Research current Twitter/X trends for a {industry} business called
+   {brandName} that {valueProposition}.
+
+   Return JSON:
+   {
+     trends: [{name, velocity, peakIn, relevanceScore, suggestedAngle}],
+     hashtags: [{tag, volume, competition, rising, clusterTags[]}],
+     formats: [{type, currentEngagementMultiplier, algorithmBoost}],
+     competitorGaps: [{gap, opportunity, urgency}],
+     audiencePatterns: [{behavior, timing, engagementType}],
+     contentRecommendations: [{
+       angle, format, hashtagStrategy, targetSignal,
+       reasoning, predictedEngagement
+     }],
+     algorithmSignals: {
+       currentWeights: {replies, bookmarks, retweets, likes, dwellTime},
+       formatBoosts: [{format, multiplier}],
+       detectedTrends: [string]
+     }
+   }"
+
+   Similar depth for Instagram, Facebook, LinkedIn — each with their
+   platform-specific algorithm intelligence baked into the prompt.
+
+   d) Save to trend_cache with platform-specific TTL:
+      - Twitter: 30 minutes (real-time platform)
+      - Instagram: 2 hours (visual trends change slowly)
+      - Facebook: 2 hours (community trends)
+      - LinkedIn: 4 hours (professional trends change slowly)
+
+   e) Trend Alert System:
+      - If any trend has relevanceScore > 0.8, create alert
+      - Auto-generate content and send to Review Deck (never auto-post)
+      - Notify admin via Telegram: "Trending: [topic]. Content generated
+        and waiting in your Review Deck."
+
+4. TREND RESEARCH PAGE (`app/trends/page.tsx`):
+   - 4-column layout on desktop, tabs on mobile
+   - Each platform column shows full research output:
+     * Scored trends with velocity indicators
+     * Hashtag clusters with volume/competition
+     * Format recommendations with multipliers
+     * Competitor gaps with opportunity scores
+     * "Trending Everywhere" section for cross-platform trends
+   - "Refresh Research" button per platform
+   - "Auto-Generate Content" toggle (when on, trends auto-become posts)
+
+5. IMAGE STUDIO (`app/images/page.tsx`):
+   Same as original spec but enhanced:
+   - AI image generation informed by Instagram agent's visual trend research
+   - Platform-specific dimensions auto-selected
+   - Industry-specific style suggestions from brand profile
+   - "Auto-generate for next week" — generates images for all scheduled posts
+
+6. AGENT WIRING — Connect all platform agents to real AI:
+   Implement EVERY method listed in the PLATFORM AGENT SPECIFICATIONS section.
+   Each generatePost() method:
+   - Takes research result as REQUIRED parameter
+   - Uses brand profile for context
+   - Includes platform algorithm intelligence in system prompt
+   - Returns structured JSON with the exact format specified
+   - Logs to agent_logs
+   - Meters usage
+
+7. AGENT LOGS PAGE (`app/logs/page.tsx`):
+   Same as before + brand_id filter + research cycle visualization
+
+================================================================================
+PART 3 OF 5 — CONTENT STUDIO, POST QUEUE, CALENDAR, AI SCHEDULING
+================================================================================
+
+PROMPT:
+
+Continue building Axon Social AI in `web/`. Parts 1-2 complete.
+Fully automated system. Research-first. Brand auto-extracted.
+
+Now build Content Studio, Post Queue, Scheduling Calendar, AI Scheduling:
+
+1. CONTENT STUDIO (`app/content/page.tsx`):
+   This is for MANUAL content creation (all modes). Auto-generated content
+   goes directly to the Review Deck — Content Studio is for when the user
+   wants to write/create something themselves.
+
+   a) Platform selector, post text editor with dynamic char limits
+   b) Image section (upload/generate from Puter.js/select from library)
+   c) AI generation with model + industry + content type selectors
+   d) Five AI action buttons: Generate, Analyze Image, Generate from Trend,
+      Repurpose, Improve
+   e) Research Intelligence Panel showing latest research for selected platform
+   f) Live post preview per platform (same preview component used in Review Deck)
+   g) AI score with breakdown (hook, CTA, platform fit, saveability,
+      shareability, reply potential, dwell time estimate)
+   h) Hashtag section with auto-generate
+   i) Action buttons:
+      - "Send to Review Deck" — creates review_queue entry, appears in swipe UI
+      - "Schedule Directly" — skips review (for power users in on-demand mode)
+      - "Create for All Platforms" — Manager Bot generates 4 versions,
+        ALL go to Review Deck as separate cards
+      - "Save as Draft" — saves without scheduling or review
+
+2. POST QUEUE (`app/queue/page.tsx`):
+   Same as original spec + automation status indicators:
+   - "Auto-generated" badge on posts created by autopilot
+   - "Research-backed" badge with hover showing research summary
+   - "Target: saves" / "Target: replies" badges showing algorithm focus
+   - Auto-fill queue runs daily at 6 AM UTC
+
+3. SCHEDULING CALENDAR (`app/calendar/page.tsx`):
+   Same as original spec (week/month views, drag-drop, golden slots) +
+   - Research freshness indicators per platform
+   - Algorithm signal targets shown on each post card
+   - "AI Fill Week" uses full research → generation pipeline
+   - "Auto-scheduled" badge on autopilot posts
+
+4. AI SCHEDULING ENGINE (`lib/scheduling.ts`):
+   Same optimization logic + new intelligence:
+   - Queries algorithm_signals from trend_cache for timing boosts
+   - If research shows format X is getting algorithm boost,
+     prioritize that format for peak hours
+   - If trend is peaking (velocity > threshold), schedule immediately
+   - Consider platform-specific timing from research data
+
+5. ENGAGEMENT COACH (`lib/engagement-coach.ts`) — NEW:
+   The system that maximizes post-publication engagement:
+
+   a) `generateReplyCoaching(postId, incomingEngagement)`:
+      - When a Twitter post gets replies, generate suggested responses
+        (reply-to-reply = 75x weight)
+      - When a LinkedIn post gets comments within golden hour,
+        generate suggested author responses (64% more engagement if <30 min)
+      - Send coaching via Telegram
+
+   b) `trackGoldenHour(postId, platform)`:
+      - Monitor engagement velocity for first 60-90 minutes after posting
+      - Compare against expected velocity from research
+      - Alert if underperforming: "Post is tracking 30% below expected.
+        Consider engaging with 3 targeted comments to boost distribution."
+
+6. PLATFORM APIs:
+   a) Twitter: POST tweet, GET profile, GET trends, GET metrics
+   b) LinkedIn/Instagram/Facebook: placeholder implementations returning
+      mock data with TODO comments
+
+7. PLATFORM ABSTRACTION (`lib/platforms.ts`):
+   PlatformClient interface + TwitterClient implementation + placeholders
+
+================================================================================
+PART 4 OF 5 — ANALYTICS, SELF-LEARNING AI, INSIGHTS, ALGORITHM DETECTION
+================================================================================
+
+PROMPT:
+
+Continue building Axon Social AI in `web/`. Parts 1-3 complete.
+Fully automated. Research-first. Content Studio + Queue + Calendar done.
+
+Now build Analytics, Self-Learning AI, AI Insights, Algorithm Detection,
+Events, and Settings:
+
+1. ANALYTICS (`app/analytics/page.tsx`):
+   Same charts as original spec (growth, engagement, heatmap, radar, etc.) +
+
+   NEW: Signal Performance Dashboard:
+   - Per-platform breakdown of which signals (saves, shares, replies,
+     bookmarks, dwell time) the AI is successfully targeting
+   - Before/After comparison since AI started managing the account
+   - Format multiplier tracking: are the AI's format choices working?
+
+   NEW: Research Accuracy Tracking:
+   - Did the research predictions match actual performance?
+   - Confidence calibration: are high-confidence predictions more accurate?
+   - Research ROI: how much better do research-informed posts perform?
+
+   NEW: Algorithm Change Timeline:
+   - Visual timeline showing detected algorithm changes
+   - Impact on engagement before/after each change
+   - How the AI adapted (strategy changes made)
+
+2. SELF-LEARNING AI (`lib/learning.ts`):
+   Same analysis methods + AUTONOMOUS STRATEGY ADJUSTMENT:
+
+   `runFullLearningCycle(brandId)`:
+   a) Query last 30 days of posted content with all metrics
+   b) Analyze timing patterns → generate timing insights
+   c) Analyze content patterns → generate content insights
+   d) Analyze format performance → generate format insights
+   e) Analyze signal targeting → are we hitting the right signals?
+   f) Compare research predictions vs actual outcomes → calibrate confidence
+   g) AUTOMATICALLY UPDATE platform_strategies:
+      - If data shows morning posts outperform evening by >20%,
+        shift scheduling window
+      - If carousels consistently outperform text, increase carousel ratio
+      - If save-targeting CTAs aren't driving saves, try different CTA styles
+   h) Log every strategy change to ai_insights with auto_applied=true
+   i) Feed insights back into agent system prompts for next cycle
+
+3. AI INSIGHTS PAGE (`app/insights/page.tsx`):
+   Same as original spec + "Auto-Applied" filter showing insights the system
+   acted on automatically, with before/after impact data.
+
+4. ALGORITHM CHANGE DETECTION (`lib/algorithm-detection.ts`) — NEW:
+   `detectAlgorithmChanges(brandId, platform)`:
+   - Query rolling 14-day engagement metrics per format
+   - Calculate z-scores for each format × signal combination
+   - If any metric deviates by >2 standard deviations, flag as potential change
+   - Generate alert: "Instagram carousel reach dropped 34% this week while
+     Reels reach increased 28%. Likely algorithm shift favoring Reels."
+   - Auto-adjust platform_strategies if confidence > 0.7:
+     * Shift content mix toward newly-favored formats
+     * Adjust signal targeting
+     * Update format multipliers in platform config
+   - Notify admin via Telegram
+   - Log to ai_insights with type "algorithm_change"
+
+5. PROVABLE ROI DASHBOARD (`components/roi-dashboard.tsx`) — NEW:
+   The feature that justifies premium pricing.
+   - Period selector: This Week, Last 30 Days, Since Onboarding
+   - Side-by-side comparison:
+     * LEFT: "Before AI" baseline (first week's performance)
+     * RIGHT: "Current" performance
+   - Metrics: engagement rate, reach, saves, shares, comments, impressions
+   - "What the AI Changed" section: list of strategy adjustments with reasons
+   - "Impact of Each Change" section: individual insight → measured impact
+   - Export as PDF for client reporting
+
+6. EVENTS PAGE (`app/events/page.tsx`):
+   Same as original spec + auto-loaded from brand profile's festival calendar.
+   When event is 3 days away, auto-trigger research → content generation.
+
+7. SETTINGS PAGE (`app/settings/page.tsx`):
+   Same as original spec + automation mode toggle, usage meter display,
+   research TTL configuration, self-learning enable/disable.
+
+================================================================================
+PART 5 OF 5 — MARKETING HUB, TELEGRAM BOT, SCHEDULER, FINAL POLISH
+================================================================================
+
+PROMPT:
+
+Continue building Axon Social AI in `web/`. Parts 1-4 complete.
+Fully automated. Research-first. Analytics + Self-Learning + Algorithm
+Detection done.
+
+Final phase: Marketing Hub, Telegram Bot, Background Scheduler, Polish.
+
+1. MARKETING HUB (same structure as original spec):
+   All marketing features are research-informed and brand-aware.
+
+   a) Campaign Planner — now includes research phase:
+      User defines theme → full research cycle → AI generates content plan
+      In autopilot mode: Manager Bot can auto-create campaigns around
+      detected trends or upcoming events
+
+   b) Ad Copy Generator — platform-specific signal optimization:
+      Each variant targets different engagement signals
+
+   c) Competitor Intelligence — platform-specific deep research:
+      Each agent runs competitor monitoring for its platform
+
+   d) Content Planner — auto-generated from platform strategies:
+      The AI can plan weeks ahead based on content pillars + research
+
+2. TELEGRAM BOT (`lib/telegram.ts`):
+   Grammy framework. The PRIMARY interface for managed service clients.
+
+   Commands:
+   /start   — Welcome + quick setup (paste website URL)
+   /brand   — View/edit brand profile
+   /status  — Automation status, next scheduled posts, usage
+   /queue   — Next 10 posts with platform badges and times
+   /approve — Show pending posts for approval (if approval mode)
+   /trends  — Show trends across all platforms
+   /ideas   — Manager Bot generates 5 content ideas
+   /events  — Next 15 events
+   /analytics — Per-platform stats, best post, engagement summary
+   /insights — Top 5 AI insights
+   /report  — Latest weekly report
+   /roi     — Provable ROI summary (before vs after)
+   /research — Force research refresh for all platforms
+   /usage   — Credits used/remaining
+   /mode    — Toggle automation mode
+   /campaign <theme> — Quick campaign creation
+   /post <text> — Manual post creation
+   /cancel  — Clear context
+
+   AUTOMATION NOTIFICATIONS (sent automatically):
+   - "Posted to Twitter: [preview]. Research backing: [summary]"
+   - "Trend alert: #AIAutomation trending on LinkedIn (relevance: 94%).
+     Auto-generating content..."
+   - "Algorithm change detected on Instagram. Shifting to Reels-first.
+     Details: [insight]"
+   - "Weekly report ready. Engagement up 23% this week. [link]"
+   - "Reply coaching: Your LinkedIn post got 8 comments in 15 minutes.
+     Reply now for the 64% engagement boost. Suggested responses: [list]"
+
+   Photo handler: upload image → generate multi-platform captions
+   Webhook: `app/api/telegram/webhook/route.ts`
+
+3. SCHEDULER (`lib/scheduler.ts`):
+   node-cron jobs for full automation:
+
+   a) Process Queue — every 1 minute:
+      Find due APPROVED items → post via platform API → update statuses → notify admin
+      Only posts that passed through Review Deck approval get published.
+      Auto-retry on failure (retry_count < max_retries)
+
+   b) Research Cycle — every 30 minutes:
+      Refresh trend_cache for all platforms for all active brand profiles.
+      Check for high-impact trends. Auto-generate content → send to Review Deck.
+
+   c) Auto-Generate Content — every 6 hours:
+      For each brand in full_auto_generate mode:
+      - Check if enough posts are approved + scheduled for next 24 hours
+      - If not: run full research → generation → send to Review Deck
+      - Notify user: "New posts ready for review. [X] needed for tomorrow."
+
+   d) Review Reminder — every 2 hours:
+      If pending review items exist for >4 hours (configurable):
+      - Send Telegram reminder: "⏰ [X] posts still awaiting your review.
+        Optimal posting times approaching. Tap to review: [link]"
+      - Only remind once per batch (don't spam)
+
+   d) Update Metrics — every 2 hours:
+      Fetch engagement metrics for all recent posts.
+      Calculate save_rate, share_rate, reply_depth.
+      Flag best_performing. Check signal_success.
+
+   e) Daily Snapshot — 00:00 UTC:
+      Per-platform follower snapshots → analytics table
+
+   f) Self-Learning — 02:00 UTC daily:
+      Run full learning cycle for all brand profiles.
+      Generate insights. Auto-apply high-confidence insights.
+      Adjust platform strategies. Measure insight impact.
+
+   g) Algorithm Detection — 03:00 UTC daily:
+      Run algorithm change detection for all platforms.
+      Alert on significant shifts. Auto-adjust strategies.
+
+   h) Weekly Report — Monday 08:00 UTC:
+      Generate AI narrative report for all brand profiles.
+      Send via Telegram. Make available on dashboard.
+
+   i) Event Check — 08:00 UTC daily:
+      Events 3 days away → research → generate content → send to Review Deck
+      Telegram: "🎉 [Event] is in 3 days. Content generated and waiting for review."
+
+   j) Engagement Coaching — every 5 minutes:
+      Check recently posted content for incoming engagement.
+      Generate reply coaching suggestions. Send via Telegram.
+
+   k) Usage Reset — 1st of each month:
+      Create new usage_meters period for all brand profiles.
+
+   Instrumentation: start scheduler + set Telegram webhook
+   Scheduler API: GET status, POST manual trigger
+
+4. FINAL POLISH:
+   a) Loading States: skeletons everywhere, streaming indicators for AI
+   b) Empty States: Axon-branded, with relevant CTAs
+   c) Responsive: sidebar collapses, charts stack, calendar → list on mobile
+   d) Keyboard Shortcuts: Ctrl+N new post, Ctrl+K command palette
+   e) Toasts: success/error/info for all automated actions
+   f) Performance: server components where possible, proper loading.tsx
+   g) Error Handling: try/catch, graceful fallbacks, retry buttons
+
+================================================================================
+VERIFICATION CHECKLIST — FULL REVIEW-FIRST FLOW
+================================================================================
+
+1. Login → Brand Setup → Paste website URL → Brand extracted automatically
+2. Brand profile shown → Confirm → "Start Automation" clicked
+3. Manager Bot triggers research for all 4 platforms (parallel)
+4. Research results populate trend_cache and platform_strategies
+5. Manager Bot generates content for all platforms using research
+6. Content + pixel-perfect previews land in the REVIEW DECK
+7. Telegram notification: "5 posts ready for review. Tap to review: [link]"
+8. User opens Review Deck on phone → sees card stack
+9. User swipes RIGHT on a LinkedIn post → card flies right → "Approved ✅"
+10. User swipes LEFT on a Facebook post → card flies left → "Rejected ❌"
+11. User swipes UP on a Twitter post → Edit interface opens
+12. User types "Make it more punchy" → Manager Bot regenerates →
+    new preview shown → User taps "Approve This Version"
+13. Approved posts move to scheduler queue at AI-optimal times
+14. Rejected post auto-replaced (if setting enabled) → new card in Review Deck
+15. Dashboard shows: "3 approved, 1 rejected, 1 edited" review summary
+16. Posts auto-publish at scheduled times → metrics tracked
+17. Engagement coaching sent via Telegram when replies come in
+18. Self-learning runs daily → analyzes what user approves/rejects/edits →
+    adjusts content generation to match user preferences
+19. Algorithm change detected → strategy auto-adjusted → admin notified
+20. Weekly report: engagement stats + "approval rate improved from 60% to 85%
+    as AI learned your preferences"
+21. Over time: fewer edits needed, higher approval rate, better content
+
+================================================================================
+PRICING TIERS (Usage-Based)
+================================================================================
+
+| Tier     | Posts/mo | Insights/mo | Price (INR) | Price (USD) |
+|----------|----------|-------------|-------------|-------------|
+| Starter  | 30       | 50          | ₹3,000      | $29         |
+| Growth   | 100      | 200         | ₹8,000      | $69         |
+| Scale    | 300      | Unlimited   | ₹18,000     | $149        |
+| Managed  | Unlimited| Unlimited   | ₹25,000+    | $199+       |
+
+Managed = full autopilot + weekly strategy calls + custom reporting
+
+================================================================================
+REVENUE ROADMAP
+================================================================================
+
+Month 1: Build MVP + run Axon's own social media through it
+Month 2: Offer to 3-5 Axon clients as managed add-on (₹15-25K/mo)
+Month 3-4: Scale to 10-15 clients. Self-learning starts producing value.
+Month 5-6: Consider self-serve SaaS. Target international at $69-149/mo.
+Month 7+: Compound growth. Self-learning moat deepens. Algorithm detection
+          becomes a selling point no competitor can match.
+
+================================================================================
+END OF SPECIFICATION
+================================================================================
+
+USAGE:
+1. Create Neon project → copy DATABASE_URL
+2. Feed Part 1 → build → db:push → test brand setup + dashboard
+3. Feed Part 2 → build → test brand extraction + research + image studio
+4. Feed Part 3 → build → test content studio + queue + calendar
+5. Feed Part 4 → build → test analytics + self-learning + ROI dashboard
+6. Feed Part 5 → build → test full automation + Telegram + scheduler
+7. Paste a website URL. Watch the AI take over. Ship it.
