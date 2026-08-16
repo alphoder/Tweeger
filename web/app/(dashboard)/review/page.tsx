@@ -98,6 +98,14 @@ export default function ReviewDeckPage() {
     fetchItems();
   }, [fetchItems]);
 
+  // Live: pick up new team posts without a manual reload
+  useEffect(() => {
+    const t = setInterval(() => {
+      if (!editMode) fetchItems();
+    }, 20000);
+    return () => clearInterval(t);
+  }, [fetchItems, editMode]);
+
   // Reset review timer when card changes
   useEffect(() => {
     setReviewStartTime(Date.now());
@@ -320,15 +328,10 @@ export default function ReviewDeckPage() {
             </div>
             <h3 className="mt-4 text-lg font-semibold text-zinc-300">All caught up!</h3>
             <p className="mt-2 text-sm text-zinc-500 max-w-md">
-              No posts pending review. Content will appear here when AI generates new posts.
+              No posts pending review. Send{" "}
+              <span className="font-mono text-zinc-300">/build</span> to the Telegram bot and the
+              team&apos;s next post will appear here for approval.
             </p>
-            <Button
-              onClick={() => window.location.href = "/content"}
-              className="mt-6 bg-white text-black hover:bg-zinc-200  border-0"
-            >
-              <Sparkles className="h-4 w-4 mr-2" />
-              Generate Content Now
-            </Button>
           </CardContent>
         </Card>
       </div>

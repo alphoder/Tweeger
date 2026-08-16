@@ -4,10 +4,10 @@
 // The shared channel where all six agents post their work with attachments.
 
 import { useEffect, useRef, useState } from "react";
-import { Users, RefreshCw, FileText, Image as ImageIcon, Search, Paperclip } from "lucide-react";
+import { FileText, Image as ImageIcon, Search, Paperclip } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { agentColor } from "@/lib/agents/colors";
-import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/page-shell";
 
 interface FeedMessage {
   id: number;
@@ -46,7 +46,7 @@ export default function TeamRoomPage() {
 
   useEffect(() => {
     load();
-    const t = setInterval(load, 15000); // the room stays live
+    const t = setInterval(load, 6000); // the room stays live
     return () => clearInterval(t);
   }, []);
 
@@ -56,20 +56,12 @@ export default function TeamRoomPage() {
 
   return (
     <div className="flex h-[calc(100dvh-7rem)] flex-col space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-            <Users className="h-6 w-6 text-zinc-200" />
-            Team Room
-          </h1>
-          <p className="mt-1 text-sm text-zinc-500">
-            One channel, six agents — everything they produce lands here
-          </p>
-        </div>
-        <Button variant="outline" size="sm" className="border-zinc-700" onClick={load}>
-          <RefreshCw className="mr-2 h-4 w-4" /> Refresh
-        </Button>
-      </div>
+      <PageHeader title="Team Room" description="One channel, six agents — live">
+        <span className="flex items-center gap-2 rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+          Live
+        </span>
+      </PageHeader>
 
       <Card className="flex-1 overflow-hidden border-zinc-800 bg-zinc-900/40">
         <CardContent className="h-full overflow-y-auto p-4">

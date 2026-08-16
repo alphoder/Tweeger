@@ -27,16 +27,9 @@ import {
   Legend,
 } from "recharts";
 import { ROIDashboard } from "@/components/roi-dashboard";
+import { PageHeader, Stat } from "@/components/page-shell";
 
 // ─── CONSTANTS ───────────────────────────────────────────────────────────────
-
-const PLATFORM_FILTERS = [
-  { key: "all", label: "All Platforms" },
-  { key: "twitter", label: "Twitter" },
-  { key: "linkedin", label: "LinkedIn" },
-  { key: "instagram", label: "Instagram" },
-  { key: "facebook", label: "Facebook" },
-];
 
 const TIME_RANGES = [
   { key: 7, label: "7d" },
@@ -49,7 +42,7 @@ const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 
 export default function AnalyticsPage() {
-  const [platform, setPlatform] = useState("all");
+  const platform = "twitter";
   const [days, setDays] = useState(7);
   const [loading, setLoading] = useState(true);
 
@@ -112,11 +105,11 @@ export default function AnalyticsPage() {
 
   function getHeatmapColor(value: number): string {
     const ratio = value / heatmapMax;
-    if (ratio === 0) return "bg-zinc-800/50";
-    if (ratio < 0.25) return "bg-zinc-700";
-    if (ratio < 0.5) return "bg-zinc-900/60";
-    if (ratio < 0.75) return "bg-zinc-700/60";
-    return "bg-emerald-500/60";
+    if (ratio === 0) return "bg-zinc-800/60";
+    if (ratio < 0.25) return "bg-emerald-500/15";
+    if (ratio < 0.5) return "bg-emerald-500/35";
+    if (ratio < 0.75) return "bg-emerald-500/60";
+    return "bg-emerald-400";
   }
 
   function getHeatmapValue(dow: number, hour: number): { avg: number; count: number } {
@@ -149,34 +142,8 @@ export default function AnalyticsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-          <BarChart3 className="h-6 w-6 text-emerald-400" />
-          Analytics
-        </h1>
-        <p className="text-sm text-zinc-500 mt-1">
-          Performance metrics, engagement heatmaps, and growth trends
-        </p>
-      </div>
-
-      {/* Filter Bar */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
-        <div className="flex gap-2">
-          {PLATFORM_FILTERS.map((p) => (
-            <button
-              key={p.key}
-              onClick={() => setPlatform(p.key)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                platform === p.key
-                  ? "bg-zinc-700 text-zinc-100"
-                  : "bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800"
-              }`}
-            >
-              {p.label}
-            </button>
-          ))}
-        </div>
-        <div className="flex gap-1 bg-zinc-800/50 rounded-lg p-0.5">
+      <PageHeader title="Analytics" description="How the account is actually performing">
+        <div className="flex gap-1 rounded-lg border border-zinc-800/80 bg-zinc-900/40 p-0.5">
           {TIME_RANGES.map((t) => (
             <button
               key={t.key}
@@ -191,34 +158,14 @@ export default function AnalyticsPage() {
             </button>
           ))}
         </div>
-      </div>
+      </PageHeader>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard
-          label="Total Followers"
-          value={totalFollowers.toLocaleString()}
-          icon={Users}
-          color="text-zinc-400"
-        />
-        <StatCard
-          label="Posts This Week"
-          value={String(topPosts.length || 0)}
-          icon={TrendingUp}
-          color="text-emerald-400"
-        />
-        <StatCard
-          label="Avg Engagement"
-          value="—"
-          icon={BarChart3}
-          color="text-zinc-200"
-        />
-        <StatCard
-          label="Total Reach"
-          value="—"
-          icon={Eye}
-          color="text-zinc-200"
-        />
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Stat label="Followers" value={totalFollowers.toLocaleString()} />
+        <Stat label="Posts this week" value={topPosts.length || 0} />
+        <Stat label="Avg engagement" value="—" hint="needs posted data" />
+        <Stat label="Reach" value="—" hint="needs posted data" />
       </div>
 
       {/* Growth Chart */}
@@ -234,8 +181,8 @@ export default function AnalyticsPage() {
               <AreaChart data={growthData as Record<string, unknown>[]}>
                 <defs>
                   <linearGradient id="fillFollowers" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#38bdf8" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
@@ -259,7 +206,7 @@ export default function AnalyticsPage() {
                 <Area
                   type="monotone"
                   dataKey="followers"
-                  stroke="#06b6d4"
+                  stroke="#38bdf8"
                   fill="url(#fillFollowers)"
                   strokeWidth={2}
                 />
@@ -357,11 +304,11 @@ export default function AnalyticsPage() {
               <div className="flex items-center gap-2 mt-3 ml-10">
                 <span className="text-[9px] text-zinc-600">Low</span>
                 <div className="flex gap-0.5">
-                  <div className="w-4 h-3 rounded-sm bg-zinc-800/50" />
-                  <div className="w-4 h-3 rounded-sm bg-zinc-700" />
-                  <div className="w-4 h-3 rounded-sm bg-zinc-900/60" />
-                  <div className="w-4 h-3 rounded-sm bg-zinc-700/60" />
+                  <div className="w-4 h-3 rounded-sm bg-zinc-800/60" />
+                  <div className="w-4 h-3 rounded-sm bg-emerald-500/15" />
+                  <div className="w-4 h-3 rounded-sm bg-emerald-500/35" />
                   <div className="w-4 h-3 rounded-sm bg-emerald-500/60" />
+                  <div className="w-4 h-3 rounded-sm bg-emerald-400" />
                 </div>
                 <span className="text-[9px] text-zinc-600">High</span>
               </div>

@@ -5,13 +5,10 @@ import {
   Terminal,
   CheckCircle2,
   XCircle,
-  Clock,
-  Zap,
-  Activity,
-  Timer,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader, Stat } from "@/components/page-shell";
 
 const AGENT_COLORS: Record<string, string> = {
   manager: "bg-zinc-500/20 text-zinc-400",
@@ -106,42 +103,14 @@ export default async function AgentLogsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-          <Terminal className="h-6 w-6 text-green-400" />
-          Agent Logs
-        </h1>
-        <p className="text-sm text-zinc-500 mt-1">
-          All AI agent activity — track calls, durations, and success rates
-        </p>
-      </div>
+      <PageHeader title="Agent Logs" description="Every AI call — model, duration, outcome" />
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard
-          label="Calls Today"
-          value={stats.totalCalls}
-          icon={Zap}
-          color="text-zinc-400"
-        />
-        <StatCard
-          label="Success Rate"
-          value={`${stats.successRate}%`}
-          icon={Activity}
-          color="text-green-400"
-        />
-        <StatCard
-          label="Avg Duration"
-          value={`${stats.avgDuration}ms`}
-          icon={Timer}
-          color="text-zinc-200"
-        />
-        <StatCard
-          label="Tokens Used"
-          value={stats.totalTokens.toLocaleString()}
-          icon={Clock}
-          color="text-zinc-200"
-        />
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Stat label="Calls today" value={stats.totalCalls} />
+        <Stat label="Success rate" value={`${stats.successRate}%`} />
+        <Stat label="Avg duration" value={`${(stats.avgDuration / 1000).toFixed(1)}s`} />
+        <Stat label="Tokens used" value={stats.totalTokens.toLocaleString()} />
       </div>
 
       {/* Who worked today */}
@@ -249,26 +218,3 @@ export default async function AgentLogsPage() {
   );
 }
 
-function StatCard({
-  label,
-  value,
-  icon: Icon,
-  color,
-}: {
-  label: string;
-  value: number | string;
-  icon: React.ElementType;
-  color: string;
-}) {
-  return (
-    <Card className="border-zinc-800 bg-zinc-900/50">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between">
-          <Icon className={`h-4 w-4 ${color}`} />
-          <span className="text-xl font-bold text-zinc-100">{value}</span>
-        </div>
-        <p className="text-xs text-zinc-500 mt-2">{label}</p>
-      </CardContent>
-    </Card>
-  );
-}

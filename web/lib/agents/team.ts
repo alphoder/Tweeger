@@ -28,7 +28,8 @@ WRITING RULES (critical — the account must never read as AI-written):
 - Specific beats generic: numbers, names, dates, real tools.
 - Sound like a sharp builder sharing an observation, not a brand making an announcement.
 - Hot takes and mild opinions welcome. Perfect polish is suspicious.
-- Never use the word "delve".`;
+- Never use the word "delve".
+- NEVER invent personal anecdotes, clients, projects, or metrics ("I watched three clients...", "my startup grew 40%"). If you don't have a real fact, write an observation or opinion instead. Fabricated stories destroy the account's credibility.`;
 
 // Shared team-chat etiquette: work more, talk less — but stay human.
 const CHAT_STYLE = `\n\nTEAM CHAT STYLE: messages to teammates are short and punchy — 1-3 sentences plus any required deliverable. No preamble, no restating the brief, no sign-offs. React like a colleague, not a report.`;

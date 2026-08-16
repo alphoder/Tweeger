@@ -2,17 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import {
-  ListOrdered,
   Loader2,
-  Filter,
-  Zap,
   CheckCircle2,
   XCircle,
   Clock,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { PageHeader } from "@/components/page-shell";
 import { QueueCard } from "@/components/queue-card";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
@@ -32,14 +28,6 @@ interface QueueItem {
   maxRetries: number;
 }
 
-const PLATFORM_FILTERS = [
-  { key: "all", label: "All", icon: "⚡" },
-  { key: "twitter", label: "Twitter", icon: "𝕏" },
-  { key: "linkedin", label: "LinkedIn", icon: "in" },
-  { key: "instagram", label: "Instagram", icon: "📷" },
-  { key: "facebook", label: "Facebook", icon: "f" },
-];
-
 const TABS = [
   { key: "scheduled", label: "Scheduled", icon: Clock, color: "text-blue-400" },
   { key: "posted", label: "Posted", icon: CheckCircle2, color: "text-green-400" },
@@ -52,7 +40,6 @@ export default function QueuePage() {
   const [items, setItems] = useState<QueueItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("scheduled");
-  const [platformFilter, setPlatformFilter] = useState("all");
   const [total, setTotal] = useState(0);
 
   // ─── FETCH QUEUE ──────────────────────────────────────────────────────────
@@ -62,7 +49,6 @@ export default function QueuePage() {
     try {
       const params = new URLSearchParams();
       params.set("status", tab);
-      if (platformFilter !== "all") params.set("platform", platformFilter);
       params.set("limit", "30");
 
       const res = await fetch(`/api/queue?${params}`);
@@ -76,7 +62,7 @@ export default function QueuePage() {
     } finally {
       setLoading(false);
     }
-  }, [tab, platformFilter]);
+  }, [tab]);
 
   useEffect(() => {
     fetchQueue();
@@ -148,44 +134,10 @@ export default function QueuePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <ListOrdered className="h-6 w-6 text-blue-400" />
-            Post Queue
-          </h1>
-          <p className="text-sm text-zinc-500 mt-1">
-            Manage scheduled, posted, and failed posts
-          </p>
-        </div>
-        <a
-          href="/content"
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 bg-white text-black hover:bg-zinc-200 hover:opacity-90"
-        >
-          <Zap className="h-4 w-4 mr-2" />
-          Create Post
-        </a>
-      </div>
-
-      {/* Platform Filter */}
-      <div className="flex gap-2 flex-wrap">
-        {PLATFORM_FILTERS.map((p) => (
-          <button
-            key={p.key}
-            onClick={() => setPlatformFilter(p.key)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-              platformFilter === p.key
-                ? "bg-zinc-700 text-zinc-100"
-                : "bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800"
-            }`}
-          >
-            <span className="mr-1">{p.icon}</span> {p.label}
-          </button>
-        ))}
-      </div>
+      <PageHeader title="Post Queue" description="Everything scheduled, shipped, or stuck" />
 
       {/* Status Tabs */}
-      <div className="flex gap-1 bg-zinc-800/50 rounded-lg p-1">
+      <div className="flex gap-1 rounded-lg border border-zinc-800/80 bg-zinc-900/40 p-1">
         {TABS.map((t) => {
           const Icon = t.icon;
           return (
@@ -238,7 +190,7 @@ export default function QueuePage() {
               <Clock className="h-12 w-12 mx-auto mb-3 opacity-30" />
               <p className="text-sm font-medium">Queue is empty</p>
               <p className="text-xs mt-1">
-                Create content in the Content Studio to get started.
+                Send /build to the Telegram bot — approved posts land here.
               </p>
             </>
           ) : tab === "posted" ? (
