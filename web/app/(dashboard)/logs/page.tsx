@@ -151,13 +151,17 @@ export default async function AgentLogsPage() {
                 <span className="col-span-2">Time</span>
                 <span className="col-span-1">Agent</span>
                 <span className="col-span-3">Action</span>
+                <span className="col-span-1">API</span>
                 <span className="col-span-1">Status</span>
                 <span className="col-span-1">Duration</span>
                 <span className="col-span-1">Tokens</span>
-                <span className="col-span-3">Details</span>
+                <span className="col-span-2">Details</span>
               </div>
 
-              {logs.map((log) => (
+              {logs.map((log) => {
+                const isGroq = log.action.endsWith(" (groq)");
+                const action = isGroq ? log.action.slice(0, -7) : log.action;
+                return (
                 <div
                   key={log.id}
                   className="grid grid-cols-12 gap-2 rounded-lg bg-zinc-800/30 px-3 py-2.5 items-center hover:bg-zinc-800/50 transition-colors"
@@ -178,7 +182,18 @@ export default async function AgentLogsPage() {
                     </Badge>
                   </span>
                   <span className="col-span-3 text-xs text-zinc-300 truncate">
-                    {log.action}
+                    {action}
+                  </span>
+                  <span className="col-span-1">
+                    <Badge
+                      className={`text-[9px] ${
+                        isGroq
+                          ? "bg-orange-500/15 text-orange-300"
+                          : "bg-sky-500/15 text-sky-300"
+                      }`}
+                    >
+                      {isGroq ? "groq" : "gemini"}
+                    </Badge>
                   </span>
                   <span className="col-span-1">
                     {log.success ? (
@@ -193,7 +208,7 @@ export default async function AgentLogsPage() {
                   <span className="col-span-1 text-xs text-zinc-500">
                     {log.tokensUsed || "—"}
                   </span>
-                  <span className="col-span-3 text-xs text-zinc-600 truncate">
+                  <span className="col-span-2 text-xs text-zinc-600 truncate">
                     {log.error
                       ? `Error: ${log.error}`
                       : log.output
@@ -201,7 +216,7 @@ export default async function AgentLogsPage() {
                         : "—"}
                   </span>
                 </div>
-              ))}
+              );})}
             </div>
           ) : (
             <div className="text-center py-12 text-zinc-600">
