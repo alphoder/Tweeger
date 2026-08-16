@@ -23,7 +23,25 @@ export function getBot(): Bot {
     } catch {
       botInfo = undefined;
     }
-    _bot = new Bot(token, botInfo ? { botInfo } : undefined);
+    _bot = new Bot(token, {
+      ...(botInfo ? { botInfo } : {}),
+      // grammy's Node build injects node-only fetch options (agent,
+      // compress) that Workers reject — strip them and use plain fetch.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      client: {
+        fetch: ((url: RequestInfo | URL, init?: RequestInit & { agent?: unknown; compress?: unknown }) => {
+          if (init) {
+            delete init.agent;
+            delete init.compress;
+            // nodejs_compat AbortSignal isn't workerd's AbortSignal;
+            // grammy's own timeout race still bounds the call.
+            delete init.signal;
+          }
+          return fetch(url, init);
+        }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
+    });
     registerHandlers(_bot);
   }
   return _bot;
@@ -799,15 +817,27 @@ function generateProgressBar(percent: number): string {
   return "█".repeat(filled) + "░".repeat(empty) + ` ${percent.toFixed(0)}%`;
 }
 
-export async function notifyAdmin(message: string) {
-  if (!ADMIN_ID) return;
+export async function notifyAdmin(message: string): Promise<boolean> {
+  // Read at call time — module-scope env can be empty on a cold start
+  const adminId = process.env.TELEGRAM_ADMIN_ID ? parseInt(process.env.TELEGRAM_ADMIN_ID) : ADMIN_ID;
+  if (!adminId) {
+    console.error("[Telegram] TELEGRAM_ADMIN_ID not set — cannot notify");
+    return false;
+  }
 
   try {
     const bot = getBot();
-    await bot.api.sendMessage(ADMIN_ID, message, {
-      parse_mode: "Markdown",
-    });
+    await bot.api.sendMessage(adminId, message, { parse_mode: "Markdown" });
+    return true;
   } catch (err) {
-    console.error("[Telegram] Failed to notify admin:", err);
+    const inner = (err as { error?: unknown })?.error;
+    console.error("[Telegram] Failed to notify admin:", err, "| inner:", inner instanceof Error ? `${inner.name}: ${inner.message}` : JSON.stringify(inner)?.slice(0, 300));
+    // Markdown parse failures are the usual culprit — retry as plain text
+    try {
+      await getBot().api.sendMessage(adminId, message.replace(/[*_`]/g, ""));
+      return true;
+    } catch {
+      return false;
+    }
   }
 }

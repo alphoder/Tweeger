@@ -35,12 +35,12 @@ async function otpHash(code: string): Promise<string> {
   return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-async function issueOtp(): Promise<void> {
+async function issueOtp(): Promise<boolean> {
   const code = String(Math.floor(100000 + Math.random() * 900000));
   const { updateWorkingMemory } = await import("@/lib/agents/team");
   await updateWorkingMemory(OTP_KEY, `${await otpHash(code)}:${Date.now() + OTP_TTL_MS}`);
   const { notifyAdmin } = await import("@/lib/telegram");
-  await notifyAdmin(`🔐 *FineTweet login code:* \`${code}\`\n\nValid for 5 minutes. Ignore if this wasn't you.`);
+  return notifyAdmin(`FineTweet login code: ${code}\n\nValid for 5 minutes. Ignore if this wasn't you.`);
 }
 
 async function consumeOtp(code: string): Promise<boolean> {
@@ -72,7 +72,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     if (body.requestOtp) {
-      await issueOtp();
+      const sent = await issueOtp();
+      if (!sent) {
+        return NextResponse.json(
+          { error: "Could not deliver the code to Telegram — check the worker logs" },
+          { status: 502 }
+        );
+      }
       return NextResponse.json({ sent: true });
     }
 
