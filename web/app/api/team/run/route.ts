@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
           brandId: brand?.id ?? draft.brandId ?? 1,
           draftId: draft.id,
           platform: "twitter",
-          previewData: { text: run.tweet, imagePath, topic: run.topic },
+          previewData: { text: run.tweet, imagePath, topic: run.topic, imagePrompt: run.imagePrompt },
           aiReasoning: `Topic: ${run.topic}. Angle: ${run.angle}.`,
           aiScore: run.criticScore,
           targetSignal: "replies",
@@ -104,6 +104,14 @@ export async function POST(request: NextRequest) {
             `🧠 *New post built by the team*\n\n_${run.topic}_\n\n"${run.tweet.slice(0, 140)}${run.tweet.length > 140 ? "..." : ""}"\n\nTake a look and swipe:\n${link}`,
             { parse_mode: "Markdown" }
           );
+          // No image quota — hand the boss Venus's brief to generate elsewhere
+          if (run.imagePrompt && !imagePath) {
+            await getBot().api.sendMessage(
+              adminId,
+              `🎨 Venus's image brief for this post — paste it into any image generator (Gemini, GPT, Midjourney) and send the photo back here. She'll check it and attach it.\n\n\`\`\`\n${run.imagePrompt}\n\`\`\``,
+              { parse_mode: "Markdown" }
+            );
+          }
         }
       } catch (err) {
         console.warn("[Team] Telegram notify failed:", err);

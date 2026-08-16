@@ -796,16 +796,87 @@ function registerHandlers(bot: Bot) {
     }
   });
 
-  // Photo handler
+  // Photo handler — the image round-trip:
+  // bot sends Venus's brief → boss generates the image anywhere and sends it
+  // here → Venus (vision) judges it → attach to the pending post, or send a
+  // refined prompt to try again.
   bot.on("message:photo", async (ctx) => {
     if (!isAdmin(ctx)) return;
 
-    const caption = ctx.message.caption || "";
-    await ctx.reply(
-      `📸 Image received!${caption ? `\n\nCaption: "${caption}"` : ""}\n\n` +
-        "Processing with AI vision... Open the web dashboard to see the generated captions for each platform.",
-      { parse_mode: "Markdown" }
-    );
+    try {
+      const { desc: descOp, eq: eqOp } = await import("drizzle-orm");
+      const pending = await db
+        .select()
+        .from(reviewQueue)
+        .where(eqOp(reviewQueue.reviewStatus, "pending_review"))
+        .orderBy(descOp(reviewQueue.createdAt))
+        .limit(5);
+      const target = pending.find(
+        (r) => (r.previewData as { imagePrompt?: string })?.imagePrompt
+      );
+      if (!target) {
+        await ctx.reply("No post is waiting for an image right now. Run /build first.");
+        return;
+      }
+      const preview = target.previewData as {
+        text?: string;
+        imagePrompt?: string;
+        imagePath?: string | null;
+        topic?: string;
+      };
+
+      await ctx.reply("🎨 Venus is reviewing your image...");
+
+      // Download the largest size from Telegram
+      const photos = ctx.message.photo;
+      const file = await ctx.api.getFile(photos[photos.length - 1].file_id);
+      const fileRes = await fetch(
+        `https://api.telegram.org/file/bot${process.env.TELEGRAM_BOT_TOKEN}/${file.file_path}`
+      );
+      if (!fileRes.ok) throw new Error("Could not download image from Telegram");
+      const bytes = new Uint8Array(await fileRes.arrayBuffer());
+      let binary = "";
+      for (let i = 0; i < bytes.length; i += 8192) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+      }
+      const dataUrl = `data:image/jpeg;base64,${btoa(binary)}`;
+
+      // Venus judges the image against her own brief
+      const { analyzeImage } = await import("./ai");
+      const raw = await analyzeImage(
+        dataUrl,
+        `You are Venus, the Visual Director. This image was generated for a tweet.\n\nTweet: "${preview.text}"\nYour original brief: "${preview.imagePrompt}"\n\nJudge it: does it fit the tweet, look photorealistic, and avoid AI tells (plastic skin, warped hands, nonsense text)? Respond ONLY with JSON: {"fits": boolean, "feedback": "one sentence", "improvedPrompt": "a refined generation prompt, only if fits is false, else null"}`,
+        { agent: "manager", action: "image_review" }
+      );
+      let verdict: { fits?: boolean; feedback?: string; improvedPrompt?: string | null };
+      try {
+        verdict = JSON.parse(raw.replace(/^```json\s*/i, "").replace(/```\s*$/i, "").trim());
+      } catch {
+        verdict = { fits: true, feedback: "Looks usable." };
+      }
+
+      if (verdict.fits) {
+        const { saveImage } = await import("./storage");
+        const saved = await saveImage(bytes, "image/jpeg", "uploads");
+        await db
+          .update(reviewQueue)
+          .set({ previewData: { ...preview, imagePath: saved.url } })
+          .where(eqOp(reviewQueue.id, target.id));
+        const { drafts } = await import("./schema");
+        await db.update(drafts).set({ imagePath: saved.url }).where(eqOp(drafts.id, target.draftId));
+        await ctx.reply(
+          `✅ Venus approved it — "${verdict.feedback}"\n\nImage attached to the post "${preview.topic}". Approve the post and it ships with this image.`
+        );
+      } else {
+        await ctx.reply(
+          `❌ Venus: "${verdict.feedback}"\n\nTry this refined prompt:\n\n\`\`\`\n${verdict.improvedPrompt || preview.imagePrompt}\n\`\`\``,
+          { parse_mode: "Markdown" }
+        );
+      }
+    } catch (err) {
+      console.error("[Telegram] Photo review failed:", err);
+      await ctx.reply("Something broke while reviewing the image — try sending it again.");
+    }
   });
 }
 

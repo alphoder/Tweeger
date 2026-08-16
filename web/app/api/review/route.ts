@@ -180,10 +180,12 @@ export async function PATCH(req: NextRequest) {
       });
 
       if (draft) {
+        const preview = item.previewData as { imagePath?: string | null } | null;
         await db.insert(queue).values({
           draftId: item.draftId,
           brandId: item.brandId,
           text: draft.text,
+          imagePath: draft.imagePath || preview?.imagePath || null,
           platform: draft.platform,
           scheduledTime: item.suggestedTime,
           status: "scheduled",
