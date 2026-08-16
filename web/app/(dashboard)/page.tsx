@@ -89,16 +89,16 @@ async function getDashboardData() {
 const PLATFORMS = [
   { name: "Twitter", icon: "𝕏", connected: true, color: "text-zinc-400" },
   { name: "LinkedIn", icon: "in", connected: false, color: "text-blue-400" },
-  { name: "Instagram", icon: "📷", connected: false, color: "text-amber-400" },
+  { name: "Instagram", icon: "📷", connected: false, color: "text-zinc-200" },
   { name: "Facebook", icon: "f", connected: false, color: "text-blue-500" },
 ];
 
 const QUICK_ACTIONS = [
   { label: "Create Post", href: "/content", icon: PenTool, color: "text-zinc-400" },
-  { label: "Images", href: "/images", icon: Image, color: "text-amber-400" },
-  { label: "Campaign", href: "/marketing/campaigns", icon: Megaphone, color: "text-amber-400" },
+  { label: "Images", href: "/images", icon: Image, color: "text-zinc-200" },
+  { label: "Campaign", href: "/marketing/campaigns", icon: Megaphone, color: "text-zinc-200" },
   { label: "Calendar", href: "/calendar", icon: CalendarRange, color: "text-green-400" },
-  { label: "Trends", href: "/trends", icon: Search, color: "text-amber-400" },
+  { label: "Trends", href: "/trends", icon: Search, color: "text-zinc-200" },
   { label: "Analytics", href: "/analytics", icon: BarChart3, color: "text-blue-400" },
 ];
 
@@ -148,11 +148,11 @@ export default async function CommandCenterPage() {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-        <Metric icon={FileText} label="Drafts" value={data.pendingDrafts} color="text-amber-400" />
+        <Metric icon={FileText} label="Drafts" value={data.pendingDrafts} color="text-zinc-200" />
         <Metric icon={Clock} label="Queued" value={data.queuedPosts} color="text-zinc-400" />
         <Metric icon={Send} label="Posted" value={data.postedToday} color="text-green-400" />
-        <Metric icon={Brain} label="Insights" value={data.recentInsights.length} color="text-amber-400" />
-        <Metric icon={Target} label="Campaigns" value={data.activeCampaigns.length} color="text-amber-400" />
+        <Metric icon={Brain} label="Insights" value={data.recentInsights.length} color="text-zinc-200" />
+        <Metric icon={Target} label="Campaigns" value={data.activeCampaigns.length} color="text-zinc-200" />
       </div>
 
       {/* Quick Actions - compact horizontal strip */}
@@ -189,7 +189,7 @@ export default async function CommandCenterPage() {
             <CardContent className="p-3">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-zinc-300 flex items-center gap-1.5">
-                  <Brain className="h-3.5 w-3.5 text-amber-400" />
+                  <Brain className="h-3.5 w-3.5 text-zinc-200" />
                   AI Insights
                 </span>
                 <Link href="/insights" className="text-[10px] text-zinc-400 hover:text-zinc-300">
@@ -260,7 +260,7 @@ export default async function CommandCenterPage() {
             <CardContent className="p-3">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-zinc-300 flex items-center gap-1.5">
-                  <Target className="h-3.5 w-3.5 text-amber-400" />
+                  <Target className="h-3.5 w-3.5 text-zinc-200" />
                   Campaigns
                 </span>
                 <Link href="/marketing/campaigns" className="text-[10px] text-zinc-400 hover:text-zinc-300">
@@ -287,7 +287,7 @@ export default async function CommandCenterPage() {
             <Card className="border-zinc-800 bg-zinc-900/40">
               <CardContent className="p-3">
                 <span className="text-xs font-semibold text-zinc-300 flex items-center gap-1.5 mb-2">
-                  <Globe className="h-3.5 w-3.5 text-amber-400" />
+                  <Globe className="h-3.5 w-3.5 text-zinc-200" />
                   Brand Profile
                 </span>
                 <div className="flex flex-wrap gap-1">
@@ -334,7 +334,7 @@ function MiniMeter({ label, used, limit }: { label: string; used: number; limit:
       <span className="text-[10px] text-zinc-500 shrink-0">{label}</span>
       <div className="flex-1 h-1 bg-zinc-800 rounded-full overflow-hidden">
         <div
-          className={`h-full rounded-full ${pct >= 100 ? "bg-red-500" : pct >= 80 ? "bg-amber-500" : "bg-emerald-500"}`}
+          className={`h-full rounded-full ${pct >= 100 ? "bg-red-500" : pct >= 80 ? "bg-zinc-600" : "bg-emerald-500"}`}
           style={{ width: `${pct}%` }}
         />
       </div>

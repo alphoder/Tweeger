@@ -45,7 +45,7 @@ import { ScheduleDialog } from "@/components/schedule-dialog";
 const PLATFORMS = [
   { key: "twitter", label: "Twitter", icon: "𝕏", color: "bg-zinc-500/20 text-zinc-400" },
   { key: "linkedin", label: "LinkedIn", icon: "in", color: "bg-blue-500/20 text-blue-400" },
-  { key: "instagram", label: "Instagram", icon: "📷", color: "bg-amber-500/20 text-amber-400" },
+  { key: "instagram", label: "Instagram", icon: "📷", color: "bg-zinc-600/20 text-zinc-200" },
   { key: "facebook", label: "Facebook", icon: "f", color: "bg-blue-600/20 text-blue-500" },
   { key: "all", label: "All Platforms", icon: "⚡", color: "bg-zinc-500/20 text-zinc-400" },
 ];
@@ -168,11 +168,11 @@ export default function ContentStudioPage() {
     setAiReasoning(null);
 
     try {
-      const systemPrompt = `You are an expert social media manager for Axon, an AI automation agency for Indian businesses.
+      const systemPrompt = `You are the social media copilot for a builder\u2019s personal Twitter/X focused on AI, ML, blockchain, and startups.
 Generate a ${contentType} for ${platform === "all" ? "Twitter" : platform}.
 Industry focus: ${industry === "All" ? "general AI automation" : industry}.
 Tone: Direct, no-nonsense, operator-focused. Concrete problems and measurable outcomes.
-Brand: Axon — WhatsApp bots, workflow automation, ad funnels.
+Voice: sharp builder, specific and human, zero AI-sounding filler.
 
 Rules:
 - Write ONLY the post text. No explanations, no labels.
@@ -189,7 +189,7 @@ REASONING: [One sentence explaining why this approach works]`;
       const userPrompt = postText.trim()
         ? `Improve and expand this draft into a polished ${platform} post:\n\n"${postText}"`
         : `Generate a high-engagement ${contentType.toLowerCase()} about AI automation ${
-            industry !== "All" ? `for ${industry} businesses in India` : "for Indian businesses"
+            industry !== "All" ? `with a ${industry} angle` : "for a technical builder audience"
           }`;
 
       const result = await chat(userPrompt, { systemPrompt, model });
@@ -240,7 +240,7 @@ REASONING: [One sentence explaining why this approach works]`;
         `Improve this ${platform} post. Make the hook stronger, the CTA clearer, and more engaging. Keep the same tone and message but make it more impactful.\n\nOriginal:\n"${postText}"\n\nWrite ONLY the improved post text. Then on a new line: REASONING: [why the changes improve it]`,
         {
           systemPrompt:
-            "You are an expert social media copywriter for Axon, an AI automation agency. Improve posts to maximize engagement.",
+            "You are an expert copywriter for a builder\u2019s personal tech Twitter. Improve posts to maximize engagement while sounding fully human.",
           model,
         }
       );
@@ -584,7 +584,7 @@ REASONING: [One sentence explaining why this approach works]`;
           <Card className="border-zinc-800 bg-zinc-900/50">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                <ImageIcon className="h-4 w-4 text-amber-400" />
+                <ImageIcon className="h-4 w-4 text-zinc-200" />
                 Image
               </CardTitle>
             </CardHeader>
@@ -686,7 +686,7 @@ REASONING: [One sentence explaining why this approach works]`;
                 <Button
                   onClick={handleGenerate}
                   disabled={generating || !puterReady}
-                  className="bg-amber-400 text-zinc-950 text-xs"
+                  className="bg-white text-black hover:bg-zinc-200 text-xs"
                 >
                   {generating ? (
                     <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />
@@ -741,7 +741,7 @@ REASONING: [One sentence explaining why this approach works]`;
           <Card className="border-zinc-800 bg-zinc-900/50">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                <Hash className="h-4 w-4 text-amber-400" />
+                <Hash className="h-4 w-4 text-zinc-200" />
                 Hashtags
               </CardTitle>
             </CardHeader>
@@ -783,7 +783,7 @@ REASONING: [One sentence explaining why this approach works]`;
                           aiScore.overall >= 70
                             ? "bg-green-500/20 text-green-400"
                             : aiScore.overall >= 40
-                            ? "bg-amber-500/20 text-amber-400"
+                            ? "bg-zinc-600/20 text-zinc-200"
                             : "bg-red-500/20 text-red-400"
                         }`}
                       >
@@ -847,7 +847,7 @@ REASONING: [One sentence explaining why this approach works]`;
             <Button
               onClick={() => setShowSchedule(true)}
               disabled={!postText.trim()}
-              className="bg-amber-400 text-zinc-950"
+              className="bg-white text-black hover:bg-zinc-200 "
             >
               <Clock className="h-4 w-4 mr-2" />
               Schedule
@@ -858,7 +858,7 @@ REASONING: [One sentence explaining why this approach works]`;
           <Button
             onClick={handleCreateForAll}
             disabled={creatingForAll || !postText.trim()}
-            className="w-full bg-amber-400 text-zinc-950 hover:bg-amber-300 "
+            className="w-full bg-white text-black hover:bg-zinc-200  "
           >
             {creatingForAll ? (
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -912,7 +912,7 @@ REASONING: [One sentence explaining why this approach works]`;
                       <Badge
                         className={`text-[9px] ${
                           draft.status === "pending"
-                            ? "bg-amber-500/20 text-amber-400"
+                            ? "bg-zinc-600/20 text-zinc-200"
                             : draft.status === "approved"
                             ? "bg-green-500/20 text-green-400"
                             : "bg-zinc-600 text-zinc-400"
@@ -959,7 +959,7 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
     value >= 70
       ? "bg-green-500"
       : value >= 40
-      ? "bg-amber-500"
+      ? "bg-zinc-600"
       : "bg-red-500";
 
   return (

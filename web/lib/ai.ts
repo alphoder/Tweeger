@@ -216,7 +216,8 @@ export async function generate(
 ): Promise<string> {
   const startTime = Date.now();
 
-  if (options?.action && CHAT_ACTIONS.test(options.action)) {
+  // Explicit model = caller wants that model (e.g. deep mode) — skip Groq
+  if (options?.action && CHAT_ACTIONS.test(options.action) && (!options.model || options.model === "auto")) {
     const groqText = await tryGroq([{ text: userPrompt }], systemPrompt, options?.temperature);
     if (groqText !== null) {
       await logCall(

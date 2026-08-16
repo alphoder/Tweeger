@@ -39,8 +39,8 @@ interface CampaignBuilderProps {
 
 const PLATFORMS = [
   { key: "twitter", label: "Twitter", color: "bg-zinc-500/20 text-zinc-400" },
-  { key: "linkedin", label: "LinkedIn", color: "bg-amber-500/20 text-amber-400" },
-  { key: "instagram", label: "Instagram", color: "bg-amber-500/20 text-amber-400" },
+  { key: "linkedin", label: "LinkedIn", color: "bg-zinc-600/20 text-zinc-200" },
+  { key: "instagram", label: "Instagram", color: "bg-zinc-600/20 text-zinc-200" },
   { key: "facebook", label: "Facebook", color: "bg-blue-500/20 text-blue-400" },
 ];
 
@@ -106,7 +106,7 @@ export function CampaignBuilder({ onClose, onCreated }: CampaignBuilderProps) {
 
     setGenerating(true);
     try {
-      const prompt = `You are Axon Social AI's Manager Bot. Generate a ${duration}-day social media campaign content plan.
+      const prompt = `You are FineTweet's Manager Bot. Generate a ${duration}-day social media campaign content plan.
 
 Campaign Theme: "${theme}"
 Target Industry: ${industry || "general"}
@@ -351,7 +351,7 @@ Return ONLY the JSON array, no other text.`;
                     setStep(2);
                     generatePlan();
                   }}
-                  className="bg-amber-400 text-zinc-950"
+                  className="bg-white text-black hover:bg-zinc-200 "
                 >
                   Generate Content Plan
                   <ChevronRight className="h-4 w-4 ml-1" />
@@ -511,7 +511,7 @@ Return ONLY the JSON array, no other text.`;
                 </Button>
                 <Button
                   onClick={() => setStep(4)}
-                  className="bg-amber-400 text-zinc-950"
+                  className="bg-white text-black hover:bg-zinc-200 "
                 >
                   Review & Launch
                   <ChevronRight className="h-4 w-4 ml-1" />
@@ -596,7 +596,7 @@ Return ONLY the JSON array, no other text.`;
                   <Button
                     onClick={() => saveCampaign(true)}
                     disabled={saving}
-                    className="bg-amber-400 text-zinc-950"
+                    className="bg-white text-black hover:bg-zinc-200 "
                   >
                     {saving ? (
                       <Loader2 className="h-4 w-4 mr-1 animate-spin" />

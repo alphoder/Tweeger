@@ -39,7 +39,7 @@ export function PostPreview({ platform, text, imagePath, hashtags }: PostPreview
               isOverLimit
                 ? "bg-red-500"
                 : charPercent > 80
-                ? "bg-amber-500"
+                ? "bg-zinc-600"
                 : "bg-zinc-500"
             }`}
             style={{ width: `${charPercent}%` }}
@@ -72,7 +72,7 @@ function TwitterPreview({ text, imagePath }: { text: string; imagePath?: string 
   return (
     <div className="p-4">
       <div className="flex gap-3">
-        <div className="h-10 w-10 rounded-full bg-amber-400 text-zinc-950 flex items-center justify-center text-white text-xs font-bold shrink-0">
+        <div className="h-10 w-10 rounded-full bg-white text-black hover:bg-zinc-200 flex items-center justify-center text-xs font-bold shrink-0">
           A
         </div>
         <div className="flex-1 min-w-0">
@@ -97,7 +97,7 @@ function TwitterPreview({ text, imagePath }: { text: string; imagePath?: string 
               <Repeat2 className="h-4 w-4" />
               <span className="text-xs">0</span>
             </button>
-            <button className="flex items-center gap-1 hover:text-amber-400 transition-colors">
+            <button className="flex items-center gap-1 hover:text-zinc-200 transition-colors">
               <Heart className="h-4 w-4" />
               <span className="text-xs">0</span>
             </button>
@@ -118,7 +118,7 @@ function LinkedInPreview({ text, imagePath }: { text: string; imagePath?: string
     <div>
       <div className="p-4">
         <div className="flex gap-3 mb-3">
-          <div className="h-12 w-12 rounded-full bg-amber-400 text-zinc-950 flex items-center justify-center text-white text-sm font-bold shrink-0">
+          <div className="h-12 w-12 rounded-full bg-white text-black hover:bg-zinc-200 flex items-center justify-center text-sm font-bold shrink-0">
             A
           </div>
           <div>
@@ -157,7 +157,7 @@ function InstagramPreview({ text, imagePath }: { text: string; imagePath?: strin
   return (
     <div>
       <div className="flex items-center gap-3 p-3 border-b border-zinc-800">
-        <div className="h-8 w-8 rounded-full bg-amber-400 text-zinc-950 flex items-center justify-center text-white text-xs font-bold">
+        <div className="h-8 w-8 rounded-full bg-white text-black hover:bg-zinc-200 flex items-center justify-center text-xs font-bold">
           A
         </div>
         <span className="font-semibold text-sm text-zinc-100">axon.ai</span>
@@ -195,7 +195,7 @@ function FacebookPreview({ text, imagePath }: { text: string; imagePath?: string
     <div>
       <div className="p-4">
         <div className="flex gap-3 mb-3">
-          <div className="h-10 w-10 rounded-full bg-amber-400 text-zinc-950 flex items-center justify-center text-white text-xs font-bold shrink-0">
+          <div className="h-10 w-10 rounded-full bg-white text-black hover:bg-zinc-200 flex items-center justify-center text-xs font-bold shrink-0">
             A
           </div>
           <div>

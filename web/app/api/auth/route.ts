@@ -22,8 +22,42 @@ function rateLimited(ip: string): boolean {
   return entry.count > MAX_ATTEMPTS;
 }
 
+// ─── TELEGRAM OTP ───────────────────────────────────────────────────────────
+// One-time login codes delivered to the admin's Telegram. Stored (hashed)
+// in the agent_memory KV row "__otp_login" — single admin, single code.
+
+const OTP_KEY = "__otp_login";
+const OTP_TTL_MS = 5 * 60 * 1000;
+
+async function otpHash(code: string): Promise<string> {
+  const data = new TextEncoder().encode(`otp:${code}:${process.env.SESSION_SECRET || process.env.ADMIN_PASSWORD}`);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function issueOtp(): Promise<void> {
+  const code = String(Math.floor(100000 + Math.random() * 900000));
+  const { updateWorkingMemory } = await import("@/lib/agents/team");
+  await updateWorkingMemory(OTP_KEY, `${await otpHash(code)}:${Date.now() + OTP_TTL_MS}`);
+  const { notifyAdmin } = await import("@/lib/telegram");
+  await notifyAdmin(`🔐 *FineTweet login code:* \`${code}\`\n\nValid for 5 minutes. Ignore if this wasn't you.`);
+}
+
+async function consumeOtp(code: string): Promise<boolean> {
+  if (!/^\d{6}$/.test(code)) return false;
+  const { getMemory, updateWorkingMemory } = await import("@/lib/agents/team");
+  const { working } = await getMemory(OTP_KEY);
+  const [hash, expiry] = working.split(":");
+  if (!hash || !expiry || Number(expiry) < Date.now()) return false;
+  if (!timingSafeEqualStr(await otpHash(code), hash)) return false;
+  await updateWorkingMemory(OTP_KEY, ""); // single use
+  return true;
+}
+
 /**
- * POST /api/auth — Login
+ * POST /api/auth — Login (password or Telegram OTP)
+ * Body: { requestOtp: true }  → sends a 6-digit code to the admin's Telegram
+ * Body: { password }          → ADMIN_PASSWORD or a valid OTP code
  */
 export async function POST(request: NextRequest) {
   try {
@@ -36,6 +70,12 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+
+    if (body.requestOtp) {
+      await issueOtp();
+      return NextResponse.json({ sent: true });
+    }
+
     const { password } = body;
 
     if (!password || typeof password !== "string") {
@@ -50,8 +90,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!timingSafeEqualStr(password, adminPassword)) {
-      return NextResponse.json({ error: "Invalid password" }, { status: 401 });
+    const valid = timingSafeEqualStr(password, adminPassword) || (await consumeOtp(password));
+    if (!valid) {
+      return NextResponse.json({ error: "Invalid password or code" }, { status: 401 });
     }
 
     const sessionToken = await createSessionToken(SESSION_MAX_AGE);

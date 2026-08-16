@@ -39,16 +39,16 @@ const FEATURES = [
     description: "Analyze competitor strategies and find opportunities",
     icon: Users,
     href: "/marketing/competitors",
-    color: "text-amber-400",
-    gradient: "from-amber-500/20 to-amber-500/5",
+    color: "text-zinc-200",
+    gradient: "from-zinc-600/20 to-zinc-600/5",
   },
   {
     title: "Content Planner",
     description: "AI-generated content calendars across platforms and industries",
     icon: CalendarClock,
     href: "/marketing/planner",
-    color: "text-amber-400",
-    gradient: "from-amber-500/20 to-amber-500/5",
+    color: "text-zinc-200",
+    gradient: "from-zinc-600/20 to-zinc-600/5",
   },
 ];
 
@@ -123,13 +123,13 @@ export default function MarketingPage() {
           label="Competitors Analyzed"
           value={loading ? "—" : String(stats.competitors)}
           icon={Users}
-          color="text-amber-400"
+          color="text-zinc-200"
         />
         <QuickStat
           label="Calendar Items"
           value={loading ? "—" : String(stats.calendarItems)}
           icon={CalendarClock}
-          color="text-amber-400"
+          color="text-zinc-200"
         />
       </div>
 
@@ -166,7 +166,7 @@ export default function MarketingPage() {
       <Card className="border-zinc-800 bg-zinc-900/50">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Zap className="h-4 w-4 text-amber-400" />
+            <Zap className="h-4 w-4 text-zinc-200" />
             Industry Focus
           </CardTitle>
         </CardHeader>
@@ -192,7 +192,7 @@ export default function MarketingPage() {
             ))}
           </div>
           <p className="text-[10px] text-zinc-600 mt-3">
-            Axon creates industry-specific campaigns optimized for Indian businesses
+            Campaigns tuned to your audience of builders, founders, and engineers
           </p>
         </CardContent>
       </Card>

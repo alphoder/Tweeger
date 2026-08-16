@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getBot } from "@/lib/telegram";
-import { webhookCallback } from "grammy/web";
 
 /**
  * POST /api/telegram/webhook
  * Telegram webhook endpoint — receives updates from Telegram.
  * Authenticated via X-Telegram-Bot-Api-Secret-Token (set with setWebhook).
+ *
+ * Calls bot.handleUpdate directly instead of grammy's webhookCallback,
+ * which stalls under OpenNext on Cloudflare Workers.
  */
 export async function POST(request: NextRequest) {
   const expected = process.env.TELEGRAM_WEBHOOK_SECRET;
@@ -19,16 +21,17 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const bot = getBot();
-    const handler = webhookCallback(bot, "std/http");
-    return handler(request);
+    const update = await request.json();
+    await getBot().handleUpdate(update);
+    return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[Telegram Webhook] Error:", err);
-    return NextResponse.json({ ok: false }, { status: 500 });
+    // Return 200 so Telegram doesn't endlessly retry a poison update
+    return NextResponse.json({ ok: false });
   }
 }
 
 // Telegram sends GET to verify the webhook
 export async function GET() {
-  return NextResponse.json({ ok: true, bot: "Axon Social AI" });
+  return NextResponse.json({ ok: true, bot: "FineTweet" });
 }

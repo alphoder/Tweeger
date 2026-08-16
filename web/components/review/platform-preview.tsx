@@ -31,7 +31,7 @@ function TwitterPreview({ content, brandName, hashtags }: PreviewProps) {
     <div className="bg-black rounded-xl border border-zinc-800 p-4 font-sans text-[15px]">
       {/* Header */}
       <div className="flex items-start gap-3">
-        <div className="h-10 w-10 rounded-full bg-amber-400 text-zinc-950 shrink-0" />
+        <div className="h-10 w-10 rounded-full bg-white text-black hover:bg-zinc-200 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1">
             <span className="font-bold text-white text-sm">{brandName || "Brand"}</span>
@@ -71,7 +71,7 @@ function TwitterPreview({ content, brandName, hashtags }: PreviewProps) {
           <Repeat2 className="h-4 w-4" />
           <span className="text-xs">12</span>
         </button>
-        <button className="flex items-center gap-1.5 text-zinc-500 hover:text-amber-400 transition-colors">
+        <button className="flex items-center gap-1.5 text-zinc-500 hover:text-zinc-200 transition-colors">
           <Heart className="h-4 w-4" />
           <span className="text-xs">86</span>
         </button>
@@ -93,7 +93,7 @@ function LinkedInPreview({ content, brandName, hashtags }: PreviewProps) {
     <div className="bg-white rounded-xl border border-zinc-200 font-sans text-[14px]">
       {/* Header */}
       <div className="flex items-start gap-3 p-4 pb-2">
-        <div className="h-12 w-12 rounded-full bg-amber-400 text-zinc-950 shrink-0" />
+        <div className="h-12 w-12 rounded-full bg-white text-black hover:bg-zinc-200 shrink-0" />
         <div className="flex-1 min-w-0">
           <span className="font-semibold text-zinc-900 text-sm block">{brandName || "Brand"}</span>
           <span className="text-zinc-500 text-xs block">AI Automation Agency · 1,234 followers</span>
@@ -151,9 +151,9 @@ function InstagramPreview({ content, brandName, hashtags }: PreviewProps) {
     <div className="bg-black rounded-xl border border-zinc-800 font-sans text-[14px]">
       {/* Header */}
       <div className="flex items-center gap-3 p-3">
-        <div className="h-8 w-8 rounded-full bg-amber-400 text-zinc-950 p-[2px]">
+        <div className="h-8 w-8 rounded-full bg-white text-black hover:bg-zinc-200 p-[2px]">
           <div className="h-full w-full rounded-full bg-black flex items-center justify-center">
-            <div className="h-[26px] w-[26px] rounded-full bg-amber-400 text-zinc-950 " />
+            <div className="h-[26px] w-[26px] rounded-full bg-white text-black hover:bg-zinc-200 " />
           </div>
         </div>
         <span className="font-semibold text-white text-sm">{(brandName || "brand").toLowerCase().replace(/\s/g, "")}</span>
@@ -161,7 +161,7 @@ function InstagramPreview({ content, brandName, hashtags }: PreviewProps) {
       </div>
 
       {/* Image placeholder */}
-      <div className="aspect-square bg-amber-400 text-zinc-950 flex items-center justify-center">
+      <div className="aspect-square bg-white text-black hover:bg-zinc-200 flex items-center justify-center">
         <span className="text-zinc-600 text-sm">📷 Image Preview</span>
       </div>
 
@@ -208,7 +208,7 @@ function FacebookPreview({ content, brandName, hashtags }: PreviewProps) {
     <div className="bg-white rounded-xl border border-zinc-200 font-sans text-[14px]">
       {/* Header */}
       <div className="flex items-start gap-3 p-4 pb-2">
-        <div className="h-10 w-10 rounded-full bg-amber-400 text-zinc-950 shrink-0" />
+        <div className="h-10 w-10 rounded-full bg-white text-black hover:bg-zinc-200 shrink-0" />
         <div className="flex-1 min-w-0">
           <span className="font-semibold text-zinc-900 text-sm block">{brandName || "Brand"}</span>
           <div className="flex items-center gap-1 text-zinc-500 text-xs">
@@ -281,7 +281,7 @@ export function PlatformPreview(props: PreviewProps) {
 const PLATFORM_STYLES: Record<string, { bg: string; text: string; label: string }> = {
   twitter: { bg: "bg-zinc-500/20", text: "text-zinc-400", label: "𝕏 Twitter" },
   linkedin: { bg: "bg-blue-600/20", text: "text-blue-400", label: "in LinkedIn" },
-  instagram: { bg: "bg-amber-500/20", text: "text-amber-400", label: "📷 Instagram" },
+  instagram: { bg: "bg-zinc-600/20", text: "text-zinc-200", label: "📷 Instagram" },
   facebook: { bg: "bg-blue-500/20", text: "text-blue-400", label: "f Facebook" },
 };
 

@@ -88,7 +88,7 @@ export default function AdCopyPage() {
 
     setGenerating(true);
     try {
-      const prompt = `You are Axon Social AI's Ad Copy specialist. Generate 4 ad copy variants for:
+      const prompt = `You are FineTweet's Ad Copy specialist. Generate 4 ad copy variants for:
 
 Product: "${productName}"
 Platform: ${platform}
@@ -349,7 +349,7 @@ Return ONLY the JSON array.`;
               <Button
                 onClick={handleGenerate}
                 disabled={generating || !productName}
-                className="w-full bg-amber-400 text-zinc-950 hover:opacity-90"
+                className="w-full bg-white text-black hover:bg-zinc-200 hover:opacity-90"
               >
                 {generating ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

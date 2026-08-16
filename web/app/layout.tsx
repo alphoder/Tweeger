@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Axon Social AI — Command Center",
+  title: "FineTweet — Command Center",
   description:
     "Multi-agent AI social media automation platform by Axon. Research trends, generate content, schedule posts, optimize engagement across Twitter, LinkedIn, Instagram, and Facebook.",
   icons: {

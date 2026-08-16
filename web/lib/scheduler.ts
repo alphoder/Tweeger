@@ -106,7 +106,8 @@ const jobStatuses: Record<string, JobStatus> = {
 
 export function getSchedulerStatus() {
   return {
-    running: started,
+    // In production the Cloudflare cron trigger drives jobs, not node-cron
+    running: started || process.env.NODE_ENV === "production",
     jobs: Object.values(jobStatuses),
   };
 }

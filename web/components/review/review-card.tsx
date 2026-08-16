@@ -56,8 +56,8 @@ export function ReviewCard({ item, className }: ReviewCardProps) {
         <PlatformBadge platform={item.platform} />
         {item.aiScore && (
           <div className="flex items-center gap-1.5">
-            <Zap className="h-3.5 w-3.5 text-amber-400" />
-            <span className="text-sm font-semibold text-amber-400">{item.aiScore}/100</span>
+            <Zap className="h-3.5 w-3.5 text-zinc-200" />
+            <span className="text-sm font-semibold text-zinc-200">{item.aiScore}/100</span>
           </div>
         )}
       </div>
@@ -79,7 +79,7 @@ export function ReviewCard({ item, className }: ReviewCardProps) {
           className="flex w-full items-center justify-between px-4 py-2.5 text-sm text-zinc-400 hover:text-zinc-200 transition-colors"
         >
           <div className="flex items-center gap-2">
-            <Brain className="h-4 w-4 text-amber-400" />
+            <Brain className="h-4 w-4 text-zinc-200" />
             <span className="font-medium">AI Intelligence</span>
           </div>
           {showIntelligence ? (
@@ -117,7 +117,7 @@ export function ReviewCard({ item, className }: ReviewCardProps) {
             {/* Target Signal + Suggested Time */}
             <div className="flex flex-wrap gap-2">
               {item.targetSignal && (
-                <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-400">
+                <Badge variant="outline" className="text-xs border-zinc-600/30 text-zinc-200">
                   <Target className="h-3 w-3 mr-1" />
                   Target: {item.targetSignal}
                 </Badge>

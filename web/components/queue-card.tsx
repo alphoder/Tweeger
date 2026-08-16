@@ -46,7 +46,7 @@ interface QueueCardProps {
 const PLATFORM_STYLES: Record<string, { icon: string; color: string; bg: string }> = {
   twitter: { icon: "𝕏", color: "text-zinc-400", bg: "bg-zinc-500/20" },
   linkedin: { icon: "in", color: "text-blue-400", bg: "bg-blue-500/20" },
-  instagram: { icon: "📷", color: "text-amber-400", bg: "bg-amber-500/20" },
+  instagram: { icon: "📷", color: "text-zinc-200", bg: "bg-zinc-600/20" },
   facebook: { icon: "f", color: "text-blue-500", bg: "bg-blue-600/20" },
 };
 
@@ -99,7 +99,7 @@ export function QueueCard({
 
   const statusBadge = {
     scheduled: { label: "Scheduled", className: "bg-blue-500/20 text-blue-400", icon: Clock },
-    posting: { label: "Posting...", className: "bg-amber-500/20 text-amber-400", icon: Zap },
+    posting: { label: "Posting...", className: "bg-zinc-600/20 text-zinc-200", icon: Zap },
     posted: { label: "Posted", className: "bg-green-500/20 text-green-400", icon: CheckCircle2 },
     failed: { label: "Failed", className: "bg-red-500/20 text-red-400", icon: XCircle },
     cancelled: { label: "Cancelled", className: "bg-zinc-500/20 text-zinc-400", icon: XCircle },
@@ -236,7 +236,7 @@ export function QueueCard({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-7 text-[10px] border-amber-700 text-amber-400"
+                  className="h-7 text-[10px] border-zinc-600 text-zinc-200"
                   onClick={() => onRetry(item.id)}
                 >
                   <RotateCcw className="h-3 w-3 mr-1" /> Retry ({item.retryCount}/{item.maxRetries})

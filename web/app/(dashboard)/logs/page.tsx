@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 const AGENT_COLORS: Record<string, string> = {
   manager: "bg-zinc-500/20 text-zinc-400",
   twitter: "bg-zinc-500/20 text-zinc-400",
-  instagram: "bg-amber-500/20 text-amber-400",
+  instagram: "bg-zinc-600/20 text-zinc-200",
   facebook: "bg-blue-500/20 text-blue-400",
   linkedin: "bg-blue-600/20 text-blue-400",
 };
@@ -134,13 +134,13 @@ export default async function AgentLogsPage() {
           label="Avg Duration"
           value={`${stats.avgDuration}ms`}
           icon={Timer}
-          color="text-amber-400"
+          color="text-zinc-200"
         />
         <StatCard
           label="Tokens Used"
           value={stats.totalTokens.toLocaleString()}
           icon={Clock}
-          color="text-amber-400"
+          color="text-zinc-200"
         />
       </div>
 
@@ -159,7 +159,7 @@ export default async function AgentLogsPage() {
                 .map(([name, n]) => (
                   <div key={name} className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/60 px-3 py-2">
                     <span className="text-sm text-zinc-300">{name}</span>
-                    <span className="font-mono text-sm font-semibold text-amber-400 tabular-nums">{n}</span>
+                    <span className="font-mono text-sm font-semibold text-zinc-200 tabular-nums">{n}</span>
                   </div>
                 ))}
             </div>

@@ -46,14 +46,14 @@ const INSIGHT_TYPE_CONFIG: Record<
   },
   audience: {
     label: "Audience",
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/20",
+    color: "text-zinc-200",
+    bgColor: "bg-zinc-600/20",
     icon: Users,
   },
   trend: {
     label: "Trend",
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/20",
+    color: "text-zinc-200",
+    bgColor: "bg-zinc-600/20",
     icon: TrendingUp,
   },
   performance: {
@@ -285,7 +285,7 @@ export default function InsightsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <Brain className="h-6 w-6 text-amber-400" />
+            <Brain className="h-6 w-6 text-zinc-200" />
             AI Insights
           </h1>
           <p className="text-sm text-zinc-500 mt-1">
@@ -309,7 +309,7 @@ export default function InsightsPage() {
           <Button
             onClick={handleAnalyze}
             disabled={analyzing}
-            className="bg-amber-400 text-zinc-950 font-semibold hover:bg-amber-300"
+            className="bg-white text-black font-semibold hover:bg-zinc-200 "
           >
             {analyzing ? (
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -323,7 +323,7 @@ export default function InsightsPage() {
 
       {/* Profile Analysis Report */}
       {analysis && (
-        <Card className="border-amber-400/25 bg-zinc-900/60">
+        <Card className="border-zinc-600/25 bg-zinc-900/60">
           <CardHeader className="pb-3">
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -331,7 +331,7 @@ export default function InsightsPage() {
                 <p className="text-sm text-zinc-400 mt-2 max-w-2xl">{analysis.summary}</p>
               </div>
               <div className="text-center shrink-0">
-                <div className="text-4xl font-bold tabular-nums text-amber-400">
+                <div className="text-4xl font-bold tabular-nums text-zinc-200">
                   {analysis.overallScore}
                 </div>
                 <div className="text-[11px] uppercase tracking-wider text-zinc-500">/ 100</div>
@@ -346,7 +346,7 @@ export default function InsightsPage() {
               <ol className="space-y-1.5">
                 {analysis.topPriorities.map((p, i) => (
                   <li key={i} className="flex gap-3 text-sm text-zinc-200">
-                    <span className="text-amber-400 font-bold tabular-nums">{i + 1}.</span>
+                    <span className="text-zinc-200 font-bold tabular-nums">{i + 1}.</span>
                     {p}
                   </li>
                 ))}
@@ -373,7 +373,7 @@ export default function InsightsPage() {
           label="Total Insights"
           value={String(totalInsights)}
           icon={Sparkles}
-          color="text-amber-400"
+          color="text-zinc-200"
         />
         <LearningStatCard
           label="Avg Confidence"
@@ -395,17 +395,17 @@ export default function InsightsPage() {
               : "—"
           }
           icon={Award}
-          color="text-amber-400"
+          color="text-zinc-200"
           trend={avgImpact}
         />
       </div>
 
       {/* Recommendations Panel */}
       {recommendations.length > 0 && (
-        <Card className="border-amber-500/30 bg-amber-950/20">
+        <Card className="border-zinc-600/30 bg-zinc-600/20">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Lightbulb className="h-4 w-4 text-amber-400" />
+              <Lightbulb className="h-4 w-4 text-zinc-200" />
               Top Recommendations
             </CardTitle>
           </CardHeader>
@@ -622,7 +622,7 @@ function InsightCard({
                         ? "bg-emerald-500"
                         : insight.confidence >= 0.6
                         ? "bg-zinc-500"
-                        : "bg-amber-500"
+                        : "bg-zinc-600"
                     }`}
                     style={{ width: `${insight.confidence * 100}%` }}
                   />
@@ -669,7 +669,7 @@ function InsightCard({
             {!insight.applied && (
               <button
                 onClick={() => onApply(insight.id)}
-                className="inline-flex items-center justify-center rounded-md text-[10px] font-medium px-2.5 py-1 bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition-colors"
+                className="inline-flex items-center justify-center rounded-md text-[10px] font-medium px-2.5 py-1 bg-zinc-600/20 text-zinc-200 hover:bg-zinc-600/30 transition-colors"
               >
                 Apply
               </button>

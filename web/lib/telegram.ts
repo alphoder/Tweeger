@@ -1,5 +1,5 @@
 // ─── TELEGRAM BOT (grammy) ──────────────────────────────────────────────────
-// Axon Social AI Command Center — Telegram interface
+// FineTweet Command Center — Telegram interface
 // Webhook mode in production, polling in dev
 
 import { Bot, InlineKeyboard, Context } from "grammy";
@@ -15,7 +15,15 @@ export function getBot(): Bot {
   if (!_bot) {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     if (!token) throw new Error("TELEGRAM_BOT_TOKEN not set");
-    _bot = new Bot(token);
+    // Providing botInfo skips grammy's getMe call on first update —
+    // that init fetch stalls under OpenNext on Workers.
+    let botInfo;
+    try {
+      botInfo = process.env.TELEGRAM_BOT_INFO ? JSON.parse(process.env.TELEGRAM_BOT_INFO) : undefined;
+    } catch {
+      botInfo = undefined;
+    }
+    _bot = new Bot(token, botInfo ? { botInfo } : undefined);
     registerHandlers(_bot);
   }
   return _bot;
@@ -30,15 +38,44 @@ function isAdmin(ctx: Context): boolean {
   return ADMIN_ID !== 0 && ctx.from?.id === ADMIN_ID;
 }
 
-/** Fetch our own API with internal service auth (bypasses session cookie). */
-export function internalFetch(path: string, init?: RequestInit): Promise<Response> {
+// ─── INTERNAL API DISPATCH ──────────────────────────────────────────────────
+// Route handlers are plain functions — call them in-process instead of
+// fetching our own URL (Workers block self-fetch with 1042, and the SELF
+// service binding deadlocks under OpenNext).
+
+type RouteModule = Record<string, (req: Request) => Promise<Response>>;
+
+const INTERNAL_ROUTES: Record<string, () => Promise<RouteModule>> = {
+  "/api/queue": () => import("@/app/api/queue/route") as unknown as Promise<RouteModule>,
+  "/api/trends": () => import("@/app/api/trends/route") as unknown as Promise<RouteModule>,
+  "/api/events": () => import("@/app/api/events/route") as unknown as Promise<RouteModule>,
+  "/api/analytics": () => import("@/app/api/analytics/route") as unknown as Promise<RouteModule>,
+  "/api/insights": () => import("@/app/api/insights/route") as unknown as Promise<RouteModule>,
+  "/api/twitter/profile": () => import("@/app/api/twitter/profile/route") as unknown as Promise<RouteModule>,
+  "/api/scheduler": () => import("@/app/api/scheduler/route") as unknown as Promise<RouteModule>,
+  "/api/team/run": () => import("@/app/api/team/run/route") as unknown as Promise<RouteModule>,
+  "/api/team/deep": () => import("@/app/api/team/deep/route") as unknown as Promise<RouteModule>,
+};
+
+export async function internalFetch(path: string, init?: RequestInit): Promise<Response> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  return fetch(`${baseUrl}${path}`, {
+  const url = `${baseUrl}${path}`;
+  const method = (init?.method || "GET").toUpperCase();
+
+  const loader = INTERNAL_ROUTES[new URL(url).pathname];
+  if (loader) {
+    const mod = await loader();
+    const handler = mod[method];
+    if (handler) {
+      const { NextRequest } = await import("next/server");
+      return handler(new NextRequest(url, init as ConstructorParameters<typeof NextRequest>[1]));
+    }
+  }
+
+  // Unknown path — plain fetch (dev only; add the route to the map above)
+  return fetch(url, {
     ...init,
-    headers: {
-      ...(init?.headers || {}),
-      authorization: `Bearer ${process.env.CRON_SECRET || ""}`,
-    },
+    headers: { ...(init?.headers || {}), authorization: `Bearer ${process.env.CRON_SECRET || ""}` },
   });
 }
 
@@ -50,7 +87,7 @@ function registerHandlers(bot: Bot) {
     if (!isAdmin(ctx)) return;
 
     await ctx.reply(
-      `🤖 *Axon Social AI Command Center*\n\nWelcome! I'm your multi-agent social media automation assistant.\n\n*Commands:*\n/post <text> — Create a draft post\n/queue — View scheduled posts\n/trends — See trending topics\n/ideas — Generate 5 content ideas\n/events — Upcoming events\n/analytics — Performance summary\n/insights — Top AI insights\n/profile — Twitter profile info\n/calendar — 7-day schedule\n/report — Weekly performance report\n/brand — Brand profile info\n/approve — Pending reviews\n/usage — Usage & billing meters\n/status — Automation status\n/team — Meet your agent team\n/build — Team builds a new post\n/doitdeep — Antigravity deep research build\n/cancel — Clear context`,
+      `🤖 *FineTweet Command Center*\n\nWelcome! I'm your multi-agent social media automation assistant.\n\n*Commands:*\n/post <text> — Create a draft post\n/queue — View scheduled posts\n/trends — See trending topics\n/ideas — Generate 5 content ideas\n/events — Upcoming events\n/analytics — Performance summary\n/insights — Top AI insights\n/profile — Twitter profile info\n/calendar — 7-day schedule\n/report — Weekly performance report\n/brand — Brand profile info\n/approve — Pending reviews\n/usage — Usage & billing meters\n/status — Automation status\n/team — Meet your agent team\n/build — Team builds a new post\n/doitdeep — Antigravity deep research build\n/cancel — Clear context`,
       { parse_mode: "Markdown" }
     );
   });

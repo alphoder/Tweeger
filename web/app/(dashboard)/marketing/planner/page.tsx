@@ -113,7 +113,7 @@ export default function PlannerPage() {
       const totalDays = weeks * 7;
       const postsPerDay = selectedPlatforms.length;
 
-      const prompt = `You are Axon Social AI's Manager Bot. Generate a ${weeks}-week content calendar.
+      const prompt = `You are FineTweet's Manager Bot. Generate a ${weeks}-week content calendar.
 
 Platforms: ${selectedPlatforms.join(", ")}
 Industries to rotate: ${selectedIndustries.length > 0 ? selectedIndustries.join(", ") : "general"}
@@ -252,7 +252,7 @@ Return ONLY the JSON array.`;
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <CalendarClock className="h-6 w-6 text-amber-400" />
+            <CalendarClock className="h-6 w-6 text-zinc-200" />
             Content Planner
           </h1>
           <p className="text-sm text-zinc-500 mt-1">
@@ -300,7 +300,7 @@ Return ONLY the JSON array.`;
                     onClick={() => setWeeks(w)}
                     className={`flex-1 px-2 py-1.5 rounded-lg text-xs font-medium ${
                       weeks === w
-                        ? "bg-amber-500/20 text-amber-400"
+                        ? "bg-zinc-600/20 text-zinc-200"
                         : "bg-zinc-800 text-zinc-500 hover:bg-zinc-700"
                     }`}
                   >
@@ -327,7 +327,7 @@ Return ONLY the JSON array.`;
                     }
                     className={`px-2.5 py-1 rounded-md text-[10px] font-medium ${
                       selectedPlatforms.includes(p)
-                        ? "bg-amber-500/20 text-amber-400"
+                        ? "bg-zinc-600/20 text-zinc-200"
                         : "bg-zinc-800 text-zinc-500 hover:bg-zinc-700"
                     }`}
                   >
@@ -354,7 +354,7 @@ Return ONLY the JSON array.`;
                     }
                     className={`px-2.5 py-1 rounded-md text-[10px] font-medium ${
                       selectedIndustries.includes(ind)
-                        ? "bg-amber-500/20 text-amber-400"
+                        ? "bg-zinc-600/20 text-zinc-200"
                         : "bg-zinc-800 text-zinc-500 hover:bg-zinc-700"
                     }`}
                   >
@@ -368,7 +368,7 @@ Return ONLY the JSON array.`;
           <Button
             onClick={handleGenerate}
             disabled={generating}
-            className="w-full bg-amber-400 text-zinc-950 hover:opacity-90"
+            className="w-full bg-white text-black hover:bg-zinc-200 hover:opacity-90"
           >
             {generating ? (
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -388,7 +388,7 @@ Return ONLY the JSON array.`;
         <Badge className="text-[10px] bg-zinc-500/20 text-zinc-400">
           Thought Leadership 30%
         </Badge>
-        <Badge className="text-[10px] bg-amber-500/20 text-amber-400">
+        <Badge className="text-[10px] bg-zinc-600/20 text-zinc-200">
           Trends 30%
         </Badge>
       </div>
@@ -429,7 +429,7 @@ Return ONLY the JSON array.`;
               <Button
                 onClick={queueApproved}
                 size="sm"
-                className="h-7 text-xs bg-amber-500/20 text-amber-300 hover:bg-amber-500/30"
+                className="h-7 text-xs bg-zinc-600/20 text-zinc-200 hover:bg-zinc-600/30"
               >
                 <Send className="h-3 w-3 mr-1" />
                 Queue Approved ({approvedCount})

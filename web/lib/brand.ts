@@ -1,75 +1,66 @@
-// ─── AXON BRAND CONFIGURATION ────────────────────────────────────────────────
+// ─── FINETWEET BRAND CONFIGURATION ────────────────────────────────────────────────
 // Central brand config used by all agents, prompts, and content generation.
-// Includes both hardcoded defaults (Axon brand) and DB-backed functions for multi-client.
+// Includes both hardcoded defaults (personal brand) and DB-backed functions for multi-client.
 
 import { db } from "./db";
 import { brandProfiles, type BrandProfile } from "./schema";
 import { eq } from "drizzle-orm";
 
-export const BRAND_NAME = "Axon";
+export const BRAND_NAME = "Vedant Singh";
 
 export const BRAND_DESCRIPTION =
-  "AI automation agency — WhatsApp bots, workflow automation, and ad funnels for Indian businesses";
+  "Personal Twitter/X of Vedant Singh — a builder working on agentic AI products. Focused on AI/ML, blockchain, and entrepreneurship. The account is a public showcase and networking surface: sharp takes, real experiments, builder lessons from the trenches.";
 
-export const BRAND_TAGLINE =
-  "The intelligence layer your business is missing";
+export const BRAND_TAGLINE = "Building agentic AI in public";
 
 export const BRAND_TONE =
-  "Direct, no-nonsense, operator-focused. Talk about concrete problems and measurable outcomes. No fluff, no buzzwords.";
+  "A sharp builder sharing observations. Specific, opinionated, human. No corporate voice, no AI-sounding filler, no hype words.";
 
-export const BRAND_WEBSITE = "https://axon-developer-site.vercel.app/";
+export const BRAND_WEBSITE = "https://x.com/VedantSing43752";
 
 export const BRAND_INDUSTRIES = [
-  "Restaurants",
-  "Hotels",
-  "Hospitals",
-  "Real Estate",
-  "Education",
+  "AI",
+  "Machine Learning",
+  "Blockchain",
   "Startups",
+  "Developer Tools",
+  "Open Source",
 ] as const;
 
 export type BrandIndustry = (typeof BRAND_INDUSTRIES)[number];
 
 export const BRAND_INDUSTRY_PAIN_POINTS: Record<string, string> = {
-  restaurants:
-    "28% revenue lost to aggregator commissions, missed orders, manual order management, no direct customer channel",
-  hotels:
-    "Missed booking inquiries, slow guest response, manual review management, no automated upselling",
-  hospitals:
-    "40% calls go unanswered, appointment no-shows, manual patient follow-up, no automated reminders",
-  real_estate:
-    "67% leads go cold, no automated follow-up, manual property matching, slow response to inquiries",
-  education:
-    "Enrollment queries pile up, manual fee reminders, no automated student communication, admission process bottlenecks",
-  startups:
-    "Can't scale customer support, manual lead qualification, no 24/7 response capability, burning money on human ops",
+  ai: "Model costs, eval difficulty, agents that demo well but fail in production, prompt brittleness",
+  machine_learning: "Data quality beats model choice, deployment gap between notebooks and production",
+  blockchain: "UX still terrible, real utility vs speculation, infra centralization creep",
+  startups: "Distribution beats product, founder burnout, build-vs-buy decisions, fundraising theater",
+  developer_tools: "DX as a moat, docs as marketing, open source sustainability",
+  open_source: "Maintainer burnout, monetization, corporate free-riding",
 };
 
+// Content pillars chosen for engagement + networking ROI in 2026:
+// agentic AI engineering is where founder/investor attention is densest,
+// evals/production-agents is underserved expertise, build-in-public earns
+// follows, and AI x crypto infra bridges both audiences.
 export const BRAND_KEY_MESSAGES = [
-  "Go live in under 72 hours",
-  "Zero missed orders, zero missed calls",
-  "Under 2-minute response time, 24/7",
-  "28% commission savings for restaurants",
-  "40% fewer missed calls for hospitals",
-  "67% lead recovery for real estate",
-  "Works on WhatsApp — where your customers already are",
-  "No app downloads. No training. Just results.",
-  "Built for Indian businesses, by people who understand Indian businesses.",
+  "Hands-on with agentic AI: multi-agent systems, evals, production failures",
+  "Builds in public — real experiments with numbers, including what broke",
+  "Sharp, specific takes on AI/ML research as it lands, not hot-take recycling",
+  "Bridges AI and crypto infra when there is real substance",
+  "Here to connect with founders, builders, and investors",
 ];
 
 export const BRAND_HASHTAGS = [
-  "#Axon",
-  "#AIAutomation",
-  "#WhatsAppBot",
-  "#BusinessAutomation",
-  "#IndianBusiness",
-  "#NoCodeAI",
+  "#buildinpublic",
+  "#AI",
+  "#MachineLearning",
+  "#blockchain",
 ];
 
 export const BRAND_PRICING = {
-  starter: { name: "Starter", price: "₹8K/mo" },
-  growth: { name: "Growth", price: "₹18K/mo" },
-  partner: { name: "Partner", price: "₹35K/mo" },
+  starter: { name: "n/a", price: "" },
+  growth: { name: "n/a", price: "" },
+  partner: { name: "n/a", price: "" },
 };
 
 export const TARGET_PLATFORMS = [
@@ -114,7 +105,7 @@ HASHTAGS TO USE (pick 2-3 relevant ones): ${BRAND_HASHTAGS.join(", ")}`;
     if (painPoints) {
       prompt += `\n\nTARGET INDUSTRY: ${industry}
 PAIN POINTS TO ADDRESS: ${painPoints}
-Focus content on how Axon solves these specific problems.`;
+Speak to these pain points from firsthand builder experience.`;
     }
   }
 
@@ -128,7 +119,6 @@ Optimize the content for this specific platform's algorithm, culture, and audien
 - Always tie claims to real outcomes or numbers
 - Write as a confident operator, not a salesperson
 - Make every post provide VALUE — insight, tip, or perspective
-- Use Indian business context and examples when relevant
 - Keep it human, never robotic`;
 
   return prompt;
@@ -138,7 +128,7 @@ Optimize the content for this specific platform's algorithm, culture, and audien
 
 /**
  * Get the first active brand from the database.
- * Returns null if no brands exist (falls back to hardcoded Axon brand).
+ * Returns null if no brands exist (falls back to the hardcoded personal brand).
  */
 export async function getActiveBrand(): Promise<BrandProfile | null> {
   try {
@@ -282,6 +272,6 @@ export async function getSmartBrandPrompt(
     return getBrandPromptFromProfile(activeBrand, platform, industry);
   }
 
-  // Fall back to hardcoded Axon brand
+  // Fall back to the hardcoded personal brand
   return getBrandPrompt(platform, industry);
 }

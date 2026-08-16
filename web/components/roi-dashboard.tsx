@@ -237,7 +237,7 @@ export function ROIDashboard() {
       <Card className="border-zinc-800 bg-zinc-900/50">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Target className="h-4 w-4 text-amber-400" />
+            <Target className="h-4 w-4 text-zinc-200" />
             Signal Targeting Performance
           </CardTitle>
         </CardHeader>
@@ -258,7 +258,7 @@ export function ROIDashboard() {
                         s.rate >= 0.7
                           ? "bg-emerald-500"
                           : s.rate >= 0.4
-                          ? "bg-amber-500"
+                          ? "bg-zinc-600"
                           : "bg-red-500"
                       }`}
                       style={{ width: `${Math.max(s.rate * 100, 2)}%` }}
@@ -295,7 +295,7 @@ export function ROIDashboard() {
                     {change.autoApplied ? (
                       <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                     ) : (
-                      <AlertTriangle className="h-4 w-4 text-amber-400" />
+                      <AlertTriangle className="h-4 w-4 text-zinc-200" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -310,7 +310,7 @@ export function ROIDashboard() {
                         className={`text-[9px] ${
                           change.confidence >= 0.7
                             ? "border-emerald-500/30 text-emerald-400"
-                            : "border-amber-500/30 text-amber-400"
+                            : "border-zinc-600/30 text-zinc-200"
                         }`}
                       >
                         {(change.confidence * 100).toFixed(0)}% confidence

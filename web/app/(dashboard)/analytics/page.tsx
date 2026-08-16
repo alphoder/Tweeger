@@ -211,13 +211,13 @@ export default function AnalyticsPage() {
           label="Avg Engagement"
           value="—"
           icon={BarChart3}
-          color="text-amber-400"
+          color="text-zinc-200"
         />
         <StatCard
           label="Total Reach"
           value="—"
           icon={Eye}
-          color="text-amber-400"
+          color="text-zinc-200"
         />
       </div>
 

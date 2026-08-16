@@ -102,7 +102,7 @@ export function ScheduleDialog({
     c >= 0.8
       ? "text-green-400"
       : c >= 0.6
-      ? "text-amber-400"
+      ? "text-zinc-200"
       : "text-zinc-400";
 
   return (
@@ -229,7 +229,7 @@ export function ScheduleDialog({
               <Button
                 onClick={handleSchedule}
                 disabled={!selectedTime && (!manualDate || !manualTime)}
-                className="flex-1 bg-amber-400 text-zinc-950"
+                className="flex-1 bg-white text-black hover:bg-zinc-200 "
               >
                 <Clock className="h-4 w-4 mr-2" />
                 Schedule

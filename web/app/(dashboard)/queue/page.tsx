@@ -160,7 +160,7 @@ export default function QueuePage() {
         </div>
         <a
           href="/content"
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 bg-amber-400 text-zinc-950 hover:opacity-90"
+          className="inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 bg-white text-black hover:bg-zinc-200 hover:opacity-90"
         >
           <Zap className="h-4 w-4 mr-2" />
           Create Post

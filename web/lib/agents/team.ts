@@ -277,6 +277,9 @@ export async function runTeamPipeline(opts: {
     `Draft tweet:\n"${draft1.trim()}"\n\nTopic: ${research.topic}. Score it 1-10 for "would a real sharp human post this". Return JSON: {"score": number, "verdict": string, "fixes": string[]}`,
     { agent: "manager", action: "team_critique", temperature: 0.4, model }
   );
+  // Model output isn't guaranteed to honor the JSON shape — normalize
+  if (!Array.isArray(critique.fixes)) critique.fixes = critique.fixes ? [String(critique.fixes)] : [];
+  if (typeof critique.score !== "number") critique.score = 7;
   transcript.push(speak(byKey.critic, `${critique.score}/10. ${critique.verdict}\nFixes: ${critique.fixes.join(" · ") || "none"}`));
   await postToFeed(byKey.critic, `${critique.score}/10 on the draft. ${critique.verdict}`).catch(() => {});
 
@@ -285,7 +288,7 @@ export async function runTeamPipeline(opts: {
   if (critique.score < 8 && critique.fixes.length > 0) {
     const draft2 = await generate(
       byKey.copywriter.systemPrompt,
-      `Your draft:\n"${draft1.trim()}"\n\nDev's critique (${critique.score}/10): ${critique.verdict}\nFixes demanded: ${critique.fixes.join("; ")}\n\nRewrite the tweet applying the fixes. Keep it under 280 chars. Return only the tweet text.`,
+      `Your draft:\n"${draft1.trim()}"\n\nMars's critique (${critique.score}/10): ${critique.verdict}\nFixes demanded: ${critique.fixes.join("; ")}\n\nRewrite the tweet applying the fixes. Keep it under 280 chars. Return only the tweet text.`,
       { agent: "twitter", action: "team_revise", temperature: 0.9, model }
     );
     finalTweet = draft2.trim();

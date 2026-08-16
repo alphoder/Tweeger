@@ -87,7 +87,7 @@ export default function CompetitorsPage() {
 
     setAnalyzing(true);
     try {
-      const prompt = `You are Axon Social AI's Competitive Intelligence agent. Analyze a competitor's social media strategy.
+      const prompt = `You are FineTweet's Competitive Intelligence agent. Analyze a competitor's social media strategy.
 
 Competitor: ${formName} (@${formHandle}) on ${formPlatform}
 
@@ -171,7 +171,7 @@ Return ONLY the JSON.`;
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <Users className="h-6 w-6 text-amber-400" />
+            <Users className="h-6 w-6 text-zinc-200" />
             Competitor Intelligence
           </h1>
           <p className="text-sm text-zinc-500 mt-1">
@@ -180,7 +180,7 @@ Return ONLY the JSON.`;
         </div>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-amber-400 text-zinc-950 hover:opacity-90"
+          className="bg-white text-black hover:bg-zinc-200 hover:opacity-90"
         >
           <Plus className="h-4 w-4 mr-2" />
           Analyze Competitor
@@ -189,11 +189,11 @@ Return ONLY the JSON.`;
 
       {/* Add Form */}
       {showAddForm && (
-        <Card className="border-amber-500/30 bg-amber-950/10">
+        <Card className="border-zinc-600/30 bg-zinc-600/10">
           <CardContent className="p-5 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-semibold flex items-center gap-2">
-                <Search className="h-4 w-4 text-amber-400" />
+                <Search className="h-4 w-4 text-zinc-200" />
                 New Competitor Analysis
               </h3>
               <button
@@ -210,14 +210,14 @@ Return ONLY the JSON.`;
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
                 placeholder="Company Name"
-                className="px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-amber-500/50"
+                className="px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600/50"
               />
               <input
                 type="text"
                 value={formHandle}
                 onChange={(e) => setFormHandle(e.target.value)}
                 placeholder="@handle"
-                className="px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-amber-500/50"
+                className="px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600/50"
               />
               <div className="flex gap-2">
                 {["twitter", "linkedin", "instagram"].map((p) => (
@@ -226,7 +226,7 @@ Return ONLY the JSON.`;
                     onClick={() => setFormPlatform(p)}
                     className={`flex-1 px-2 py-2 rounded-lg text-xs font-medium ${
                       formPlatform === p
-                        ? "bg-amber-500/20 text-amber-400"
+                        ? "bg-zinc-600/20 text-zinc-200"
                         : "bg-zinc-800 text-zinc-500"
                     }`}
                   >
@@ -239,7 +239,7 @@ Return ONLY the JSON.`;
             <Button
               onClick={handleAnalyze}
               disabled={analyzing}
-              className="w-full bg-amber-400 text-zinc-950"
+              className="w-full bg-white text-black hover:bg-zinc-200 "
             >
               {analyzing ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -317,8 +317,8 @@ Return ONLY the JSON.`;
                       title="Recommendations"
                       items={comp.analysis.recommendations}
                       icon={Lightbulb}
-                      color="text-amber-400"
-                      bgColor="bg-amber-500/10"
+                      color="text-zinc-200"
+                      bgColor="bg-zinc-600/10"
                     />
                   </div>
                 )}
@@ -380,7 +380,7 @@ Return ONLY the JSON.`;
 
                 <a
                   href="/content"
-                  className="inline-flex items-center justify-center w-full rounded-md text-xs font-medium py-2 bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition-colors"
+                  className="inline-flex items-center justify-center w-full rounded-md text-xs font-medium py-2 bg-zinc-600/20 text-zinc-200 hover:bg-zinc-600/30 transition-colors"
                 >
                   <TrendingUp className="h-3.5 w-3.5 mr-1.5" />
                   Generate Counter-Content

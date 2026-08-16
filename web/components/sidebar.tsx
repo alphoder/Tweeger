@@ -83,7 +83,7 @@ const NAV_ITEMS: NavItem[] = [
 const PLATFORMS = [
   { name: "Twitter", connected: true, color: "bg-zinc-500" },
   { name: "LinkedIn", connected: false, color: "bg-blue-600" },
-  { name: "Instagram", connected: false, color: "bg-amber-500" },
+  { name: "Instagram", connected: false, color: "bg-zinc-600" },
   { name: "Facebook", connected: false, color: "bg-blue-500" },
 ];
 
@@ -110,15 +110,15 @@ function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
     <div className="flex h-full flex-col">
       {/* Logo */}
       <div className="flex items-center gap-3 px-4 py-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-400 text-zinc-950 shadow-lg shadow-zinc-500/20">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-black hover:bg-zinc-200 shadow-lg shadow-zinc-500/20">
           <Zap className="h-5 w-5 text-white" />
         </div>
         <div>
           <h1 className="text-lg font-bold tracking-tight text-zinc-50">
-            Axon
+            FineTweet
           </h1>
           <p className="text-[11px] font-medium tracking-widest text-zinc-400 uppercase">
-            Social AI
+            Agent Team
           </p>
         </div>
       </div>
@@ -249,9 +249,9 @@ export function Sidebar() {
 
         <div className="flex items-center gap-2 ml-3">
           <Zap className="h-5 w-5 text-zinc-400" />
-          <span className="font-bold text-zinc-50">Axon</span>
+          <span className="font-bold text-zinc-50">FineTweet</span>
           <span className="text-[10px] font-medium tracking-widest text-zinc-400 uppercase">
-            Social AI
+            Agent Team
           </span>
         </div>
       </div>

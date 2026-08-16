@@ -91,7 +91,7 @@ const INPUT_METHODS = [
 const PLATFORMS = [
   { key: "twitter", label: "Twitter/X", emoji: "𝕏", color: "bg-zinc-500" },
   { key: "linkedin", label: "LinkedIn", emoji: "in", color: "bg-blue-600" },
-  { key: "instagram", label: "Instagram", emoji: "📷", color: "bg-amber-500" },
+  { key: "instagram", label: "Instagram", emoji: "📷", color: "bg-zinc-600" },
   { key: "facebook", label: "Facebook", emoji: "f", color: "bg-blue-500" },
 ];
 
@@ -286,7 +286,7 @@ export default function BrandSetupPage() {
                         className={`h-2 w-2 rounded-full ${
                           p === "twitter" ? "bg-zinc-500" :
                           p === "linkedin" ? "bg-blue-600" :
-                          p === "instagram" ? "bg-amber-500" :
+                          p === "instagram" ? "bg-zinc-600" :
                           "bg-blue-500"
                         }`}
                         title={p}
@@ -372,7 +372,7 @@ export default function BrandSetupPage() {
             <Button
               onClick={handleExtract}
               disabled={!inputValue.trim()}
-              className="w-full bg-amber-400 text-zinc-950 hover:bg-amber-300 text-white border-0"
+              className="w-full bg-white text-black hover:bg-zinc-200  border-0"
             >
               <Sparkles className="h-4 w-4 mr-2" />
               Extract Brand with AI
@@ -387,7 +387,7 @@ export default function BrandSetupPage() {
         <Card className="bg-zinc-900/50 border-zinc-800">
           <CardContent className="p-12 flex flex-col items-center justify-center text-center">
             <div className="relative">
-              <div className="h-16 w-16 rounded-2xl bg-amber-400 text-zinc-950 flex items-center justify-center animate-pulse">
+              <div className="h-16 w-16 rounded-2xl bg-white text-black hover:bg-zinc-200 flex items-center justify-center animate-pulse">
                 <Sparkles className="h-8 w-8 text-zinc-400" />
               </div>
               <Loader2 className="h-6 w-6 text-zinc-400 animate-spin absolute -top-1 -right-1" />
@@ -486,7 +486,7 @@ export default function BrandSetupPage() {
           <Card className="bg-zinc-900/50 border-zinc-800">
             <CardHeader className="pb-3">
               <CardTitle className="text-base text-zinc-100 flex items-center gap-2">
-                <Palette className="h-4 w-4 text-amber-400" />
+                <Palette className="h-4 w-4 text-zinc-200" />
                 Tone & Voice
               </CardTitle>
             </CardHeader>
@@ -592,7 +592,7 @@ export default function BrandSetupPage() {
           <Card className="bg-zinc-900/50 border-zinc-800">
             <CardHeader className="pb-3">
               <CardTitle className="text-base text-zinc-100 flex items-center gap-2">
-                <Tags className="h-4 w-4 text-amber-400" />
+                <Tags className="h-4 w-4 text-zinc-200" />
                 Keywords & Themes
               </CardTitle>
             </CardHeader>
@@ -668,7 +668,7 @@ export default function BrandSetupPage() {
           <Card className="bg-zinc-900/50 border-zinc-800">
             <CardHeader className="pb-3">
               <CardTitle className="text-base text-zinc-100 flex items-center gap-2">
-                <Target className="h-4 w-4 text-amber-400" />
+                <Target className="h-4 w-4 text-zinc-200" />
                 Content Pillars
               </CardTitle>
             </CardHeader>
@@ -682,7 +682,7 @@ export default function BrandSetupPage() {
                     </div>
                     <div className="h-1.5 rounded-full bg-zinc-800 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-amber-400 text-zinc-950 "
+                        className="h-full rounded-full bg-white text-black hover:bg-zinc-200 "
                         style={{ width: `${pillar.percentage}%` }}
                       />
                     </div>
@@ -788,7 +788,7 @@ export default function BrandSetupPage() {
             </Button>
             <Button
               onClick={handleSave}
-              className="flex-1 bg-amber-400 text-zinc-950 hover:bg-amber-300 text-white border-0"
+              className="flex-1 bg-white text-black hover:bg-zinc-200  border-0"
             >
               <Save className="h-4 w-4 mr-2" />
               Save Brand & Activate AI Agents

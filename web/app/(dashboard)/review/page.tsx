@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ReviewCard, type ReviewItem } from "@/components/review/review-card";
+import { agentColor } from "@/lib/agents/colors";
 
 // ─── REVIEW DECK PAGE ────────────────────────────────────────────────────────
 // Responsive: mobile swipe deck vs desktop carousel with keyboard shortcuts.
@@ -323,7 +324,7 @@ export default function ReviewDeckPage() {
             </p>
             <Button
               onClick={() => window.location.href = "/content"}
-              className="mt-6 bg-amber-400 text-zinc-950 hover:bg-amber-300 text-white border-0"
+              className="mt-6 bg-white text-black hover:bg-zinc-200  border-0"
             >
               <Sparkles className="h-4 w-4 mr-2" />
               Generate Content Now
@@ -414,7 +415,7 @@ export default function ReviewDeckPage() {
         <Card className="bg-zinc-900/50 border-zinc-800">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-3">
-              <MessageSquare className="h-4 w-4 text-amber-400" />
+              <MessageSquare className="h-4 w-4 text-zinc-200" />
               <span className="text-sm font-medium text-zinc-200">Edit & Discuss</span>
               <button
                 onClick={() => setEditMode(false)}
@@ -435,7 +436,7 @@ export default function ReviewDeckPage() {
                 onClick={handleSendEdit}
                 disabled={editLoading || !editMessage.trim()}
                 size="sm"
-                className="bg-amber-600 hover:bg-amber-500 text-white shrink-0"
+                className="bg-zinc-600 hover:bg-zinc-600 text-white shrink-0"
               >
                 {editLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -476,8 +477,8 @@ export default function ReviewDeckPage() {
           size="icon"
           className={`h-12 w-12 rounded-full border shadow-lg ${
             editMode
-              ? "bg-amber-500/30 border-amber-500/50 text-amber-300"
-              : "bg-amber-500/20 border-amber-500/30 text-amber-400 hover:bg-amber-500/30"
+              ? "bg-zinc-600/30 border-zinc-600/50 text-zinc-200"
+              : "bg-zinc-600/20 border-zinc-600/30 text-zinc-200 hover:bg-zinc-600/30"
           }`}
         >
           <ArrowUp className="h-5 w-5" />
@@ -597,12 +598,12 @@ function TeamTranscript({ draftId }: { draftId: number }) {
             ) : (
               messages.map((m, i) => (
                 <div key={i} className="flex gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-base">
+                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-base ring-1 ${agentColor(m.agentKey).bg} ${agentColor(m.agentKey).ring}`}>
                     {m.emoji}
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm">
-                      <span className="font-semibold text-zinc-200">{m.name}</span>{" "}
+                      <span className={`font-semibold ${agentColor(m.agentKey).text}`}>{m.name}</span>{" "}
                       <span className="text-xs text-zinc-500">{m.designation}</span>
                     </p>
                     <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-zinc-400">

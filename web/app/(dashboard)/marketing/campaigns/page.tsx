@@ -45,7 +45,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   draft: { label: "Draft", color: "bg-zinc-700 text-zinc-300" },
   active: { label: "Active", color: "bg-emerald-500/20 text-emerald-400" },
   completed: { label: "Completed", color: "bg-blue-500/20 text-blue-400" },
-  paused: { label: "Paused", color: "bg-amber-500/20 text-amber-400" },
+  paused: { label: "Paused", color: "bg-zinc-600/20 text-zinc-200" },
   cancelled: { label: "Cancelled", color: "bg-red-500/20 text-red-400" },
 };
 
@@ -122,7 +122,7 @@ export default function CampaignsPage() {
         </div>
         <Button
           onClick={() => setShowBuilder(true)}
-          className="bg-amber-400 text-zinc-950 hover:opacity-90"
+          className="bg-white text-black hover:bg-zinc-200 hover:opacity-90"
         >
           <Plus className="h-4 w-4 mr-2" />
           New Campaign
@@ -244,7 +244,7 @@ export default function CampaignsPage() {
                     {camp.status === "active" && (
                       <button
                         onClick={() => updateStatus(camp.id, "paused")}
-                        className="flex-1 inline-flex items-center justify-center rounded-md text-[10px] font-medium py-1.5 bg-amber-500/20 text-amber-300 hover:bg-amber-500/30"
+                        className="flex-1 inline-flex items-center justify-center rounded-md text-[10px] font-medium py-1.5 bg-zinc-600/20 text-zinc-200 hover:bg-zinc-600/30"
                       >
                         <Pause className="h-3 w-3 mr-1" />
                         Pause

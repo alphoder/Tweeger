@@ -32,7 +32,7 @@ interface PlatformTrends {
 const PLATFORMS = [
   { key: "twitter", label: "Twitter / X", icon: "𝕏", color: "text-zinc-400" },
   { key: "linkedin", label: "LinkedIn", icon: "in", color: "text-blue-400" },
-  { key: "instagram", label: "Instagram", icon: "📷", color: "text-amber-400" },
+  { key: "instagram", label: "Instagram", icon: "📷", color: "text-zinc-200" },
   { key: "facebook", label: "Facebook", icon: "f", color: "text-blue-500" },
 ];
 
@@ -118,10 +118,10 @@ export default function TrendsPage() {
 
       {/* Cross-platform trends */}
       {crossPlatformTrends.length > 0 && (
-        <Card className="border-amber-500/30 bg-amber-500/5">
+        <Card className="border-zinc-600/30 bg-zinc-600/5">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-amber-400" />
+              <Sparkles className="h-4 w-4 text-zinc-200" />
               Trending Everywhere
             </CardTitle>
           </CardHeader>

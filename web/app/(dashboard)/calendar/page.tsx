@@ -38,7 +38,7 @@ interface CalendarPost {
 const PLATFORM_COLORS: Record<string, string> = {
   twitter: "bg-zinc-500",
   linkedin: "bg-blue-500",
-  instagram: "bg-amber-500",
+  instagram: "bg-zinc-600",
   facebook: "bg-blue-600",
 };
 
@@ -193,7 +193,7 @@ export default function CalendarPage() {
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <CalendarIcon className="h-6 w-6 text-amber-400" />
+            <CalendarIcon className="h-6 w-6 text-zinc-200" />
             Scheduling Calendar
           </h1>
           <p className="text-sm text-zinc-500 mt-1">

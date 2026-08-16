@@ -36,7 +36,7 @@ const ANGLE_COLORS: Record<string, string> = {
   "ROI-Focused": "text-emerald-400 bg-emerald-500/20",
   "Fear/FOMO": "text-red-400 bg-red-500/20",
   "Social Proof": "text-blue-400 bg-blue-500/20",
-  "Problem-Solution": "text-amber-400 bg-amber-500/20",
+  "Problem-Solution": "text-zinc-200 bg-zinc-600/20",
 };
 
 const PLATFORM_LIMITS: Record<string, number> = {

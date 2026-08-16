@@ -212,7 +212,7 @@ export default function ImageStudioPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-          <ImageIcon className="h-6 w-6 text-amber-400" />
+          <ImageIcon className="h-6 w-6 text-zinc-200" />
           Image Studio
         </h1>
         <p className="text-sm text-zinc-500 mt-1">
@@ -224,7 +224,7 @@ export default function ImageStudioPage() {
       <Card className="border-zinc-800 bg-zinc-900/50">
         <CardHeader>
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Wand2 className="h-4 w-4 text-amber-400" />
+            <Wand2 className="h-4 w-4 text-zinc-200" />
             AI Image Generator
           </CardTitle>
         </CardHeader>
@@ -279,7 +279,7 @@ export default function ImageStudioPage() {
             <Button
               onClick={handleGenerate}
               disabled={generating || !puterReady}
-              className="bg-amber-400 text-zinc-950"
+              className="bg-white text-black hover:bg-zinc-200 "
             >
               {generating ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -427,7 +427,7 @@ function ImageCard({
   onDelete: (id: number) => void;
 }) {
   const sourceBadge = {
-    ai_generated: { label: "AI", className: "bg-amber-500/20 text-amber-400" },
+    ai_generated: { label: "AI", className: "bg-zinc-600/20 text-zinc-200" },
     uploaded: { label: "Upload", className: "bg-blue-500/20 text-blue-400" },
     researched: { label: "Research", className: "bg-zinc-500/20 text-zinc-400" },
     stock: { label: "Stock", className: "bg-zinc-500/20 text-zinc-400" },

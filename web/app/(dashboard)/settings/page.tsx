@@ -49,12 +49,12 @@ interface AgentInfo {
 export default function SettingsPage() {
   const [connections, setConnections] = useState<ConnectionStatus[]>([
     { name: "Twitter / X", status: "disconnected", icon: Globe, color: "text-zinc-400" },
-    { name: "LinkedIn", status: "disconnected", icon: Globe, color: "text-amber-400" },
-    { name: "Instagram", status: "disconnected", icon: Globe, color: "text-amber-400" },
+    { name: "LinkedIn", status: "disconnected", icon: Globe, color: "text-zinc-200" },
+    { name: "Instagram", status: "disconnected", icon: Globe, color: "text-zinc-200" },
     { name: "Facebook", status: "disconnected", icon: Globe, color: "text-blue-400" },
     { name: "Neon Postgres", status: "disconnected", icon: Shield, color: "text-emerald-400" },
-    { name: "Google Gemini", status: "disconnected", icon: Brain, color: "text-amber-400" },
-    { name: "Gemini AI", status: "disconnected", icon: Zap, color: "text-amber-400" },
+    { name: "Google Gemini", status: "disconnected", icon: Brain, color: "text-zinc-200" },
+    { name: "Gemini AI", status: "disconnected", icon: Zap, color: "text-zinc-200" },
   ]);
 
   const [testingAll, setTestingAll] = useState(false);
@@ -283,13 +283,13 @@ export default function SettingsPage() {
       <Card className="border-zinc-800 bg-zinc-900/50">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Palette className="h-4 w-4 text-amber-400" />
+            <Palette className="h-4 w-4 text-zinc-200" />
             Brand Configuration
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <BrandField label="Brand Name" value="Axon Social AI" />
+            <BrandField label="Brand Name" value="FineTweet" />
             <BrandField label="Target Market" value="Indian Businesses" />
             <BrandField
               label="Industries"
@@ -473,7 +473,7 @@ export default function SettingsPage() {
         <Card className="border-zinc-800 bg-zinc-900/50">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Brain className="h-4 w-4 text-amber-400" />
+              <Brain className="h-4 w-4 text-zinc-200" />
               AI Configuration
             </CardTitle>
           </CardHeader>
@@ -485,7 +485,7 @@ export default function SettingsPage() {
               <select
                 value={defaultModel}
                 onChange={(e) => setDefaultModel(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 focus:outline-none focus:border-amber-500/50"
+                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 focus:outline-none focus:border-zinc-600/50"
               >
                 <option value="Gemini Flash">Gemini Flash (Fast)</option>
                 <option value="GPT-4.1 Nano">GPT-4.1 Nano</option>

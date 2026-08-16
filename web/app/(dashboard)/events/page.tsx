@@ -26,10 +26,10 @@ const CATEGORY_CONFIG: Record<
 > = {
   industry: { label: "Industry", color: "text-blue-400", dotColor: "bg-blue-400" },
   sale: { label: "Sale", color: "text-emerald-400", dotColor: "bg-emerald-400" },
-  product_launch: { label: "Launch", color: "text-amber-400", dotColor: "bg-amber-400" },
-  cultural: { label: "Cultural", color: "text-amber-400", dotColor: "bg-amber-400" },
+  product_launch: { label: "Launch", color: "text-zinc-200", dotColor: "bg-zinc-600" },
+  cultural: { label: "Cultural", color: "text-zinc-200", dotColor: "bg-zinc-600" },
   webinar: { label: "Webinar", color: "text-zinc-400", dotColor: "bg-zinc-400" },
-  conference: { label: "Conference", color: "text-amber-400", dotColor: "bg-amber-400" },
+  conference: { label: "Conference", color: "text-zinc-200", dotColor: "bg-zinc-600" },
 };
 
 const CATEGORY_FILTERS = [
@@ -217,7 +217,7 @@ export default function EventsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <CalendarDays className="h-6 w-6 text-amber-400" />
+            <CalendarDays className="h-6 w-6 text-zinc-200" />
             Events
           </h1>
           <p className="text-sm text-zinc-500 mt-1">
@@ -235,7 +235,7 @@ export default function EventsPage() {
           </Button>
           <Button
             onClick={() => setShowAddDialog(true)}
-            className="bg-amber-400 text-zinc-950 hover:opacity-90"
+            className="bg-white text-black hover:bg-zinc-200 hover:opacity-90"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Event
@@ -327,7 +327,7 @@ export default function EventsPage() {
                         key={day}
                         className={`h-16 rounded-lg p-1 text-xs transition-colors ${
                           isToday
-                            ? "bg-zinc-700/50 ring-1 ring-amber-500/50"
+                            ? "bg-zinc-700/50 ring-1 ring-zinc-600/50"
                             : dayEvents.length > 0
                             ? "bg-zinc-800/50"
                             : "bg-zinc-900/30"
@@ -335,7 +335,7 @@ export default function EventsPage() {
                       >
                         <span
                           className={`text-[10px] font-medium ${
-                            isToday ? "text-amber-400" : "text-zinc-400"
+                            isToday ? "text-zinc-200" : "text-zinc-400"
                           }`}
                         >
                           {day}
@@ -386,7 +386,7 @@ export default function EventsPage() {
             <Card className="border-zinc-800 bg-zinc-900/50">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-amber-400" />
+                  <Zap className="h-4 w-4 text-zinc-200" />
                   Upcoming Events
                 </CardTitle>
               </CardHeader>
@@ -484,7 +484,7 @@ export default function EventsPage() {
 
                         <a
                           href="/content"
-                          className="inline-flex items-center justify-center w-full rounded-md text-[10px] font-medium py-1.5 bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition-colors"
+                          className="inline-flex items-center justify-center w-full rounded-md text-[10px] font-medium py-1.5 bg-zinc-600/20 text-zinc-200 hover:bg-zinc-600/30 transition-colors"
                         >
                           <Sparkles className="h-3 w-3 mr-1" />
                           Generate Content
@@ -513,7 +513,7 @@ export default function EventsPage() {
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl w-full max-w-lg p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold flex items-center gap-2">
-                <Plus className="h-5 w-5 text-amber-400" />
+                <Plus className="h-5 w-5 text-zinc-200" />
                 Add Custom Event
               </h2>
               <button
@@ -534,7 +534,7 @@ export default function EventsPage() {
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
                 placeholder="e.g., Summer Product Launch"
-                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-amber-500/50"
+                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600/50"
               />
             </div>
 
@@ -545,7 +545,7 @@ export default function EventsPage() {
                 type="date"
                 value={formDate}
                 onChange={(e) => setFormDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 focus:outline-none focus:border-amber-500/50"
+                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 focus:outline-none focus:border-zinc-600/50"
               />
             </div>
 
@@ -581,7 +581,7 @@ export default function EventsPage() {
                 onChange={(e) => setFormDescription(e.target.value)}
                 placeholder="Brief description of the event..."
                 rows={2}
-                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 resize-none focus:outline-none focus:border-amber-500/50"
+                className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 resize-none focus:outline-none focus:border-zinc-600/50"
               />
             </div>
 
@@ -604,7 +604,7 @@ export default function EventsPage() {
                     }
                     className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
                       formIndustries.includes(ind)
-                        ? "bg-amber-500/20 text-amber-300"
+                        ? "bg-zinc-600/20 text-zinc-200"
                         : "bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800"
                     }`}
                   >
@@ -625,7 +625,7 @@ export default function EventsPage() {
               </Button>
               <Button
                 onClick={handleAddEvent}
-                className="flex-1 bg-amber-400 text-zinc-950 hover:opacity-90"
+                className="flex-1 bg-white text-black hover:bg-zinc-200 hover:opacity-90"
               >
                 Create Event
               </Button>

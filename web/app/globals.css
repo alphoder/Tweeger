@@ -82,39 +82,40 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Warm charcoal + brass — instrument-panel palette, no AI-violet */
+/* Codex-style monochrome: near-black surfaces, off-white type, white
+   primary actions. Color comes only from the agents and semantics. */
 .dark {
-  --background: oklch(0.155 0.006 75);
-  --foreground: oklch(0.955 0.008 85);
-  --card: oklch(0.195 0.007 75);
-  --card-foreground: oklch(0.955 0.008 85);
-  --popover: oklch(0.195 0.007 75);
-  --popover-foreground: oklch(0.955 0.008 85);
-  --primary: oklch(0.83 0.155 82); /* brass */
-  --primary-foreground: oklch(0.18 0.01 75);
-  --secondary: oklch(0.26 0.008 75);
-  --secondary-foreground: oklch(0.955 0.008 85);
-  --muted: oklch(0.26 0.008 75);
-  --muted-foreground: oklch(0.69 0.01 80);
-  --accent: oklch(0.26 0.008 75);
-  --accent-foreground: oklch(0.955 0.008 85);
+  --background: oklch(0.145 0 0); /* ~#0d0d0d */
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.185 0 0); /* ~#171717 */
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.185 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.97 0 0); /* white action buttons */
+  --primary-foreground: oklch(0.145 0 0);
+  --secondary: oklch(0.24 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.24 0 0);
+  --muted-foreground: oklch(0.68 0 0);
+  --accent: oklch(0.24 0 0);
+  --accent-foreground: oklch(0.97 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.98 0.01 85 / 10%);
-  --input: oklch(0.98 0.01 85 / 15%);
-  --ring: oklch(0.83 0.155 82 / 60%);
-  --chart-1: oklch(0.83 0.155 82);
-  --chart-2: oklch(0.72 0.12 60);
-  --chart-3: oklch(0.62 0.09 45);
-  --chart-4: oklch(0.78 0.02 80);
-  --chart-5: oklch(0.55 0.01 75);
-  --sidebar: oklch(0.17 0.006 75);
-  --sidebar-foreground: oklch(0.955 0.008 85);
-  --sidebar-primary: oklch(0.83 0.155 82);
-  --sidebar-primary-foreground: oklch(0.18 0.01 75);
-  --sidebar-accent: oklch(0.26 0.008 75);
-  --sidebar-accent-foreground: oklch(0.955 0.008 85);
-  --sidebar-border: oklch(0.98 0.01 85 / 10%);
-  --sidebar-ring: oklch(0.83 0.155 82 / 60%);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 13%);
+  --ring: oklch(0.97 0 0 / 40%);
+  --chart-1: oklch(0.75 0.14 250); /* saturn blue */
+  --chart-2: oklch(0.76 0.15 160); /* mercury green */
+  --chart-3: oklch(0.74 0.16 20);  /* mars red */
+  --chart-4: oklch(0.78 0.13 350); /* venus pink */
+  --chart-5: oklch(0.72 0.14 300); /* pluto purple */
+  --sidebar: oklch(0.165 0 0);
+  --sidebar-foreground: oklch(0.97 0 0);
+  --sidebar-primary: oklch(0.97 0 0);
+  --sidebar-primary-foreground: oklch(0.145 0 0);
+  --sidebar-accent: oklch(0.24 0 0);
+  --sidebar-accent-foreground: oklch(0.97 0 0);
+  --sidebar-border: oklch(1 0 0 / 9%);
+  --sidebar-ring: oklch(0.97 0 0 / 40%);
 }
 
 @layer base {
