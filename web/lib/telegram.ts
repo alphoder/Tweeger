@@ -105,7 +105,7 @@ function registerHandlers(bot: Bot) {
     if (!isAdmin(ctx)) return;
 
     await ctx.reply(
-      `🤖 *FineTweet Command Center*\n\nWelcome! I'm your multi-agent social media automation assistant.\n\n*Commands:*\n/post <text> — Create a draft post\n/queue — View scheduled posts\n/trends — See trending topics\n/ideas — Generate 5 content ideas\n/events — Upcoming events\n/analytics — Performance summary\n/insights — Top AI insights\n/profile — Twitter profile info\n/calendar — 7-day schedule\n/report — Weekly performance report\n/brand — Brand profile info\n/approve — Pending reviews\n/usage — Usage & billing meters\n/status — Automation status\n/team — Meet your agent team\n/build — Team builds a new post\n/doitdeep — Antigravity deep research build\n/cancel — Clear context`,
+      `🤖 *FineTweet Command Center*\n\nWelcome! I'm your multi-agent social media automation assistant.\n\n*Commands:*\n/post <text> — Create a draft post\n/queue — View scheduled posts\n/trends — See trending topics\n/ideas — Generate 5 content ideas\n/events — Upcoming events\n/analytics — Performance summary\n/insights — Top AI insights\n/profile — Twitter profile info\n/calendar — 7-day schedule\n/report — Weekly performance report\n/brand — Brand profile info\n/approve — Pending reviews\n/usage — Usage & billing meters\n/status — Automation status\n/team — Meet your agent team\n/build — Team builds a new post\n/doitdeep — Antigravity deep research build\n/idol <name> — Team studies a creator you admire\n/idols — List role models\n/cancel — Clear context\n\n*Talk to anyone directly:*\n/jupiter /saturn /mercury /venus /mars /pluto <message>\nOr just type — Jupiter routes it.`,
       { parse_mode: "Markdown" }
     );
   });
@@ -886,6 +886,80 @@ function generateProgressBar(percent: number): string {
   const filled = Math.round(percent / 10);
   const empty = 10 - filled;
   return "█".repeat(filled) + "░".repeat(empty) + ` ${percent.toFixed(0)}%`;
+}
+
+const PLATFORM_LABEL: Record<string, string> = {
+  twitter: "𝕏 Twitter",
+  linkedin: "💼 LinkedIn",
+  instagram: "📷 Instagram",
+  facebook: "📘 Facebook",
+};
+
+/**
+ * Deliver a due post as copy-paste blocks — one message per platform so each
+ * code block is a clean tap-to-copy in Telegram. No auto-posting.
+ */
+export async function sendPostPackage(item: {
+  id: number;
+  text: string;
+  imagePath?: string | null;
+  pack?: {
+    twitter?: string;
+    linkedin?: string;
+    instagram?: string;
+    facebook?: string;
+    imagePrompt?: string;
+    videoPrompt?: string;
+  } | null;
+}): Promise<void> {
+  const adminId = process.env.TELEGRAM_ADMIN_ID;
+  if (!adminId) throw new Error("TELEGRAM_ADMIN_ID not set");
+  const bot = getBot();
+
+  await bot.api.sendMessage(
+    adminId,
+    `⏰ *Time to post* — copy each version into its app:`,
+    { parse_mode: "Markdown" }
+  );
+
+  // Attached image first, if the boss provided one
+  if (item.imagePath?.startsWith("data:")) {
+    try {
+      const base64 = item.imagePath.split(",")[1];
+      const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+      const { InputFile } = await import("grammy");
+      await bot.api.sendPhoto(adminId, new InputFile(bytes, "post.jpg"), {
+        caption: "Attach this image to the post",
+      });
+    } catch (err) {
+      console.warn("[Telegram] Could not send package image:", err);
+    }
+  }
+
+  const pack = item.pack || {};
+  const versions: [string, string | undefined][] = [
+    ["twitter", pack.twitter || item.text],
+    ["linkedin", pack.linkedin],
+    ["instagram", pack.instagram],
+    ["facebook", pack.facebook],
+  ];
+  for (const [platform, text] of versions) {
+    if (!text) continue;
+    await bot.api.sendMessage(
+      adminId,
+      `${PLATFORM_LABEL[platform]}\n\`\`\`\n${text.slice(0, 3500)}\n\`\`\``,
+      { parse_mode: "Markdown" }
+    );
+  }
+
+  if (pack.imagePrompt || pack.videoPrompt) {
+    await bot.api.sendMessage(
+      adminId,
+      (pack.imagePrompt ? `🎨 Image prompt\n\`\`\`\n${pack.imagePrompt.slice(0, 1700)}\n\`\`\`` : "") +
+        (pack.videoPrompt ? `\n\n🎬 Video prompt\n\`\`\`\n${pack.videoPrompt.slice(0, 1700)}\n\`\`\`` : ""),
+      { parse_mode: "Markdown" }
+    );
+  }
 }
 
 export async function notifyAdmin(message: string): Promise<boolean> {

@@ -331,6 +331,15 @@ export const queue = pgTable(
     }),
     text: text("text").notNull(),
     imagePath: text("image_path"),
+    // Per-platform copy-paste pack + creative prompts (delivered, not posted)
+    pack: jsonb("pack").$type<{
+      twitter?: string;
+      linkedin?: string;
+      instagram?: string;
+      facebook?: string;
+      imagePrompt?: string;
+      videoPrompt?: string;
+    }>(),
     platform: platformEnum("platform").notNull().default("twitter"),
     scheduledTime: timestamp("scheduled_time", {
       withTimezone: true,

@@ -65,7 +65,7 @@ export const TEAM: TeamAgent[] = [
     designation: "Critic",
     emoji: "🔎",
     commands: ["mars", "critic"],
-    systemPrompt: `You are Mars, the Critic. You are the harshest reader on the team. You flag anything that smells like AI writing, engagement bait, or corporate voice. You score drafts 1-10 and give surgical, specific fixes. You would rather kill a post than ship a mediocre one.${CHAT_STYLE}`,
+    systemPrompt: `You are Mars, the Critic. You are the harshest reader on the team. You flag anything that smells like AI writing, engagement bait, or corporate voice. You score drafts 1-10 and give surgical, specific fixes. AUTOMATIC FAIL (score 3 max): any invented personal anecdote, fake client story, or made-up metric ("cancelled three subscriptions this week", "my app hit 10k users") — the account owner never did those things. Demand a rewrite as an observation or opinion. You would rather kill a post than ship a mediocre one.${CHAT_STYLE}`,
   },
   {
     key: "manager",
@@ -147,6 +147,54 @@ export async function updateWorkingMemory(agentKey: string, working: string): Pr
     });
 }
 
+// ─── IDOLS ──────────────────────────────────────────────────────────────────
+// Role-model accounts the boss wants to write like. Each idol has a "method
+// card" (hooks, structure, strategy) stored in agent_memory as idol:<slug>.
+// Mercury and Venus study these before producing anything.
+
+export async function getIdolContext(): Promise<string> {
+  const { agentMemory } = await import("@/lib/schema");
+  const { like } = await import("drizzle-orm");
+  const rows = await db.select().from(agentMemory).where(like(agentMemory.agentKey, "idol:%")).limit(10);
+  if (!rows.length) return "";
+  return (
+    "\n\nROLE MODELS — the boss wants to write like these creators. Study their methods and apply them (never copy their words):\n" +
+    rows.map((r) => `--- ${r.agentKey.slice(5)} ---\n${r.working.slice(0, 1200)}`).join("\n")
+  );
+}
+
+export async function listIdols(): Promise<{ slug: string; card: string }[]> {
+  const { agentMemory } = await import("@/lib/schema");
+  const { like } = await import("drizzle-orm");
+  const rows = await db.select().from(agentMemory).where(like(agentMemory.agentKey, "idol:%")).limit(20);
+  return rows.map((r) => ({ slug: r.agentKey.slice(5), card: r.working }));
+}
+
+/** Research a creator's method and store the card. Returns the card. */
+export async function addIdol(nameOrHandle: string, notes?: string): Promise<string> {
+  const slug = nameOrHandle.toLowerCase().replace(/^@/, "").replace(/[^a-z0-9_-]+/g, "-").slice(0, 40);
+  const card = await generate(
+    byKey.researcher.systemPrompt,
+    `The boss wants to learn from this creator: "${nameOrHandle}"${notes ? ` (notes from the boss: ${notes})` : ""}.
+
+Write a METHOD CARD (max 200 words) describing how this creator wins on social media:
+- HOOKS: how their first lines grab attention (patterns, not quotes)
+- STRUCTURE: how their posts flow (length, line breaks, threads?)
+- STRATEGY: content mix, posting style, engagement tactics
+- VOICE: tone and personality markers
+If you genuinely don't know this creator, infer the method from their niche and say so on the first line.`,
+    { agent: "manager", action: "idol_research", temperature: 0.5 }
+  );
+  await updateWorkingMemory(`idol:${slug}`, card.trim());
+  return card.trim();
+}
+
+export async function removeIdol(slug: string): Promise<void> {
+  const { agentMemory } = await import("@/lib/schema");
+  const { eq } = await import("drizzle-orm");
+  await db.delete(agentMemory).where(eq(agentMemory.agentKey, `idol:${slug.toLowerCase()}`));
+}
+
 function memoryBlock(mem: { constant: string; working: string }): string {
   let block = "";
   if (mem.constant) block += `\n\nSTANDING KNOWLEDGE (constant):\n${mem.constant}`;
@@ -214,11 +262,20 @@ export interface TranscriptMessage {
   timestamp: string;
 }
 
+export interface PlatformPack {
+  twitter: string;
+  linkedin: string;
+  instagram: string;
+  facebook: string;
+}
+
 export interface TeamRunResult {
   topic: string;
   angle: string;
   tweet: string;
+  pack: PlatformPack;
   imagePrompt: string | null;
+  videoPrompt: string | null;
   criticScore: number;
   transcript: TranscriptMessage[];
 }
@@ -251,6 +308,7 @@ export async function runTeamPipeline(opts: {
   const transcript: TranscriptMessage[] = [];
   const direction = opts.userDirection ? `\n\nDirection from the boss: ${opts.userDirection}` : "";
   const model = opts.deep ? PRO_MODEL : undefined;
+  const idols = await getIdolContext().catch(() => "");
 
   // 1. Saturn picks the topic + angle (her working memory prevents repeats)
   const novaMem = await getMemory("researcher");
@@ -265,7 +323,7 @@ export async function runTeamPipeline(opts: {
 
   // 2. Mercury drafts
   const draft1 = await generate(
-    byKey.copywriter.systemPrompt,
+    byKey.copywriter.systemPrompt + idols,
     `Saturn's brief:\nTopic: ${research.topic}\nAngle: ${research.angle}\nWhy now: ${research.whyNow}${direction}\n\nWrite ONE tweet (under 280 chars). Return only the tweet text.`,
     { agent: "twitter", action: "team_draft", temperature: 0.95, model }
   );
@@ -288,7 +346,7 @@ export async function runTeamPipeline(opts: {
   let finalTweet = draft1.trim();
   if (critique.score < 8 && critique.fixes.length > 0) {
     const draft2 = await generate(
-      byKey.copywriter.systemPrompt,
+      byKey.copywriter.systemPrompt + idols,
       `Your draft:\n"${draft1.trim()}"\n\nMars's critique (${critique.score}/10): ${critique.verdict}\nFixes demanded: ${critique.fixes.join("; ")}\n\nRewrite the tweet applying the fixes. Keep it under 280 chars. Return only the tweet text.`,
       { agent: "twitter", action: "team_revise", temperature: 0.9, model }
     );
@@ -297,18 +355,30 @@ export async function runTeamPipeline(opts: {
     await postToFeed(byKey.copywriter, "Revised after Mars's notes.", [{ type: "draft", label: `Draft v2 — ${research.topic}`, content: finalTweet }]).catch(() => {});
   }
 
-  // 5. Venus briefs the image (optional)
+  // 5. Venus briefs the visuals: one image prompt + one video prompt
   let imagePrompt: string | null = null;
+  let videoPrompt: string | null = null;
   if (opts.withImage !== false) {
-    imagePrompt = await generate(
-      byKey.visual.systemPrompt,
-      `Tweet that will run with this image:\n"${finalTweet}"\n\nWrite a single photorealistic image generation prompt (one paragraph) that would make this tweet stronger. Realistic photography style, no text in image. Return only the prompt.`,
+    const visual = await generateJSON<{ imagePrompt: string; videoPrompt: string }>(
+      byKey.visual.systemPrompt + idols,
+      `Post that will run with these visuals:\n"${finalTweet}"\n\nProduce two generation prompts:\n1. imagePrompt — one photorealistic image (realistic photography, no text in image)\n2. videoPrompt — a 15-30s vertical reel/short concept (shot list style: what we see, pacing, mood; no dialogue script)\n\nReturn JSON: {"imagePrompt": string, "videoPrompt": string}`,
       { agent: "manager", action: "team_visual", temperature: 0.85, model }
     );
-    imagePrompt = imagePrompt.trim();
-    transcript.push(speak(byKey.visual, `Image brief:\n\n${imagePrompt}`));
-    await postToFeed(byKey.visual, "Image brief ready.", [{ type: "image-brief", label: `Visual — ${research.topic}`, content: imagePrompt }]).catch(() => {});
+    imagePrompt = (visual.imagePrompt || "").trim() || null;
+    videoPrompt = (visual.videoPrompt || "").trim() || null;
+    transcript.push(speak(byKey.visual, `Image brief:\n${imagePrompt}\n\nVideo brief:\n${videoPrompt}`));
+    await postToFeed(byKey.visual, "Visual briefs ready (image + video).", [{ type: "image-brief", label: `Visuals — ${research.topic}`, content: `IMAGE:\n${imagePrompt}\n\nVIDEO:\n${videoPrompt}` }]).catch(() => {});
   }
+
+  // 5b. Mercury adapts the post for every platform
+  const pack = await generateJSON<PlatformPack>(
+    byKey.copywriter.systemPrompt + idols,
+    `Core post (Twitter version, already approved by the critic):\n"${finalTweet}"\n\nTopic: ${research.topic}\n\nAdapt it for each platform — same idea, native format:\n- twitter: the version above, unchanged\n- linkedin: 3-6 short paragraphs, professional but human, a line break between each, no hashtags walls (max 3 at the end)\n- instagram: caption with a strong first line (feed cutoff), casual, 3-5 hashtags at the end\n- facebook: conversational 2-4 sentences, invites discussion\n\nReturn JSON: {"twitter": string, "linkedin": string, "instagram": string, "facebook": string}`,
+    { agent: "twitter", action: "team_platform_pack", temperature: 0.8, model }
+  ).catch(() => ({ twitter: finalTweet, linkedin: finalTweet, instagram: finalTweet, facebook: finalTweet }));
+  pack.twitter = finalTweet; // never let the adaptation drift the approved tweet
+  transcript.push(speak(byKey.copywriter, `Platform pack ready — LinkedIn, Instagram, and Facebook versions adapted.`));
+  await postToFeed(byKey.copywriter, "Platform pack ready.", [{ type: "draft", label: `Pack — ${research.topic}`, content: `LINKEDIN:\n${pack.linkedin}\n\nINSTAGRAM:\n${pack.instagram}\n\nFACEBOOK:\n${pack.facebook}` }]).catch(() => {});
 
   // 6. Jupiter signs off
   const signoff = await generate(
@@ -328,7 +398,9 @@ export async function runTeamPipeline(opts: {
     topic: research.topic,
     angle: research.angle,
     tweet: finalTweet,
+    pack,
     imagePrompt,
+    videoPrompt,
     criticScore: critique.score,
     transcript,
   };

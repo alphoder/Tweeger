@@ -144,24 +144,12 @@ async function processQueue() {
           .set({ status: "posting" })
           .where(eq(queue.id, item.id));
 
-        // Post via the real platform client
-        const client = getClient(item.platform);
-        let postId: string;
-        let postUrl: string;
-
-        if (client.isConfigured()) {
-          // Use real API
-          const result = await client.post(item.text, item.imagePath || undefined);
-          postId = result.postId;
-          postUrl = result.postUrl;
-        } else {
-          // Platform not configured — simulate so queue doesn't stall
-          console.warn(
-            `[Scheduler] ${item.platform} not configured, simulating post`
-          );
-          postId = `sim_${Date.now()}_${item.id}`;
-          postUrl = `https://${item.platform}.com/post/${postId}`;
-        }
+        // Deliver to Telegram for copy-paste — the boss posts manually.
+        // ponytail: switch back to platform clients if auto-posting returns.
+        const { sendPostPackage } = await import("./telegram");
+        await sendPostPackage(item);
+        const postId = `delivered_${Date.now()}_${item.id}`;
+        const postUrl = null as string | null;
 
         // Save to posted table
         await db.insert(posted).values({
@@ -182,7 +170,7 @@ async function processQueue() {
             status: "posted",
             postedAt: now,
             postId,
-            postUrl,
+            postUrl: postUrl ?? undefined,
           })
           .where(eq(queue.id, item.id));
 
